@@ -7,7 +7,8 @@
     android:orientation="vertical"
     tools:context="com.wq.halfbeanapp.view.HomeActivity">
 
-    <TextView
+    <FrameLayout
+        android:id="@+id/id_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />

@@ -3,17 +3,28 @@ package com.wq.halfbeanapp.view;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
+import com.wq.halfbeanapp.view.fragment.HalfBeanFragment;
 import com.wq.halfbeanapp.view.fragment.HomeFragment;
+import com.wq.halfbeanapp.view.fragment.HotTopicFragment;
+import com.wq.halfbeanapp.view.fragment.MineFragment;
 
 public class HomeActivity extends BaseActivity {
 
     private FragmentManager fm;
     private FragmentTransaction transaction;
     private HomeFragment homeFragment;
-    private
+    private HalfBeanFragment halfBeanFragment;
+    private HotTopicFragment hotTopicFragment;
+    private MineFragment mineFragment;
+    private FragmentManager fragmentManager;
+    private int index;
+    private TextView tvHome,tvBean,tvTopic,tvMine;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,50 +33,124 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        tvHome=findViewById(R.id.tvHome);
+        tvBean=findViewById(R.id.tvBean);
+        tvTopic=findViewById(R.id.tvTopic);
+        tvMine=findViewById(R.id.tvMine);
 
     }
 
     @Override
     public void initEventData() {
+        fragmentManager = getSupportFragmentManager();
+
 
     }
 
     @Override
     public void bindEvent() {
+        tvHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTabSelection(0);
+            }
+        });
+        tvBean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTabSelection(1);
+            }
+        });
+        tvTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTabSelection(2);
+            }
+        });
+        tvMine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTabSelection(3);
+            }
+        });
 
     }
 
     @Override
     public void loadData() {
+        setTabSelection(0);
+
 
     }
 
-    void selectFM(int i) {
-        fm = getSupportFragmentManager();
-        transaction = fm.beginTransaction();
-        switch (i) {
-            case 1:
-                HomeFragment homeFragment = new HomeFragment();
-                transaction.hide(this);
-                transaction.add(R.id.id_content, fm_first);
-                transaction.addToBackStack(null);
-                Log.i("TAG", "进入port");
+
+    public void setTabSelection(int index) {
+        if (this.index == index) {
+            return;
+        }
+        this.index = index;
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        hideFragments(transaction);
+        switch (index) {
+            case 0:
+                //需要实时刷新
+                if (homeFragment == null) {
+                    homeFragment = new HomeFragment();
+                    transaction.add(R.id.id_content, homeFragment);
+                } else {
+                    transaction.show(homeFragment);
+                }
                 break;
+
+            case 1:
+                if (halfBeanFragment == null) {
+                    halfBeanFragment = new HalfBeanFragment();
+                    transaction.add(R.id.id_content, halfBeanFragment);
+                } else {
+                    transaction.show(halfBeanFragment);
+                }
+                break;
+
+
             case 2:
-                SecondFragment fm_second = new SecondFragment();
-                transaction.hide(this);
-                transaction.add(R.id.id_content, fm_second);
-                transaction.addToBackStack(null);
+                if (hotTopicFragment == null) {
+                    hotTopicFragment = new HotTopicFragment();
+                    transaction.add(R.id.id_content, hotTopicFragment);
+                } else {
+                    transaction.show(hotTopicFragment);
+                }
+
                 break;
             case 3:
-                ThreadFragment fm_thread = new ThreadFragment();
-                transaction.hide(this);
-                transaction.add(R.id.id_content, fm_thread);
-                transaction.addToBackStack(null);
+                if (mineFragment == null) {
+                    mineFragment = new MineFragment();
+                    transaction.add(R.id.id_content, mineFragment);
+                } else {
+                    transaction.show(mineFragment);
+                }
                 break;
-            default:
-                break;
+
         }
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
+
+    }
+
+    /**
+     * 将所有Fragment都置为隐藏状态
+     *
+     * @param transaction 用于对Fragment执行操作的事务
+     */
+    private void hideFragments(FragmentTransaction transaction) {
+        if (homeFragment != null) {
+            transaction.hide(homeFragment);
+        }
+        if (halfBeanFragment != null) {
+            transaction.hide(halfBeanFragment);
+        }
+        if (hotTopicFragment != null) {
+            transaction.hide(hotTopicFragment);
+        }
+        if (mineFragment != null)
+            transaction.hide(mineFragment);
     }
 }
