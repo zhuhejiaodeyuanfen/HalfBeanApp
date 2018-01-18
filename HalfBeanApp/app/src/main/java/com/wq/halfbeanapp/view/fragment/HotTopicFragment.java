@@ -11,6 +11,7 @@ import com.wq.halfbeanapp.bean.LiveBoardModel;
 import com.wq.halfbeanapp.constants.UrlConstants;
 import com.wq.halfbeanapp.net.response.DataListResponseCallback;
 import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
+import com.wq.halfbeanapp.view.topic.TopicCardActivity;
 
 import java.util.List;
 
@@ -42,9 +43,11 @@ public class HotTopicFragment extends BaseFragment {
         rvHotList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         rvHotList.setAdapter(hotTopicLiveAdapter);
         //点击进入cardView界面
+
         hotTopicLiveAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                getBaseActivity().launcher(mContext, TopicCardActivity.class);
 
             }
         });

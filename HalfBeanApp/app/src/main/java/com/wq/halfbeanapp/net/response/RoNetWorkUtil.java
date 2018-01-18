@@ -32,15 +32,15 @@ public class RoNetWorkUtil {
         return this;
     }
 
-    public RoNetWorkUtil params(String params) {
+    public RoNetWorkUtil params(Object params) {
         this.params = params;
         return this;
     }
 
     private String url;
-    private String params;
+    private Object params;
 
-    public String getParams() {
+    public Object getParams() {
         return params;
     }
 
@@ -53,12 +53,12 @@ public class RoNetWorkUtil {
         doGetUrl(getUrl(), getParams(), responseCallBack);
     }
 
-    private void doGetUrl(final String url, String params, final BaseResponseCallback responseCallBack) {
+    private void doGetUrl(final String url, final Object params, final BaseResponseCallback responseCallBack) {
         Observable.create(new Observable.OnSubscribe<String>() {
 
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                String result = VivianHttpUtil.sendPost(url, "", "UTF-8");
+                String result = VivianHttpUtil.sendPost(url, params, "UTF-8");
                 AppLogUtil.i("call"+result);
                 subscriber.onNext(result);
 

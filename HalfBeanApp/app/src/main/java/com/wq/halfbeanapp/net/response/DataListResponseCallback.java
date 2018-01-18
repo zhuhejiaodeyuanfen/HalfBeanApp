@@ -29,6 +29,7 @@ public abstract class DataListResponseCallback<T> extends BaseResponseCallback {
 
     @Override
     public void onSuccess(String response) {
+        AppLogUtil.i("响应结果"+response);
         ResponseBean responseBean = JsonTools.getBean(response, ResponseBean.class);
         if (responseBean.isSuccess()) {
             onResponseSuccess((List<T>) responseBean.getArrayData(rawType));

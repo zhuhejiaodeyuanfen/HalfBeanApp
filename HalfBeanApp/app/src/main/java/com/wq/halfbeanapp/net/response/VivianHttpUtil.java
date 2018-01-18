@@ -5,11 +5,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
 
 /**
  * Created by vivianWQ on 2017/11/22
@@ -40,14 +39,6 @@ public class VivianHttpUtil {
         return request(http, data, charset, GET);
     }
 
-    public static String sendGet(String http, HashMap<String, String> map, String charset) {
-        return sendGet(http, map, charset, false);
-    }
-
-    public static String sendGet(String http, HashMap<String, String> map, String charset, boolean encode) {
-        return sendGet(http, parseMap(map, charset, encode), charset);
-    }
-
 
     /**
      * POST方式发送数据
@@ -57,53 +48,17 @@ public class VivianHttpUtil {
      * @param charset
      * @return
      */
-    public static String sendPost(String http, String data, String charset) {
+    public static String sendPost(String http, Object data, String charset) {
         return request(http, data, charset, POST);
     }
 
-    public static String sendPost(String http, HashMap<String, String> map, String charset) {
-        return sendPost(http, map, charset, false);
-    }
-
-    public static String sendPost(String http, HashMap<String, String> map, String charset, boolean encode) {
-        return sendPost(http, parseMap(map, charset, encode), charset);
-    }
-
-    /**
-     * 解析map
-     */
-    private static String parseMap(HashMap<String, String> map, String charset, boolean encode) {
-        StringBuffer sb = new StringBuffer();
-        if (map != null && !map.isEmpty()) {
-            try {
-                boolean f = true;
-                String v;
-                for (String k : map.keySet()) {
-                    if (k != null && !"".equals(k)) {
-                        v = map.get(k).trim();
-                        if (!f)
-                            sb.append("&");
-                        if (encode)
-                            v = URLEncoder.encode(v, charset);
-                        sb.append(k).append("=").append(v);
-                        f = false;
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString().trim();
-    }
-
-    private static HttpURLConnection connection = null;
 
 
 
-    private static String request(String http, String data, String charset, String type) {
+    private static String request(String http, Object data, String charset, String type) {
 
         StringBuilder builder = new StringBuilder();
-        connection = null;
+        HttpURLConnection  connection = null;
         OutputStreamWriter outputStreamWriter = null;
         BufferedWriter bufferedWriter = null;
         InputStreamReader inputStreamReader = null;
@@ -118,23 +73,26 @@ public class VivianHttpUtil {
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(type);
             connection.setConnectTimeout(connectTimeOut);
-            connection.setRequestProperty("Content-type", "text/html");
             connection.setReadTimeout(readTimeOut);
             connection.setRequestProperty("accept", "application/json");
+            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             connection.setRequestProperty("connection", "Keep-Alive");
-            connection.setRequestProperty("Charset", "utf-8");
+            connection.setUseCaches(false);
             if (POST.equals(type))
                 connection.setDoOutput(true);
             connection.setDoInput(true);
-            connection.connect();
 
+            String strParam = JsonTools.getJsonString(data);
+            //传送数据
             //传送数据
             if (POST.equals(type)) {
                 if (data != null && !"".equals(data)) {
-                    outputStreamWriter = new OutputStreamWriter(connection.getOutputStream(), charset);
-                    bufferedWriter = new BufferedWriter(outputStreamWriter);
-                    bufferedWriter.write(data);
-                    bufferedWriter.flush();
+                    byte[] writeBytes = strParam.getBytes();
+                    connection.setRequestProperty("Content-Length", String.valueOf(writeBytes.length));
+                    OutputStream outWriteStream = connection.getOutputStream();
+                    outWriteStream.write(strParam.getBytes());
+                    outWriteStream.flush();
+                    outWriteStream.close();
                 }
             }
             //接收数据

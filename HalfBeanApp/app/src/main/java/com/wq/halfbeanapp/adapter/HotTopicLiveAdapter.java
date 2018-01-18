@@ -25,6 +25,7 @@ public class HotTopicLiveAdapter extends BaseRecyclerViewAdapter<LiveBoardModel>
         LiveBoardModel item = getItem(position);
         TextView tvTitle = (TextView) holder.getView(R.id.tvTitle, false);
         TextView tvContent = (TextView) holder.getView(R.id.tvContent, false);
+        holder.getView(R.id.baseItem,true);
         tvTitle.setText(item.getLiveBoardTitle());
         tvContent.setText(item.getLiveBoardContent());
 

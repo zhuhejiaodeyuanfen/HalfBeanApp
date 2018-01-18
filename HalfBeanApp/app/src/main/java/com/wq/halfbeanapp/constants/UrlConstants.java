@@ -13,4 +13,6 @@ public class UrlConstants {
     public static final String getAllHotList = baseIp + "/wq/live/getAllLive";
 
 
+    public static final String QUERY_HOT_List = baseIp + "/wq/live/queryLive";
+
 }
