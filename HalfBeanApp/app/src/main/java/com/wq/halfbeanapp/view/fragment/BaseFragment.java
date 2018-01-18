@@ -26,6 +26,7 @@ public abstract class BaseFragment extends Fragment {
      */
     public void init() {
         initView();
+        initEventData();
         bindEvent();
         loadData();
     }
@@ -37,6 +38,8 @@ public abstract class BaseFragment extends Fragment {
 //        EventBus.getDefault().register(this);
     }
 
+
+    public abstract void initEventData();
 
     /**
      * 打开一个普通的弹窗
@@ -61,7 +64,6 @@ public abstract class BaseFragment extends Fragment {
      * @return 返回布局文件资源Id
      */
     public abstract int onSetLayoutId();
-
 
 
     /**

@@ -10,6 +10,11 @@ import com.wq.halfbeanapp.R;
  */
 public class HomeFragment extends BaseFragment{
     @Override
+    public void initEventData() {
+
+    }
+
+    @Override
     public int onSetLayoutId() {
         return R.layout.fragment_home;
     }

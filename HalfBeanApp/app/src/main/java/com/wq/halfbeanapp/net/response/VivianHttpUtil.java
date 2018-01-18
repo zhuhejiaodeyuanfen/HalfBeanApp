@@ -96,10 +96,14 @@ public class VivianHttpUtil {
         return sb.toString().trim();
     }
 
+    private static HttpURLConnection connection = null;
+
+
+
     private static String request(String http, String data, String charset, String type) {
 
         StringBuilder builder = new StringBuilder();
-        HttpURLConnection connection = null;
+        connection = null;
         OutputStreamWriter outputStreamWriter = null;
         BufferedWriter bufferedWriter = null;
         InputStreamReader inputStreamReader = null;
@@ -114,7 +118,11 @@ public class VivianHttpUtil {
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(type);
             connection.setConnectTimeout(connectTimeOut);
+            connection.setRequestProperty("Content-type", "text/html");
             connection.setReadTimeout(readTimeOut);
+            connection.setRequestProperty("accept", "application/json");
+            connection.setRequestProperty("connection", "Keep-Alive");
+            connection.setRequestProperty("Charset", "utf-8");
             if (POST.equals(type))
                 connection.setDoOutput(true);
             connection.setDoInput(true);
@@ -132,6 +140,7 @@ public class VivianHttpUtil {
             //接收数据
             if (connection.getResponseCode() == 200) {
                 inputStreamReader = new InputStreamReader(connection.getInputStream(), charset);
+
                 bufferedReader = new BufferedReader(inputStreamReader);
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {

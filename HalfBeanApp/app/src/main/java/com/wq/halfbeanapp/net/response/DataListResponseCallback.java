@@ -4,32 +4,34 @@ import com.wq.halfbeanapp.util.AppLogUtil;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
+
 
 /**
  * Created by apple on 2017/3/8.
- * 数据callBack 将泛型传递后直接拿到该实体类
+ * 数组的responseCallBack
  */
 
-public abstract class DataResponseCallback<T> extends BaseResponseCallback {
+public abstract class DataListResponseCallback<T> extends BaseResponseCallback {
 
     private Class<? super T> rawType;
 
-
-    public DataResponseCallback() {
+    public DataListResponseCallback() {
+        super();
         Type myClass = getClass().getGenericSuperclass();    //反射获取带泛型的class
         if (myClass instanceof Class) {
             throw new RuntimeException("Missing type parameter.");
         }
         rawType = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+
     }
 
 
     @Override
     public void onSuccess(String response) {
-        //根据code是不是0判断是0
         ResponseBean responseBean = JsonTools.getBean(response, ResponseBean.class);
         if (responseBean.isSuccess()) {
-            onResponseSuccess((T) responseBean.getData(rawType));
+            onResponseSuccess((List<T>) responseBean.getArrayData(rawType));
         } else {
             AppLogUtil.i("失败了");
             onResponseFail(responseBean.getMessage());
@@ -37,7 +39,7 @@ public abstract class DataResponseCallback<T> extends BaseResponseCallback {
     }
 
 
-    public abstract void onResponseSuccess(T response);
+    public abstract void onResponseSuccess(List<T> response);
 
 
 }

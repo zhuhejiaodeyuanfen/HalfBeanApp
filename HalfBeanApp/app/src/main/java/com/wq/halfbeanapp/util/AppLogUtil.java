@@ -8,7 +8,7 @@ import android.util.Log;
  * 全局打印日志类--可以通过开关判断是否开启打印功能
  */
 
-public class NetWorkLogUtil {
+public class AppLogUtil {
 
 
     public static boolean allowLog =true;
@@ -16,7 +16,7 @@ public class NetWorkLogUtil {
     public static String customTagPrefix = "";  // 自定义Tag的前缀，可以是作者名
 
 
-    private NetWorkLogUtil() {
+    private AppLogUtil() {
     }
 
     // 容许打印日志的类型，默认是true，设置为false则不打印

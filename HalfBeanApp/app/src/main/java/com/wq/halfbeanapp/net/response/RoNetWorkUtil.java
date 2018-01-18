@@ -1,7 +1,7 @@
 package com.wq.halfbeanapp.net.response;
 
 
-import com.wq.halfbeanapp.util.NetWorkLogUtil;
+import com.wq.halfbeanapp.util.AppLogUtil;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -49,16 +49,17 @@ public class RoNetWorkUtil {
 
     }
 
-    public void execute(ResponseCallBack responseCallBack) {
+    public void execute(BaseResponseCallback responseCallBack) {
         doGetUrl(getUrl(), getParams(), responseCallBack);
     }
 
-    private void doGetUrl(final String url, String params, final ResponseCallBack responseCallBack) {
+    private void doGetUrl(final String url, String params, final BaseResponseCallback responseCallBack) {
         Observable.create(new Observable.OnSubscribe<String>() {
 
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                String result = VivianHttpUtil.sendGet(url, "", "utf-8");
+                String result = VivianHttpUtil.sendPost(url, "", "UTF-8");
+                AppLogUtil.i("call"+result);
                 subscriber.onNext(result);
 
             }
@@ -67,17 +68,19 @@ public class RoNetWorkUtil {
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
+                        AppLogUtil.i("onCompleted");
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        AppLogUtil.i("发生了错误"+e.getMessage());
 
                     }
 
                     @Override
                     public void onNext(String s) {
-                        NetWorkLogUtil.i(s);
+                        AppLogUtil.i(s);
 
                         responseCallBack.onSuccess(s);
                         onCompleted();

@@ -33,10 +33,10 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        tvHome=findViewById(R.id.tvHome);
-        tvBean=findViewById(R.id.tvBean);
-        tvTopic=findViewById(R.id.tvTopic);
-        tvMine=findViewById(R.id.tvMine);
+        tvHome= (TextView) findViewById(R.id.tvHome);
+        tvBean= (TextView) findViewById(R.id.tvBean);
+        tvTopic= (TextView) findViewById(R.id.tvTopic);
+        tvMine= (TextView) findViewById(R.id.tvMine);
 
     }
 
