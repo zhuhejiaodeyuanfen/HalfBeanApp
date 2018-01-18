@@ -2,6 +2,8 @@ package com.wq.halfbeanapp.view.topic;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.Button;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.adapter.PhotoVpAdapter;
@@ -18,6 +20,9 @@ import java.util.List;
 public class TopicCardActivity extends BaseActivity {
     private RecyclerViewPager rvPager;
     private PhotoVpAdapter photoVpAdapter;
+    private Button btnCommit;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,8 @@ public class TopicCardActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
+        btnCommit= (Button) findViewById(R.id.btnCommit);
         photoVpAdapter = new PhotoVpAdapter(TopicCardActivity.this);
         rvPager = (RecyclerViewPager) findViewById(R.id.rvPager);
         rvPager.setAdapter(photoVpAdapter);
@@ -45,6 +52,13 @@ public class TopicCardActivity extends BaseActivity {
 
     @Override
     public void bindEvent() {
+        btnCommit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launcher(TopicCardActivity.this, AddTopicActivity.class);
+
+            }
+        });
 
     }
 

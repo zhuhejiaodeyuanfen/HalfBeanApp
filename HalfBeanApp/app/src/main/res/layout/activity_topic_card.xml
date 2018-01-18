@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context="com.wq.halfbeanapp.view.topic.TopicCardActivity">
 
+    <Button
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/btnCommit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="立即参与" />
+
     <com.wq.halfbeanapp.widget.recyclerviewpagerlib.RecyclerViewPager
         android:id="@+id/rvPager"
         android:layout_width="match_parent"
