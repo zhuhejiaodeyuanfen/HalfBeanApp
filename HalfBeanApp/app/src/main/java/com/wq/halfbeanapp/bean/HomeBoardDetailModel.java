@@ -7,10 +7,9 @@ import java.sql.Timestamp;
  */
 public class HomeBoardDetailModel {
 
-    private int livePostId;//帖子id
+    private int homePostId;//帖子id
     private String postTitle;//帖子标题
     private String postParentId;//帖子所属父版块id
-    private String postSonId;//帖子所属子版块id
     private String postAdmin;//发帖者姓名
     private Timestamp postCreateTime;//发帖时间
     private String postContent;//帖子内容
@@ -19,12 +18,12 @@ public class HomeBoardDetailModel {
     private int postCommentCount;//帖子的评论数
     private int rePostCount;//帖子的转发数
 
-    public int getLivePostId() {
-        return livePostId;
+    public int getHomePostId() {
+        return homePostId;
     }
 
-    public void setLivePostId(int livePostId) {
-        this.livePostId = livePostId;
+    public void setHomePostId(int homePostId) {
+        this.homePostId = homePostId;
     }
 
     public String getPostTitle() {
@@ -44,13 +43,6 @@ public class HomeBoardDetailModel {
         this.postParentId = postParentId;
     }
 
-    public String getPostSonId() {
-        return postSonId;
-    }
-
-    public void setPostSonId(String postSonId) {
-        this.postSonId = postSonId;
-    }
 
     public String getPostAdmin() {
         return postAdmin;

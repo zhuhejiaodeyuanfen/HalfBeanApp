@@ -1,6 +1,7 @@
 package com.wq.halfbeanapp.adapter;
 
 import android.content.Context;
+import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.bean.HomeBoardDetailModel;
@@ -18,6 +19,14 @@ public class HomeLiveAdapter extends BaseRecyclerViewAdapter<HomeBoardDetailMode
 
     @Override
     protected void bindData(BaseViewHolder holder, int position) {
+        HomeBoardDetailModel item = getItem(position);
+        TextView tvTitle = (TextView) holder.getView(R.id.tvTitle, false);
+        tvTitle.setText(item.getPostTitle());
+        TextView tvWriter = (TextView) holder.getView(R.id.tvWriter, false);
+        tvWriter.setText(item.getPostAdmin());
+        TextView tvCount = (TextView) holder.getView(R.id.tvCount, false);
+        tvCount.setText(item.getPostCommentCount() + "");
+
 
     }
 

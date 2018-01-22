@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".view.HomeActivity" />
         <activity android:name=".view.topic.TopicCardActivity" />
-        <activity android:name=".view.topic.AddTopicActivity"></activity>
+        <activity android:name=".view.topic.AddTopicActivity" />
+        <activity android:name=".view.HomeDetailActivity"></activity>
     </application>
 
 </manifest>

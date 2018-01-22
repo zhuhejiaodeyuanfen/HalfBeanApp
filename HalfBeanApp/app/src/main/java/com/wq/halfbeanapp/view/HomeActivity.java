@@ -21,7 +21,7 @@ public class HomeActivity extends BaseActivity {
     private HotTopicFragment hotTopicFragment;
     private MineFragment mineFragment;
     private FragmentManager fragmentManager;
-    private int index;
+    private int index=-1;
     private TextView tvHome,tvBean,tvTopic,tvMine;
 
 
