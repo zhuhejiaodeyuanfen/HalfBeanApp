@@ -21,8 +21,8 @@ public class HomeActivity extends BaseActivity {
     private HotTopicFragment hotTopicFragment;
     private MineFragment mineFragment;
     private FragmentManager fragmentManager;
-    private int index=-1;
-    private TextView tvHome,tvBean,tvTopic,tvMine;
+    private int index = -1;
+    private TextView tvHome, tvBean, tvTopic, tvMine, tvAddTopic;
 
 
     @Override
@@ -33,10 +33,11 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        tvHome= (TextView) findViewById(R.id.tvHome);
-        tvBean= (TextView) findViewById(R.id.tvBean);
-        tvTopic= (TextView) findViewById(R.id.tvTopic);
-        tvMine= (TextView) findViewById(R.id.tvMine);
+        tvHome = (TextView) findViewById(R.id.tvHome);
+        tvBean = (TextView) findViewById(R.id.tvBean);
+        tvTopic = (TextView) findViewById(R.id.tvTopic);
+        tvMine = (TextView) findViewById(R.id.tvMine);
+        tvAddTopic = (TextView) findViewById(R.id.tvAddTopic);
 
     }
 
@@ -71,6 +72,12 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 setTabSelection(3);
+            }
+        });
+        tvAddTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launcher(HomeActivity.this, HomeAddTopicActivity.class);
             }
         });
 
@@ -129,6 +136,7 @@ public class HomeActivity extends BaseActivity {
                     transaction.show(mineFragment);
                 }
                 break;
+
 
         }
         transaction.commitAllowingStateLoss();

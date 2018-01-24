@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".view.LoginActivity"></activity>
+        <activity android:name=".view.LoginActivity" />
         <activity android:name=".view.HomeActivity" />
         <activity android:name=".view.topic.TopicCardActivity" />
         <activity android:name=".view.topic.AddTopicActivity" />
@@ -24,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.RegisterActivity" />
+        <activity android:name=".view.HomeAddTopicActivity" />
+        <activity android:name=".view.PhotoSelectActivity"></activity>
     </application>
 
 </manifest>

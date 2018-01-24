@@ -10,16 +10,30 @@ public class UrlConstants {
 
     public static final String baseIp = "http://192.168.10.65:8080";
 
+    /**
+     * 获取所有动态列表
+     */
     public static final String getAllHotList = baseIp + "/wq/live/getAllLive";
 
 
+    /**
+     * 获取动态详情
+     */
     public static final String QUERY_HOT_List = baseIp + "/wq/live/queryLive";
 
+    /**
+     * 获取首页新闻
+     */
     public static final String GET_HOME_LIST = baseIp + "/wq/home/getHomeLive";
 
     /**
      * 获取评论列表
      */
     public static final String GET_COMMENT_LIST = baseIp + "/wq/comment/getComment";
+
+    /**
+     * 用户登陆链接
+     */
+    public static final String USER_LOGIN = baseIp + "/wq/user/login";
 
 }

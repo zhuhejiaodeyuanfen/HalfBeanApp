@@ -6,12 +6,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
+import com.wq.halfbeanapp.constants.AppConstants;
+import com.wq.halfbeanapp.constants.UrlConstants;
+import com.wq.halfbeanapp.net.response.BaseResponseCallback;
+import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
 import com.wq.halfbeanapp.util.AppStrUtil;
+import com.wq.halfbeanapp.util.file.AppConfigFileImpl;
 
 public class LoginActivity extends BaseActivity {
     private EditText etUser, etPassWord;
     private TextView tvLogin, tvRegister;
     private String passWord, userName;
+    private String loginStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,12 @@ public class LoginActivity extends BaseActivity {
 
             }
         });
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launcher(LoginActivity.this, RegisterActivity.class);
+            }
+        });
 
     }
 
@@ -64,5 +76,28 @@ public class LoginActivity extends BaseActivity {
         passWord = etPassword.getText().toString();//这里不需要去前后的空格
         userName = etUserName.getText().toString();
         showProgressDialog(R.string.login_progress_msg);
+        loginStr = "userName=" + userName + "&&passWord=" + passWord;
+
+
+        RoNetWorkUtil
+                .getInstance()
+                .get(UrlConstants.USER_LOGIN)
+                .conParams(loginStr)
+                .execute(new BaseResponseCallback() {
+                    @Override
+                    public void onResponseFail(String errorString) {
+                        cancelProgressDialog();
+                        showToast(errorString);
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+                        cancelProgressDialog();
+                        showToast("登陆成功");
+                        AppConfigFileImpl.saveParams(LoginActivity.this, AppConstants.USER_LOGIN, true);
+                        launcher(LoginActivity.this, HomeActivity.class);
+
+                    }
+                });
     }
 }

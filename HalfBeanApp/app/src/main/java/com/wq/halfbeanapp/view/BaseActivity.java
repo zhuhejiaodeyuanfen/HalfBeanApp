@@ -13,6 +13,7 @@ import android.view.View;
 import com.wq.halfbeanapp.view.iview.IActivity;
 import com.wq.halfbeanapp.view.iview.IDialogTwoView;
 import com.wq.halfbeanapp.widget.dialog.ToastDialog;
+import com.wq.halfbeanapp.widget.dialog.ToastView;
 
 public abstract class BaseActivity extends AppCompatActivity implements IActivity {
 
@@ -122,9 +123,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
      */
     public void showToast(int strId) {
 
+        ToastView.showToast(strId,BaseActivity.this);
+
     }
 
     public void showToast(String message) {
+        ToastView.showToast(message,BaseActivity.this);
 
 
     }
@@ -165,7 +169,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
                     .setCancelable(false)
                     .create();
         }
-//        toastDialog.setMessage(msg, R.mipmap.ic_upload);
+        toastDialog.setMessage(msg);
         try {
             toastDialog.show();
         } catch (Exception e) {
@@ -178,11 +182,19 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     }
 
     public void showProgressDialog(int msg) {
+        showProgressDialog(getString(msg));
 
     }
 
     public void cancelProgressDialog() {
 
+        if (toastDialog != null) {
+            try {
+                toastDialog.dismiss();
+            }catch (Exception  e){
+                //当前页面可能销毁，关闭就会报错
+            }
+        }
 
     }
 

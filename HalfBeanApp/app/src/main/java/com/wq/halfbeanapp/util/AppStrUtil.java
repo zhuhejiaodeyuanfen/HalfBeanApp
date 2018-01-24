@@ -64,13 +64,12 @@ public final class AppStrUtil {
      * @author jiaBF
      */
     public static boolean checkIsContainChinese(TextView textView, String message) {
-//        if (AppInputCheckUtil.isContainChinese(textView.getText().toString().trim())) {
-//            ToastView.showToast(message, textView.getContext());
-//            return true;
-//        } else {
-//            return false;
-//        }
-        return false;
+        if (AppInputCheckUtil.isContainChinese(textView.getText().toString().trim())) {
+            ToastView.showToast(message, textView.getContext());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

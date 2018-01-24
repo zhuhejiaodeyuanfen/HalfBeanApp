@@ -42,6 +42,9 @@ public class ToastDialog extends Dialog {
         this.mResId = mResId;
     }
 
+    public void setMessage(String msg) {
+        this.mMessage = msg;
+    }
     /**
      * 调用完Builder类的create()方法后显示该对话框的方法
      */
