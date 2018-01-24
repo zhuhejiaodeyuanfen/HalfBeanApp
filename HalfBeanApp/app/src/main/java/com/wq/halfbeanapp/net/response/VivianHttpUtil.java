@@ -28,19 +28,6 @@ public class VivianHttpUtil {
 
 
     /**
-     * GET方式发送数据
-     *
-     * @param http
-     * @param data
-     * @param charset
-     * @return
-     */
-    public static String sendGet(String http, String data, String charset) {
-        return request(http, data, charset, GET);
-    }
-
-
-    /**
      * POST方式发送数据
      *
      * @param http
@@ -49,16 +36,18 @@ public class VivianHttpUtil {
      * @return
      */
     public static String sendPost(String http, Object data, String charset) {
-        return request(http, data, charset, POST);
+        return request(http, data, charset, POST, true);
+    }
+
+    public static String sendPost1(String http, Object data, String charset) {
+        return request(http, data, charset, POST, false);
     }
 
 
-
-
-    private static String request(String http, Object data, String charset, String type) {
+    private static String request(String http, Object data, String charset, String type, boolean isObject) {
 
         StringBuilder builder = new StringBuilder();
-        HttpURLConnection  connection = null;
+        HttpURLConnection connection = null;
         OutputStreamWriter outputStreamWriter = null;
         BufferedWriter bufferedWriter = null;
         InputStreamReader inputStreamReader = null;
@@ -75,20 +64,27 @@ public class VivianHttpUtil {
             connection.setConnectTimeout(connectTimeOut);
             connection.setReadTimeout(readTimeOut);
             connection.setRequestProperty("accept", "application/json");
-            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setUseCaches(false);
             if (POST.equals(type))
                 connection.setDoOutput(true);
             connection.setDoInput(true);
-
-            String strParam = JsonTools.getJsonString(data);
+            String strParam;
+            if (isObject) {
+                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                strParam = JsonTools.getJsonString(data);
+            } else {
+                strParam = data.toString();
+            }
             //传送数据
             //传送数据
             if (POST.equals(type)) {
                 if (data != null && !"".equals(data)) {
                     byte[] writeBytes = strParam.getBytes();
-                    connection.setRequestProperty("Content-Length", String.valueOf(writeBytes.length));
+                    if (isObject) {
+                        connection.setRequestProperty("Content-Length", String.valueOf(writeBytes.length));
+                    }
                     OutputStream outWriteStream = connection.getOutputStream();
                     outWriteStream.write(strParam.getBytes());
                     outWriteStream.flush();

@@ -17,4 +17,9 @@ public class UrlConstants {
 
     public static final String GET_HOME_LIST = baseIp + "/wq/home/getHomeLive";
 
+    /**
+     * 获取评论列表
+     */
+    public static final String GET_COMMENT_LIST = baseIp + "/wq/comment/getComment";
+
 }

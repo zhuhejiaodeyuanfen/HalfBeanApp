@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.wq.halfbeanapp.view.iview.IActivity;
 import com.wq.halfbeanapp.view.iview.IDialogTwoView;
+import com.wq.halfbeanapp.widget.dialog.ToastDialog;
 
 public abstract class BaseActivity extends AppCompatActivity implements IActivity {
 
@@ -58,6 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
      * 拿数据
      */
     public abstract void loadData();
+
     /**
      * 初始化页面
      */
@@ -150,10 +152,26 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
      *
      * @param msg 提示的文字
      */
+    private ToastDialog toastDialog;
+
+    /**
+     * 显示进度框
+     *
+     * @param msg 提示的文字
+     */
     public void showProgressDialog(String msg) {
-
+        if (toastDialog == null) {
+            toastDialog = new ToastDialog.Builder(this)
+                    .setCancelable(false)
+                    .create();
+        }
+//        toastDialog.setMessage(msg, R.mipmap.ic_upload);
+        try {
+            toastDialog.show();
+        } catch (Exception e) {
+            //当前页面可能销毁，打开就会报错
+        }
     }
-
 
     public void showProgressDialogCancel(String msg) {
 
@@ -179,7 +197,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     }
 
     public boolean hasNetworkMsg() {
-        return  true;
+        return true;
     }
 
 
@@ -209,6 +227,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     public static void launcher(Context context, Class<?> targetActivity) {
         ActivityLauncher.activityLauncher(context, targetActivity);
     }
+
 
     public void launcher(Class<?> targetActivity) {
         ActivityLauncher.activityLauncher(this, targetActivity);

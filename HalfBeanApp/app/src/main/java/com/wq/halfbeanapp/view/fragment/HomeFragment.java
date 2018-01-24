@@ -1,5 +1,6 @@
 package com.wq.halfbeanapp.view.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -52,7 +53,10 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, int position) {
                 //adapter数据点击事件
-                getBaseActivity().launcher(mContext, HomeDetailActivity.class);
+                HomeBoardDetailModel item = homeLiveAdapter.getItem(position);
+                Bundle args = new Bundle();
+                args.putSerializable("item", item);
+                getBaseActivity().launcher(mContext, HomeDetailActivity.class, args);
             }
         });
 

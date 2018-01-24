@@ -1,11 +1,12 @@
 package com.wq.halfbeanapp.bean;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * 首页
  */
-public class HomeBoardDetailModel {
+public class HomeBoardDetailModel implements Serializable {
 
     private int homePostId;//帖子id
     private String postTitle;//帖子标题

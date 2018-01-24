@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.wq.halfbeanapp.view.HomeDetailActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:textSize="18sp"
+            android:layout_height="wrap_content"
+            android:text="让我告诉你让我告诉你让我告诉你让我告诉你让我告诉你让我告诉你让我告诉你" />
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/tvTitle"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+
+        <LinearLayout
+            android:layout_below="@id/tvTitle"
+            android:layout_marginLeft="10dp"
+            android:layout_alignBottom="@id/ivIcon"
+            android:layout_toRightOf="@id/ivIcon"
+            android:layout_alignTop="@id/ivIcon"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+        <TextView
+
+
+
+            android:text="苏苏小沫"
+
+            android:id="@+id/tvWriter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="13小时前"
+            android:id="@+id/tvTimeDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/ivIcon"
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:text="a3r4353534534534"
+            android:layout_height="match_parent"
+           />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvComment"
+        android:layout_width="match_parent"
+        android:layout_height="250dp" />
+
+</LinearLayout>

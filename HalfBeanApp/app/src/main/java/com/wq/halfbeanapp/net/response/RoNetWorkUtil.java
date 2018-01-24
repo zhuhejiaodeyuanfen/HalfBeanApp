@@ -37,7 +37,23 @@ public class RoNetWorkUtil {
         return this;
     }
 
+
+    public RoNetWorkUtil conParams(String conParams) {
+        this.conParams = conParams;
+        return this;
+    }
+
     private String url;
+    private String conParams;
+
+    public String getConParams() {
+        return conParams;
+    }
+
+    public void setConParams(String conParams) {
+        this.conParams = conParams;
+    }
+
     private Object params;
 
     public Object getParams() {
@@ -50,16 +66,25 @@ public class RoNetWorkUtil {
     }
 
     public void execute(BaseResponseCallback responseCallBack) {
-        doGetUrl(getUrl(), getParams(), responseCallBack);
+        doGetUrl(getUrl(), getParams(), responseCallBack,true);
     }
 
-    private void doGetUrl(final String url, final Object params, final BaseResponseCallback responseCallBack) {
+    public void execute1(BaseResponseCallback responseCallBack) {
+        doGetUrl(getUrl(), getParams(), responseCallBack,false);
+    }
+
+    private void doGetUrl(final String url, final Object params, final BaseResponseCallback responseCallBack, final boolean isObject) {
         Observable.create(new Observable.OnSubscribe<String>() {
 
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                String result = VivianHttpUtil.sendPost(url, params, "UTF-8");
-                AppLogUtil.i("call"+result);
+                String result;
+                if (isObject ) {
+                    result = VivianHttpUtil.sendPost(url, params, "UTF-8");
+                } else {
+                    result = VivianHttpUtil.sendPost1(url, conParams, "UTF-8");
+                }
+                AppLogUtil.i("call" + result);
                 subscriber.onNext(result);
 
             }
@@ -74,7 +99,7 @@ public class RoNetWorkUtil {
 
                     @Override
                     public void onError(Throwable e) {
-                        AppLogUtil.i("发生了错误"+e.getMessage());
+                        AppLogUtil.i("发生了错误" + e.getMessage());
 
                     }
 

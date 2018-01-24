@@ -26,6 +26,7 @@ public class HomeLiveAdapter extends BaseRecyclerViewAdapter<HomeBoardDetailMode
         tvWriter.setText(item.getPostAdmin());
         TextView tvCount = (TextView) holder.getView(R.id.tvCount, false);
         tvCount.setText(item.getPostCommentCount() + "");
+        holder.getView(R.id.baseItem, true);
 
 
     }
