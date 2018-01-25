@@ -20,6 +20,15 @@ public class UserBean {
     private Timestamp createTime = new Timestamp(new Date().getTime());
     private Timestamp lastLoginTime = new Timestamp(new Date().getTime());
     private String lastIp = "";
+    private String userIcon;
+
+    public String getUserIcon() {
+        return userIcon;
+    }
+
+    public void setUserIcon(String userIcon) {
+        this.userIcon = userIcon;
+    }
 
     public String getUserFollow() {
         return userFollow;

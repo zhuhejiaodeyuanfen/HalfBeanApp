@@ -36,4 +36,20 @@
         <attr name="border_color" format="color" />
     </declare-styleable>
 
+    <style name="ios_bottom_dialog" parent="android:Theme">
+        <item name="android:backgroundDimAmount">0.68</item> <!-- 背景变暗的程度 -->
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
 </resources>
