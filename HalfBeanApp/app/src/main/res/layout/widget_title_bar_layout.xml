@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/titleView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- 沉浸式statusbar设置 android:clipToPadding="true"，android:fitsSystemWindows="true"。除了这里需要设置之外 代码onCreate里也需要设置-->
+
+    <com.wq.halfbeanapp.widget.titlebar.TitleBar
+        android:id="@+id/titleBarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FD5152"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true" />
+
+
+</LinearLayout>

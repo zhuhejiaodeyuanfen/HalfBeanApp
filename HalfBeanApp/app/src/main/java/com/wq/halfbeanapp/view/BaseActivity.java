@@ -10,10 +10,12 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.view.iview.IActivity;
 import com.wq.halfbeanapp.view.iview.IDialogTwoView;
 import com.wq.halfbeanapp.widget.dialog.ToastDialog;
 import com.wq.halfbeanapp.widget.dialog.ToastView;
+import com.wq.halfbeanapp.widget.titlebar.TitleBar;
 
 public abstract class BaseActivity extends AppCompatActivity implements IActivity {
 
@@ -23,6 +25,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
 
     }
 
+
+    public TitleBar initTitle(String title, String rightText) {
+        TitleBar uiTitleBar = (TitleBar) getWindow().findViewById(R.id.titleBarView);
+        uiTitleBar.setRightText(rightText);
+        uiTitleBar.setTitleText(title);
+        return uiTitleBar;
+    }
     @SuppressLint("NewApi")
     @Override
     public void setContentView(int layoutResID) {

@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.adapter.LockAdapter;
-import com.wq.halfbeanapp.bean.TypeBean;
 
 public class HomeAddTopicActivity extends BaseActivity {
     private TextView tvAddPic;
@@ -44,11 +43,11 @@ public class HomeAddTopicActivity extends BaseActivity {
         tvAddPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //    launcher(HomeAddTopicActivity.this, PhotoSelectActivity.class);
-                TypeBean typeBean=new TypeBean();
-                typeBean.setType(1);
-                typeBean.setContent("");
-                lockAdapter.addData(typeBean);
+                   launcher(HomeAddTopicActivity.this, PhotoSelectActivity.class);
+//                TypeBean typeBean=new TypeBean();
+//                typeBean.setType(1);
+//                typeBean.setContent("");
+//                lockAdapter.addData(typeBean);
 
 
             }

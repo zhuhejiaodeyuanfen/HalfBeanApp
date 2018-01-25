@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wq.halfbeanapp.widget.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:background="@drawable/gray_corner_button"
+    android:orientation="vertical">
+    <!-- 条高宽就行了 -->
+    <ImageView
+        android:id="@+id/photoalbumchoiceitem_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/photoalbumchoiceitem_sure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="7dp" />
+
+    <RelativeLayout
+        android:id="@+id/indexView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:id="@+id/indexTv"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginBottom="22dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/bg_round_red"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+</com.wq.halfbeanapp.widget.SquareRelativeLayout> <!-- 获取图片用的项目 -->
