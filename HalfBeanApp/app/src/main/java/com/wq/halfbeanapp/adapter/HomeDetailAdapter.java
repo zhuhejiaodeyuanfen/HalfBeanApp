@@ -25,7 +25,7 @@ import java.util.List;
  * desc:
  * Version: 1.0
  */
-public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<TypeBean> dataList = new ArrayList<>();
     private final Context mContext;
@@ -47,7 +47,7 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return unLockCount;
     }
 
-    public LockAdapter(@NonNull Context context) {
+    public HomeDetailAdapter(@NonNull Context context) {
         this.mContext = context;
     }
 

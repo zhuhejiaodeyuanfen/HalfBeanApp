@@ -6,12 +6,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
+import com.wq.halfbeanapp.bean.UserBean;
 import com.wq.halfbeanapp.constants.AppConstants;
 import com.wq.halfbeanapp.constants.UrlConstants;
-import com.wq.halfbeanapp.net.response.BaseResponseCallback;
+import com.wq.halfbeanapp.net.response.DataResponseCallback;
 import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
 import com.wq.halfbeanapp.util.AppStrUtil;
 import com.wq.halfbeanapp.util.file.AppConfigFileImpl;
+import com.wq.halfbeanapp.util.user.UserInfoUtil;
 
 public class LoginActivity extends BaseActivity {
     private EditText etUser, etPassWord;
@@ -83,19 +85,23 @@ public class LoginActivity extends BaseActivity {
                 .getInstance()
                 .get(UrlConstants.USER_LOGIN)
                 .conParams(loginStr)
-                .execute(new BaseResponseCallback() {
+                .execute1(new DataResponseCallback<UserBean>() {
                     @Override
-                    public void onResponseFail(String errorString) {
-                        cancelProgressDialog();
-                        showToast(errorString);
-                    }
-
-                    @Override
-                    public void onSuccess(String response) {
+                    public void onResponseSuccess(UserBean response) {
+                        UserInfoUtil.saveUserInfo(LoginActivity.this, response);
                         cancelProgressDialog();
                         showToast("登陆成功");
                         AppConfigFileImpl.saveParams(LoginActivity.this, AppConstants.USER_LOGIN, true);
                         launcher(LoginActivity.this, HomeActivity.class);
+
+
+                    }
+
+                    @Override
+                    public void onResponseFail(String errorString) {
+
+                        cancelProgressDialog();
+                        showToast(errorString);
 
                     }
                 });

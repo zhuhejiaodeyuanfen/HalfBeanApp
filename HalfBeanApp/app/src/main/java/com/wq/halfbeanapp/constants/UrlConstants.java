@@ -36,4 +36,14 @@ public class UrlConstants {
      */
     public static final String USER_LOGIN = baseIp + "/wq/user/login";
 
+    /**
+     * 添加一个新话题
+     */
+    public static final String ADD_HOME_TOPIC = baseIp + "/wq/home/addHotTopic";
+
+    /**
+     * 获取用户信息
+     */
+    public static final String GET_USER_CONTENT = baseIp + "/wq/user/getUser-content";
+
 }

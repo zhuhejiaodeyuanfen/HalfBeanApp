@@ -32,6 +32,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         uiTitleBar.setTitleText(title);
         return uiTitleBar;
     }
+
+    public TitleBar initTitle(String title) {
+        TitleBar uiTitleBar = (TitleBar) getWindow().findViewById(R.id.titleBarView);
+        uiTitleBar.setTitleText(title);
+        return uiTitleBar;
+    }
+
     @SuppressLint("NewApi")
     @Override
     public void setContentView(int layoutResID) {
@@ -132,12 +139,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
      */
     public void showToast(int strId) {
 
-        ToastView.showToast(strId,BaseActivity.this);
+        ToastView.showToast(strId, BaseActivity.this);
 
     }
 
     public void showToast(String message) {
-        ToastView.showToast(message,BaseActivity.this);
+        ToastView.showToast(message, BaseActivity.this);
 
 
     }
@@ -200,7 +207,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         if (toastDialog != null) {
             try {
                 toastDialog.dismiss();
-            }catch (Exception  e){
+            } catch (Exception e) {
                 //当前页面可能销毁，关闭就会报错
             }
         }

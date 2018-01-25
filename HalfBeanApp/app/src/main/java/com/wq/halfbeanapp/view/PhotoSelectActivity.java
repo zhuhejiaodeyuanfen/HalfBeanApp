@@ -215,6 +215,8 @@ public class PhotoSelectActivity  extends BaseActivity {
         appPermissionUtil1.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -7,10 +7,25 @@
     android:orientation="vertical"
     tools:context="com.wq.halfbeanapp.view.HomeAddTopicActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <include layout="@layout/widget_title_bar_layout" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="发表新话题" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnAddTopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发表新话题到" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="默认发布到大杂烩" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvAddTopic"
@@ -27,6 +42,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="添加图片" />
+
+        <TextView
+            android:id="@+id/tvCommit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交" />
 
 
     </LinearLayout>

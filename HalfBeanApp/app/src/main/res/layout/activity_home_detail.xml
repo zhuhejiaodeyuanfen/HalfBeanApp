@@ -7,6 +7,9 @@
     android:orientation="vertical"
     tools:context="com.wq.halfbeanapp.view.HomeDetailActivity">
 
+    <include
+        layout="@layout/widget_title_bar_layout"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -14,7 +17,7 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvSubTitle"
             android:layout_width="match_parent"
             android:textSize="18sp"
             android:layout_height="wrap_content"
@@ -59,13 +62,19 @@
 
 
         <TextView
-            android:layout_marginTop="10dp"
             android:layout_below="@id/ivIcon"
             android:id="@+id/tvContent"
-            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_width="0dp"
             android:text="a3r4353534534534"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvContent"
+            android:layout_below="@id/ivIcon"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
