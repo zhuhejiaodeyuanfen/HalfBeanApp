@@ -1,13 +1,24 @@
 package com.wq.halfbeanapp.bean;
 
+import java.io.Serializable;
+
 /**
  * 照片墙model
  */
-public class LiveBoardModel {
+public class LiveBoardModel implements Serializable {
     private int liveBoardModelId;//子版块的id
     private String liveBoardTitle;//子版块的名称
     private String liveBoardContent;//子版块的内容
     private long createTime;//发布时间
+    private String liveIcon;
+
+    public String getLiveIcon() {
+        return liveIcon;
+    }
+
+    public void setLiveIcon(String liveIcon) {
+        this.liveIcon = liveIcon;
+    }
 
     public int getLiveBoardModelId() {
         return liveBoardModelId;

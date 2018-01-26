@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
+import com.wq.halfbeanapp.bean.LiveBoardModel;
 import com.wq.halfbeanapp.view.BaseActivity;
 
 import java.util.ArrayList;
@@ -17,7 +19,9 @@ public class AddTopicActivity extends BaseActivity {
 
     private Button btnCommit, btnChange;
     private EditText etTopic;
+
     private List<String> colorList = new ArrayList<>();
+    private LiveBoardModel liveBoardModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class AddTopicActivity extends BaseActivity {
         etTopic = (EditText) findViewById(R.id.etTopic);
         btnCommit = (Button) findViewById(R.id.btnCommit);
         btnChange = (Button) findViewById(R.id.btnChange);
+
     }
 
     @Override
@@ -45,6 +50,7 @@ public class AddTopicActivity extends BaseActivity {
         colorList.add("#7bbfea");
         colorList.add("#008792");
         colorList.add("#78cdd1");
+
 
     }
 
