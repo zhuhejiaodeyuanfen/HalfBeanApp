@@ -66,6 +66,7 @@ public class VivianHttpUtil {
             connection.setRequestProperty("accept", "application/json");
 
             connection.setRequestProperty("connection", "Keep-Alive");
+            connection.setRequestProperty("uid","1");
             connection.setUseCaches(false);
             if (POST.equals(type))
                 connection.setDoOutput(true);

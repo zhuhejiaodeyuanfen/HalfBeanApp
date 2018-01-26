@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.bean.UserBean;
 import com.wq.halfbeanapp.constants.PermissionConstants;
+import com.wq.halfbeanapp.constants.UrlConstants;
+import com.wq.halfbeanapp.net.response.DataResponseCallback;
+import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
 import com.wq.halfbeanapp.util.AppIntentUtil;
 import com.wq.halfbeanapp.util.AppLogUtil;
 import com.wq.halfbeanapp.util.sdk.glide.GlideImageLoader;
@@ -126,7 +129,29 @@ public class MineFragment extends BaseFragment {
                 case AppIntentUtil.REQUEST_PICTURE_CUT:
                     AppLogUtil.i("收到图片裁剪成功返回码");
                     cropFile.getAbsolutePath();
-                    getBaseActivity().showToast(cropFile.getAbsolutePath());
+
+
+
+                    RoNetWorkUtil
+                            .getInstance()
+                            .get(UrlConstants.UPDATE_USER_ICON)
+                            .conParams("userIcon="+cropFile.getAbsolutePath())
+                            .execute1(new DataResponseCallback<UserBean>() {
+                                @Override
+                                public void onResponseSuccess(UserBean response) {
+                                    if(response!=null)
+                                    {
+                                        GlideImageLoader.display(mContext,ivUser,response.getUserIcon());
+                                        UserInfoUtil.saveUserInfo(mContext,response);
+                                    }
+
+                                }
+
+                                @Override
+                                public void onResponseFail(String errorString) {
+
+                                }
+                            });
 
 
                     break;

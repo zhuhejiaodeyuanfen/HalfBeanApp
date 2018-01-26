@@ -46,4 +46,10 @@ public class UrlConstants {
      */
     public static final String GET_USER_CONTENT = baseIp + "/wq/user/getUser-content";
 
+
+    /**
+     * 更新用户头像
+     */
+    public static final String UPDATE_USER_ICON = baseIp + "/wq/user/update-icon";
+
 }
