@@ -3,6 +3,9 @@ package com.wq.halfbeanapp.view;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,13 +13,18 @@ import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.adapter.CommentListAdapter;
 import com.wq.halfbeanapp.adapter.HomeDetailAdapter;
 import com.wq.halfbeanapp.bean.CommentBean;
+import com.wq.halfbeanapp.bean.CommentModelOri;
 import com.wq.halfbeanapp.bean.HomeBoardDetailModel;
 import com.wq.halfbeanapp.bean.TypeBean;
 import com.wq.halfbeanapp.constants.UrlConstants;
 import com.wq.halfbeanapp.net.response.DataListResponseCallback;
+import com.wq.halfbeanapp.net.response.DataResponseCallback;
 import com.wq.halfbeanapp.net.response.JsonTools;
+import com.wq.halfbeanapp.net.response.ResponseBean;
 import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
+import com.wq.halfbeanapp.util.user.UserInfoUtil;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class HomeDetailActivity extends BaseActivity {
@@ -26,9 +34,13 @@ public class HomeDetailActivity extends BaseActivity {
     private HomeBoardDetailModel homeBoardDetailModel;
     private ImageView ivIcon;
     private RecyclerView rvContent;
+    private Button btnSend;
+    private EditText etContent;
 
+    private CommentModelOri commentModelOri;
     private CommentListAdapter commentListAdapter;
     private HomeDetailAdapter homeDetailAdapter;
+    private CommentBean commentBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +52,19 @@ public class HomeDetailActivity extends BaseActivity {
     public void initView() {
         initTitle("话题详情");
         tvContent = (TextView) findViewById(R.id.tvContent);
+        etContent= (EditText) findViewById(R.id.etContent);
         rvComment = (RecyclerView) findViewById(R.id.rvComment);
         tvSubTitle = (TextView) findViewById(R.id.tvSubTitle);
         tvWriter = (TextView) findViewById(R.id.tvWriter);
         tvTimeDate = (TextView) findViewById(R.id.tvTimeDate);
         rvContent = (RecyclerView) findViewById(R.id.rvContent);
+        btnSend= (Button) findViewById(R.id.btnSend);
 
     }
 
     @Override
     public void initEventData() {
+        commentModelOri=new CommentModelOri();
         homeBoardDetailModel = (HomeBoardDetailModel) getIntent().getSerializableExtra("item");
         commentListAdapter = new CommentListAdapter(HomeDetailActivity.this);
         homeDetailAdapter = new HomeDetailAdapter(HomeDetailActivity.this);
@@ -62,6 +77,41 @@ public class HomeDetailActivity extends BaseActivity {
 
     @Override
     public void bindEvent() {
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                commentModelOri.setCommentContent(etContent.getText().toString());
+                commentModelOri.setCommentPostId(homeBoardDetailModel.getHomePostId());
+                commentModelOri.setCommentUserId(UserInfoUtil.getUserInfo(HomeDetailActivity.this).getUserId());
+                commentModelOri.setCommentTime(new Timestamp(System.currentTimeMillis()));
+                RoNetWorkUtil
+                        .getInstance()
+                        .get(UrlConstants.USER_ADD_COMMENT)
+                        .params(commentModelOri)
+                        .execute(new DataResponseCallback<ResponseBean>() {
+                            @Override
+                            public void onResponseSuccess(ResponseBean response) {
+                                showToast("发表成功!");
+                                commentBean=new CommentBean();
+                                commentBean.setUserComment(etContent.getText().toString());
+                                etContent.setText("");
+                                commentBean.setUserIcon(UserInfoUtil.getUserInfo(HomeDetailActivity.this).getUserIcon());
+                                commentBean.setUserName(UserInfoUtil.getUserInfo(HomeDetailActivity.this).getUserName());
+                                commentBean.setCommentTime(commentModelOri.getCommentTime());
+                              commentListAdapter.addData(commentBean);
+
+                            }
+
+                            @Override
+                            public void onResponseFail(String errorString) {
+                                showToast(errorString);
+
+                            }
+                        });
+
+            }
+        });
 
     }
 
@@ -82,7 +132,7 @@ public class HomeDetailActivity extends BaseActivity {
         RoNetWorkUtil
                 .getInstance()
                 .get(UrlConstants.GET_COMMENT_LIST)
-                .conParams("postId=1")
+                .conParams("postId="+homeBoardDetailModel.getHomePostId())
                 .execute1(new DataListResponseCallback<CommentBean>() {
                     @Override
                     public void onResponseSuccess(List<CommentBean> response) {

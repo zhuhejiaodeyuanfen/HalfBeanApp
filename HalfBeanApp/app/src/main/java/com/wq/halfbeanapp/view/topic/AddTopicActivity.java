@@ -5,12 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.bean.LiveBoardModel;
+import com.wq.halfbeanapp.bean.LivePhotoDetailModel;
+import com.wq.halfbeanapp.constants.UrlConstants;
+import com.wq.halfbeanapp.net.response.DataResponseCallback;
+import com.wq.halfbeanapp.net.response.ResponseBean;
+import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
+import com.wq.halfbeanapp.util.user.UserInfoUtil;
 import com.wq.halfbeanapp.view.BaseActivity;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,6 +28,7 @@ public class AddTopicActivity extends BaseActivity {
 
     private List<String> colorList = new ArrayList<>();
     private LiveBoardModel liveBoardModel;
+    private LivePhotoDetailModel livePhotoDetailModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,7 @@ public class AddTopicActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        initTitle("Start A Live");
         etTopic = (EditText) findViewById(R.id.etTopic);
         btnCommit = (Button) findViewById(R.id.btnCommit);
         btnChange = (Button) findViewById(R.id.btnChange);
@@ -39,6 +47,7 @@ public class AddTopicActivity extends BaseActivity {
 
     @Override
     public void initEventData() {
+        liveBoardModel = (LiveBoardModel) getIntent().getSerializableExtra("data");
         colorList.add("#c63c26");
         colorList.add("#f3715c");
         colorList.add("#cd9a5b");
@@ -63,6 +72,39 @@ public class AddTopicActivity extends BaseActivity {
                 etTopic.setBackgroundColor(Color.parseColor(colorList.get(new Random().nextInt(colorList.size()))));
 
 
+            }
+        });
+        btnCommit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                livePhotoDetailModel = new LivePhotoDetailModel();
+                livePhotoDetailModel.setPostAdmin(UserInfoUtil.getUserInfo(AddTopicActivity.this).getUserId() + "");
+                livePhotoDetailModel.setPostBackColor("#DDF0ED");
+                livePhotoDetailModel.setPostCreateTime(new Timestamp(System.currentTimeMillis()));
+                livePhotoDetailModel.setPostContent(etTopic.getText().toString());
+                livePhotoDetailModel.setPostParentId(liveBoardModel.getLiveBoardModelId() + "");
+                livePhotoDetailModel.setPostSonId("1");
+                RoNetWorkUtil
+                        .getInstance()
+                        .get(UrlConstants.USER_ADD_LIVE)
+                        .params(livePhotoDetailModel)
+                        .execute(new DataResponseCallback<ResponseBean>() {
+                            @Override
+                            public void onResponseSuccess(ResponseBean response) {
+
+                                showToast("发表成功");
+
+
+                            }
+
+                            @Override
+                            public void onResponseFail(String errorString) {
+
+                                cancelProgressDialog();
+                                showToast(errorString);
+
+                            }
+                        });
             }
         });
 

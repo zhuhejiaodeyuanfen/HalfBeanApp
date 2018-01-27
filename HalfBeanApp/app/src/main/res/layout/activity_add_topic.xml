@@ -7,29 +7,34 @@
     android:orientation="vertical"
     tools:context="com.wq.halfbeanapp.view.topic.AddTopicActivity">
 
+    <include layout="@layout/widget_title_bar_layout" />
+
     <EditText
         android:id="@+id/etTopic"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp" />
+        android:background="#ffc"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnChange"
-            android:text="更换背景"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="更换背景" />
 
         <Button
             android:id="@+id/btnCommit"
-            android:layout_alignParentRight="true"
-            android:text="提交"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="提交" />
     </RelativeLayout>
 
 </LinearLayout>

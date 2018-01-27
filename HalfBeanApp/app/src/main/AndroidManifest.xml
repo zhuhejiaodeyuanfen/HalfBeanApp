@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,22 +13,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".view.LoginActivity" />
-        <activity android:name=".view.HomeActivity" />
-        <activity android:name=".view.topic.TopicCardActivity" />
-        <activity android:name=".view.topic.AddTopicActivity" />
-        <activity android:name=".view.HomeDetailActivity" />
-        <activity android:name=".view.StartPagerActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.HomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.topic.TopicCardActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.topic.AddTopicActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.HomeDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.StartPagerActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.RegisterActivity" />
-        <activity android:name=".view.HomeAddTopicActivity" />
-        <activity android:name=".view.PhotoSelectActivity"></activity>
+        <activity android:name=".view.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.HomeAddTopicActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.PhotoSelectActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -38,6 +49,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <activity android:name=".view.topic.BeanAddTopicActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

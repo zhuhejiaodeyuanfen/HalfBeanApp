@@ -1,18 +1,21 @@
 package com.wq.halfbeanapp.view.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.adapter.HotTopicLiveAdapter;
 import com.wq.halfbeanapp.adapter.MyItemClickListener;
 import com.wq.halfbeanapp.bean.LiveBoardModel;
-import com.wq.halfbeanapp.constants.UrlConstants;
-import com.wq.halfbeanapp.net.response.DataListResponseCallback;
-import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
+import com.wq.halfbeanapp.view.iview.IHotTopicFragment;
+import com.wq.halfbeanapp.view.presenter.HotTopicPresenter;
+import com.wq.halfbeanapp.view.topic.BeanAddTopicActivity;
 import com.wq.halfbeanapp.view.topic.TopicCardActivity;
+import com.wq.halfbeanapp.widget.SwipeRefreshView;
 
 import java.util.List;
 
@@ -22,9 +25,12 @@ import java.util.List;
  * desc:
  * Version: 1.0
  */
-public class HotTopicFragment extends BaseFragment {
+public class HotTopicFragment extends BaseFragment implements IHotTopicFragment {
     private RecyclerView rvHotList;
     private HotTopicLiveAdapter hotTopicLiveAdapter;
+    private TextView tvAddLive;
+    private SwipeRefreshView refreshView;
+    private HotTopicPresenter hotTopicPresenter;
 
 
     @Override
@@ -35,6 +41,8 @@ public class HotTopicFragment extends BaseFragment {
     @Override
     public void initView() {
         rvHotList = (RecyclerView) mContentView.findViewById(R.id.rvHotList);
+        tvAddLive = (TextView) mContentView.findViewById(R.id.tvAddLive);
+        refreshView = (SwipeRefreshView) mContentView.findViewById(R.id.refreshView);
 
     }
 
@@ -59,29 +67,40 @@ public class HotTopicFragment extends BaseFragment {
 
     @Override
     public void bindEvent() {
+        tvAddLive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBaseActivity().launcher(mContext, BeanAddTopicActivity.class);
+
+            }
+        });
+
+        refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                hotTopicPresenter.getLivePage(true);
+
+            }
+        });
 
     }
 
     @Override
     public void loadData() {
 
-        RoNetWorkUtil
-                .getInstance()
-                .get(UrlConstants.getAllHotList)
-                .params("")
-                .execute(new DataListResponseCallback<LiveBoardModel>() {
-                    @Override
-                    public void onResponseSuccess(List<LiveBoardModel> response) {
-                        if (response != null && response.size() > 0)
-                            hotTopicLiveAdapter.addData(response);
 
-                    }
+        hotTopicPresenter = new HotTopicPresenter(this);
+        hotTopicPresenter.getLivePage(true);
 
-                    @Override
-                    public void onResponseFail(String errorString) {
 
-                    }
-                });
+    }
+
+    @Override
+    public void showAllHot(List<LiveBoardModel> liveBoardModels) {
+        refreshView.setRefreshing(false);
+        hotTopicLiveAdapter.clear();
+        hotTopicLiveAdapter.addData(liveBoardModels);
 
     }
 }

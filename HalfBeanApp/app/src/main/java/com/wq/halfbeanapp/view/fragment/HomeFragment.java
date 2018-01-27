@@ -34,6 +34,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initView() {
+
         rvHomeList = (RecyclerView) mContentView.findViewById(R.id.rvHomeList);
 
     }

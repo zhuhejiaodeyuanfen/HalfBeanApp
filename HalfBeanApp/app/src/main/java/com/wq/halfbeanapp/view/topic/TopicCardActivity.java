@@ -143,7 +143,9 @@ public class TopicCardActivity extends BaseActivity {
         btnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launcher(TopicCardActivity.this, AddTopicActivity.class);
+                Bundle args = new Bundle();
+                args.putSerializable("data", liveBoardModel);
+                launcher(TopicCardActivity.this, AddTopicActivity.class, args);
 
             }
         });
@@ -154,7 +156,7 @@ public class TopicCardActivity extends BaseActivity {
     public void loadData() {
 
         HashMap<String, String> map = new HashMap<>();
-        map.put("id", "1");
+        map.put("id", liveBoardModel.getLiveBoardModelId()+"");
         RoNetWorkUtil
                 .getInstance()
                 .get(UrlConstants.QUERY_HOT_List)

@@ -7,8 +7,7 @@
     android:orientation="vertical"
     tools:context="com.wq.halfbeanapp.view.HomeDetailActivity">
 
-    <include
-        layout="@layout/widget_title_bar_layout"/>
+    <include layout="@layout/widget_title_bar_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,62 +18,60 @@
         <TextView
             android:id="@+id/tvSubTitle"
             android:layout_width="match_parent"
-            android:textSize="18sp"
             android:layout_height="wrap_content"
-            android:text="让我告诉你让我告诉你让我告诉你让我告诉你让我告诉你让我告诉你让我告诉你" />
+            android:text="让我告诉你让我告诉你让我告诉你让我告诉你让我告诉你让我告诉你让我告诉你"
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/ivIcon"
-            android:layout_marginTop="20dp"
-            android:layout_below="@id/tvTitle"
-            android:src="@mipmap/ic_launcher"
             android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:layout_below="@id/tvSubTitle"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/ic_launcher" />
 
 
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/ivIcon"
+            android:layout_alignTop="@id/ivIcon"
             android:layout_below="@id/tvTitle"
             android:layout_marginLeft="10dp"
-            android:layout_alignBottom="@id/ivIcon"
             android:layout_toRightOf="@id/ivIcon"
-            android:layout_alignTop="@id/ivIcon"
             android:gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
-        <TextView
+            <TextView
 
 
+                android:id="@+id/tvWriter"
 
-            android:text="苏苏小沫"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="苏苏小沫" />
 
-            android:id="@+id/tvWriter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:text="13小时前"
-            android:id="@+id/tvTimeDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tvTimeDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="13小时前" />
         </LinearLayout>
 
 
         <TextView
-            android:layout_below="@id/ivIcon"
             android:id="@+id/tvContent"
-            android:visibility="gone"
             android:layout_width="0dp"
-            android:text="a3r4353534534534"
             android:layout_height="0dp"
-           />
+            android:layout_below="@id/ivIcon"
+            android:text="a3r4353534534534"
+            android:visibility="gone" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvContent"
-            android:layout_below="@id/ivIcon"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="250dp"
+            android:layout_below="@id/ivIcon" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -82,4 +79,21 @@
         android:layout_width="match_parent"
         android:layout_height="250dp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etContent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发送" />
+    </LinearLayout>
 </LinearLayout>

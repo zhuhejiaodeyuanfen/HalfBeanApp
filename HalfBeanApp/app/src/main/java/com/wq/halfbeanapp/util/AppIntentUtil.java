@@ -102,6 +102,24 @@ public class AppIntentUtil {
         fragment.startActivityForResult(intent, REQUEST_PICTURE_CUT);
     }
 
+    public static void cropPhoto(Activity fragment, File file, Uri imageUri) {
+        Uri outputUri = Uri.fromFile(file);//缩略图保存地址
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        intent.setDataAndType(imageUri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("scale", true);
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true);
+        fragment.startActivityForResult(intent, REQUEST_PICTURE_CUT);
+    }
+
 
     /**
      * 7.0以下获取图片地址的方法
@@ -164,6 +182,38 @@ public class AppIntentUtil {
         return file;
     }
 
+    public static File handleImage(Intent data, Activity fragment) {
+        String imagePath = null;
+        File file;
+        Uri imageUri = data.getData();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (DocumentsContract.isDocumentUri(fragment, imageUri)) {
+                //如果是document类型的uri,则通过document id处理
+                String docId = DocumentsContract.getDocumentId(imageUri);
+                if ("com.android.providers.media.documents".equals(imageUri.getAuthority())) {
+                    String id = docId.split(":")[1];//解析出数字格式的id
+                    String selection = MediaStore.Images.Media._ID + "=" + id;
+                    imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection, fragment);
+                } else if ("com.android.downloads.documents".equals(imageUri.getAuthority())) {
+                    Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
+                    imagePath = getImagePath(contentUri, null, fragment);
+                }
+            } else if ("content".equalsIgnoreCase(imageUri.getScheme())) {
+                //如果是content类型的Uri，则使用普通方式处理
+                imagePath = getImagePath(imageUri, null, fragment);
+            } else if ("file".equalsIgnoreCase(imageUri.getScheme())) {
+                //如果是file类型的Uri,直接获取图片路径即可
+                imagePath = imageUri.getPath();
+            }
+
+        } else {
+            imagePath = getImagePath(imageUri, null, fragment);
+        }
+        file = new File(imagePath);
+        cropPhoto(fragment, file, imageUri);
+        return file;
+    }
+
 
     /**
      * 调用系统相册命令 从相册选择图片
@@ -171,6 +221,12 @@ public class AppIntentUtil {
      * @param fragment
      */
     public static void selectFromAlbum(Fragment fragment) {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        fragment.startActivityForResult(intent, REQUEST_PICK_IMAGE);
+    }
+
+    public static void selectFromAlbum(Activity fragment) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         fragment.startActivityForResult(intent, REQUEST_PICK_IMAGE);

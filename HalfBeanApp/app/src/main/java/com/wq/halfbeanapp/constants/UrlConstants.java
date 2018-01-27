@@ -8,7 +8,8 @@ package com.wq.halfbeanapp.constants;
  */
 public class UrlConstants {
 
-    public static final String baseIp = "http://192.168.10.65:8080";
+    //    public static final String baseIp = "http://192.168.10.65:8080";
+    public static final String baseIp = "http://192.168.1.9:8080";
 
     /**
      * 获取所有动态列表
@@ -51,5 +52,21 @@ public class UrlConstants {
      * 更新用户头像
      */
     public static final String UPDATE_USER_ICON = baseIp + "/wq/user/update-icon";
+
+    /**
+     * 用户添加一条最新的live动态
+     */
+    public static final String USER_ADD_LIVE = baseIp + "/wq/live/addLivePost";
+
+
+    /**
+     * 用户增加一个live话题
+     */
+    public static final String USER_ADD_TOPIC_LIVE = baseIp + "/wq/live/addTopicLive";
+
+    /**
+     * 用户添加评论
+     */
+    public static final String USER_ADD_COMMENT = baseIp + "/wq/comment/addComment";
 
 }

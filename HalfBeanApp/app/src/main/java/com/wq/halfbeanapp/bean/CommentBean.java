@@ -1,5 +1,7 @@
 package com.wq.halfbeanapp.bean;
 
+import java.sql.Timestamp;
+
 /**
  * Created by vivianWQ on 2018/1/24
  * Mail: wangqi_vivian@sina.com
@@ -11,6 +13,16 @@ public class CommentBean {
     private String userComment;
     private String userIcon;
     private String userName;
+
+    public Timestamp getCommentTime() {
+        return commentTime;
+    }
+
+    public void setCommentTime(Timestamp commentTime) {
+        this.commentTime = commentTime;
+    }
+
+    private Timestamp commentTime;
 
     public int getCommentId() {
         return commentId;
