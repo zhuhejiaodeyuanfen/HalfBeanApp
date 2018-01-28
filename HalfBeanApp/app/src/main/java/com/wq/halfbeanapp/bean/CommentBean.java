@@ -14,6 +14,16 @@ public class CommentBean {
     private String userIcon;
     private String userName;
 
+    public Timestamp getSysCurrentTime() {
+        return sysCurrentTime;
+    }
+
+    public void setSysCurrentTime(Timestamp sysCurrentTime) {
+        this.sysCurrentTime = sysCurrentTime;
+    }
+
+    private Timestamp sysCurrentTime;
+
     public Timestamp getCommentTime() {
         return commentTime;
     }

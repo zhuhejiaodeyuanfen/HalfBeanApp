@@ -25,7 +25,7 @@ import java.util.List;
  * desc:
  * Version: 1.0
  */
-public class HotTopicFragment extends BaseFragment implements IHotTopicFragment {
+public class HomeLiveFragment extends BaseFragment implements IHotTopicFragment {
     private RecyclerView rvHotList;
     private HotTopicLiveAdapter hotTopicLiveAdapter;
     private TextView tvAddLive;

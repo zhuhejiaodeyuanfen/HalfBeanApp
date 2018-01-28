@@ -1,20 +1,11 @@
 package com.wq.halfbeanapp.view.fragment;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
-import com.wq.halfbeanapp.adapter.HomeLiveAdapter;
-import com.wq.halfbeanapp.adapter.MyItemClickListener;
-import com.wq.halfbeanapp.bean.HomeBoardDetailModel;
-import com.wq.halfbeanapp.constants.UrlConstants;
-import com.wq.halfbeanapp.net.response.DataListResponseCallback;
-import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
-import com.wq.halfbeanapp.view.HomeDetailActivity;
-
-import java.util.List;
 
 /**
  * Created by vivianWQ on 2017/12/7
@@ -23,9 +14,12 @@ import java.util.List;
  * Version: 1.0
  */
 public class HomeFragment extends BaseFragment {
-    private RecyclerView rvHomeList;
-    private HomeLiveAdapter homeLiveAdapter;
+    private TextView tvRight, tvLeft;
+    private int index=-1;
+    private HomeTopicFragment homeTopicFragment;
+    private HomeLiveFragment halfBeanFragment;
 
+    private FragmentManager fragmentManager;
 
     @Override
     public int onSetLayoutId() {
@@ -35,29 +29,30 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void initView() {
 
-        rvHomeList = (RecyclerView) mContentView.findViewById(R.id.rvHomeList);
+        tvRight = (TextView) mContentView.findViewById(R.id.tvRight);
+        tvLeft = (TextView) mContentView.findViewById(R.id.tvLeft);
 
     }
 
     @Override
     public void initEventData() {
-        homeLiveAdapter = new HomeLiveAdapter(mContext);
-        rvHomeList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        rvHomeList.setAdapter(homeLiveAdapter);
 
+        fragmentManager = getChildFragmentManager();
+        setTabSelection(0);
     }
 
     @Override
     public void bindEvent() {
-
-        homeLiveAdapter.setOnItemClickListener(new MyItemClickListener() {
+        tvLeft.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                //adapter数据点击事件
-                HomeBoardDetailModel item = homeLiveAdapter.getItem(position);
-                Bundle args = new Bundle();
-                args.putSerializable("item", item);
-                getBaseActivity().launcher(mContext, HomeDetailActivity.class, args);
+            public void onClick(View v) {
+                setTabSelection(0);
+            }
+        });
+        tvRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTabSelection(1);
             }
         });
 
@@ -67,23 +62,54 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void loadData() {
 
-        RoNetWorkUtil
-                .getInstance()
-                .get(UrlConstants.GET_HOME_LIST)
-                .params("")
-                .execute(new DataListResponseCallback<HomeBoardDetailModel>() {
-                    @Override
-                    public void onResponseSuccess(List<HomeBoardDetailModel> response) {
-                        if (response != null && response.size() > 0)
-                            homeLiveAdapter.addData(response);
 
-                    }
+    }
 
-                    @Override
-                    public void onResponseFail(String errorString) {
+    /**
+     * 将所有Fragment都置为隐藏状态
+     *
+     * @param transaction 用于对Fragment执行操作的事务
+     */
+    private void hideFragments(FragmentTransaction transaction) {
+        if (homeTopicFragment != null) {
+            transaction.hide(homeTopicFragment);
+        }
+        if (halfBeanFragment != null) {
+            transaction.hide(halfBeanFragment);
+        }
 
-                    }
-                });
+    }
+
+    public void setTabSelection(int index) {
+        if (this.index == index) {
+            return;
+        }
+        this.index = index;
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        hideFragments(transaction);
+        switch (index) {
+            case 0:
+                //需要实时刷新
+                if (homeTopicFragment == null) {
+                    homeTopicFragment = new HomeTopicFragment();
+                    transaction.add(R.id.viewHome, homeTopicFragment);
+                } else {
+                    transaction.show(homeTopicFragment);
+                }
+                break;
+
+            case 1:
+                if (halfBeanFragment == null) {
+                    halfBeanFragment = new HomeLiveFragment();
+                    transaction.add(R.id.viewHome, halfBeanFragment);
+                } else {
+                    transaction.show(halfBeanFragment);
+                }
+                break;
+
+
+        }
+        transaction.commitAllowingStateLoss();
 
     }
 }

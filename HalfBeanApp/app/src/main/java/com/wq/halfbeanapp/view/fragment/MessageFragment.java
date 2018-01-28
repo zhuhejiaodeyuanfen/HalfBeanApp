@@ -8,7 +8,7 @@ import com.wq.halfbeanapp.R;
  * desc:
  * Version: 1.0
  */
-public class HalfBeanFragment extends BaseFragment {
+public class MessageFragment extends BaseFragment {
     @Override
     public void initEventData() {
 

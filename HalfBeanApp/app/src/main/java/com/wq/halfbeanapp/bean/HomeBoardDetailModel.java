@@ -19,6 +19,28 @@ public class HomeBoardDetailModel implements Serializable {
     private int postCommentCount;//帖子的评论数
     private int rePostCount;//帖子的转发数
 
+
+
+    public String getPostAdminIcon() {
+        return postAdminIcon;
+    }
+
+    public void setPostAdminIcon(String postAdminIcon) {
+        this.postAdminIcon = postAdminIcon;
+    }
+
+    private String postAdminIcon;
+
+    public Timestamp getSysCurrentTime() {
+        return sysCurrentTime;
+    }
+
+    public void setSysCurrentTime(Timestamp sysCurrentTime) {
+        this.sysCurrentTime = sysCurrentTime;
+    }
+
+    private Timestamp sysCurrentTime;//服务器当前时间
+
     public int getHomePostId() {
         return homePostId;
     }

@@ -22,10 +22,18 @@ import com.wq.halfbeanapp.net.response.DataResponseCallback;
 import com.wq.halfbeanapp.net.response.JsonTools;
 import com.wq.halfbeanapp.net.response.ResponseBean;
 import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
+import com.wq.halfbeanapp.util.AppDateUtil;
+import com.wq.halfbeanapp.util.sdk.glide.GlideImageLoader;
 import com.wq.halfbeanapp.util.user.UserInfoUtil;
+import com.wq.halfbeanapp.widget.dialog.PageSelectDialog;
 
 import java.sql.Timestamp;
 import java.util.List;
+
+/**
+ * 页码器展示规则 commentNum>20展示页码器
+ * <20不需要展示
+ */
 
 public class HomeDetailActivity extends BaseActivity {
 
@@ -41,6 +49,8 @@ public class HomeDetailActivity extends BaseActivity {
     private CommentListAdapter commentListAdapter;
     private HomeDetailAdapter homeDetailAdapter;
     private CommentBean commentBean;
+    private TextView btnSelectPage;
+    private PageSelectDialog pageSelectDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,26 +62,70 @@ public class HomeDetailActivity extends BaseActivity {
     public void initView() {
         initTitle("话题详情");
         tvContent = (TextView) findViewById(R.id.tvContent);
-        etContent= (EditText) findViewById(R.id.etContent);
+        etContent = (EditText) findViewById(R.id.etContent);
         rvComment = (RecyclerView) findViewById(R.id.rvComment);
         tvSubTitle = (TextView) findViewById(R.id.tvSubTitle);
         tvWriter = (TextView) findViewById(R.id.tvWriter);
         tvTimeDate = (TextView) findViewById(R.id.tvTimeDate);
         rvContent = (RecyclerView) findViewById(R.id.rvContent);
-        btnSend= (Button) findViewById(R.id.btnSend);
+        btnSend = (Button) findViewById(R.id.btnSend);
+        btnSelectPage = (TextView) findViewById(R.id.btnSelectPage);
+        ivIcon = (ImageView) findViewById(R.id.ivIcon);
+
 
     }
 
     @Override
     public void initEventData() {
-        commentModelOri=new CommentModelOri();
+        commentModelOri = new CommentModelOri();
         homeBoardDetailModel = (HomeBoardDetailModel) getIntent().getSerializableExtra("item");
+        if (homeBoardDetailModel != null) {
+            GlideImageLoader.display(HomeDetailActivity.this, ivIcon, homeBoardDetailModel.getPostAdminIcon());
+            tvTimeDate.setText(AppDateUtil.getCompareShowString(homeBoardDetailModel.getSysCurrentTime().getTime(), homeBoardDetailModel.getPostCreateTime().getTime()));
+        }
         commentListAdapter = new CommentListAdapter(HomeDetailActivity.this);
         homeDetailAdapter = new HomeDetailAdapter(HomeDetailActivity.this);
-        rvContent.setLayoutManager(new LinearLayoutManager(HomeDetailActivity.this, LinearLayoutManager.VERTICAL, false));
+        rvContent.setLayoutManager(new LinearLayoutManager(HomeDetailActivity.this, LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         rvContent.setAdapter(homeDetailAdapter);
-        rvComment.setLayoutManager(new LinearLayoutManager(HomeDetailActivity.this, LinearLayoutManager.VERTICAL, false));
+        rvComment.setLayoutManager(new LinearLayoutManager(HomeDetailActivity.this, LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         rvComment.setAdapter(commentListAdapter);
+        if (homeBoardDetailModel.getPostCommentCount() > 20) {
+            //超过20条,需要展示
+            btnSelectPage.setVisibility(View.VISIBLE);
+            int page = homeBoardDetailModel.getPostCommentCount() / 20;
+
+
+            int pageMod = homeBoardDetailModel.getPostCommentCount() % 20;
+            if (pageMod > 0) {
+                page = page + 1;
+
+            }
+            btnSelectPage.setText("1/" + page);
+        } else {
+            btnSelectPage.setVisibility(View.GONE);
+        }
+
+        pageSelectDialog = new PageSelectDialog
+                .Builder(HomeDetailActivity.this)
+                .initCommentCount(homeBoardDetailModel.getPostCommentCount())
+                .create();
+        pageSelectDialog.setiDialog(new PageSelectDialog.IDialog() {
+            @Override
+            public void selectPage(int page) {
+                showToast("选择了第几页" + page);
+                getPageData(page);
+            }
+        });
 
     }
 
@@ -93,13 +147,13 @@ public class HomeDetailActivity extends BaseActivity {
                             @Override
                             public void onResponseSuccess(ResponseBean response) {
                                 showToast("发表成功!");
-                                commentBean=new CommentBean();
+                                commentBean = new CommentBean();
                                 commentBean.setUserComment(etContent.getText().toString());
                                 etContent.setText("");
                                 commentBean.setUserIcon(UserInfoUtil.getUserInfo(HomeDetailActivity.this).getUserIcon());
                                 commentBean.setUserName(UserInfoUtil.getUserInfo(HomeDetailActivity.this).getUserName());
                                 commentBean.setCommentTime(commentModelOri.getCommentTime());
-                              commentListAdapter.addData(commentBean);
+                                commentListAdapter.addData(commentBean);
 
                             }
 
@@ -112,6 +166,12 @@ public class HomeDetailActivity extends BaseActivity {
 
             }
         });
+        btnSelectPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pageSelectDialog.show();
+            }
+        });
 
     }
 
@@ -121,7 +181,6 @@ public class HomeDetailActivity extends BaseActivity {
 //            tvContent.setText(homeBoardDetailModel.getPostContent());
             tvSubTitle.setText(homeBoardDetailModel.getPostTitle());
             tvWriter.setText(homeBoardDetailModel.getPostAdmin());
-            tvTimeDate.setText(homeBoardDetailModel.getPostCreateTime().toString());
             List<TypeBean> beanList = JsonTools.getBeanList(homeBoardDetailModel.getPostContent(), TypeBean.class);
             if (beanList != null && beanList.size() > 0) {
                 homeDetailAdapter.addData(beanList);
@@ -129,15 +188,23 @@ public class HomeDetailActivity extends BaseActivity {
 
         }
 
+        getPageData(1);
+
+    }
+
+    public void getPageData(int page) {
+
+
         RoNetWorkUtil
                 .getInstance()
                 .get(UrlConstants.GET_COMMENT_LIST)
-                .conParams("postId="+homeBoardDetailModel.getHomePostId())
+                .conParams("postId=" + homeBoardDetailModel.getHomePostId() + "&&page=" + page)
                 .execute1(new DataListResponseCallback<CommentBean>() {
                     @Override
                     public void onResponseSuccess(List<CommentBean> response) {
-                        if (response != null && response.size() > 0)
-                            commentListAdapter.addData(response);
+                        if (response != null && response.size() > 0) {
+                            commentListAdapter.setDatas(response);
+                        }
 
                     }
 
@@ -146,6 +213,5 @@ public class HomeDetailActivity extends BaseActivity {
 
                     }
                 });
-
     }
 }

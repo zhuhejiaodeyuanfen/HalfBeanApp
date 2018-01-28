@@ -29,30 +29,24 @@
             android:gravity="center"
             android:text="首页" />
 
+
         <TextView
             android:id="@+id/tvBean"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="半豆" />
+            android:text="消息" />
 
-        <TextView
-            android:id="@+id/tvAddTopic"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="发表" />
 
         <TextView
             android:id="@+id/tvTopic"
-
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="豆聊" />
+            android:text="动态" />
+
 
         <TextView
             android:id="@+id/tvMine"

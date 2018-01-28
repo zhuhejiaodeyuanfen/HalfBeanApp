@@ -9,7 +9,13 @@ import com.wq.halfbeanapp.bean.HomeBoardDetailModel;
 /**
  * Created by vivianWQ on 2018/1/19
  * Mail: wangqi_vivian@sina.com
- * desc:
+ * desc: 时间显示原则
+ * 小于1分钟   刚刚
+ * 小于1小时--小于1小时   xx分钟前
+ * 小于24小时---大于1小时  xx小时前
+ * 大于1天---3天  x天前
+ * 大于3天   当年  xx月x日
+ * 大于3天 非当年 xx年xx月x日
  * Version: 1.0
  */
 public class HomeLiveAdapter extends BaseRecyclerViewAdapter<HomeBoardDetailModel> {
@@ -27,6 +33,7 @@ public class HomeLiveAdapter extends BaseRecyclerViewAdapter<HomeBoardDetailMode
         TextView tvCount = (TextView) holder.getView(R.id.tvCount, false);
         tvCount.setText(item.getPostCommentCount() + "");
         holder.getView(R.id.baseItem, true);
+
 
 
     }

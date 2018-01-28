@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
-import com.wq.halfbeanapp.view.fragment.HalfBeanFragment;
+import com.wq.halfbeanapp.view.fragment.MessageFragment;
 import com.wq.halfbeanapp.view.fragment.HomeFragment;
-import com.wq.halfbeanapp.view.fragment.HotTopicFragment;
+import com.wq.halfbeanapp.view.fragment.HomeLiveFragment;
 import com.wq.halfbeanapp.view.fragment.MineFragment;
 
 public class HomeActivity extends BaseActivity {
@@ -17,12 +17,12 @@ public class HomeActivity extends BaseActivity {
     private FragmentManager fm;
     private FragmentTransaction transaction;
     private HomeFragment homeFragment;
-    private HalfBeanFragment halfBeanFragment;
-    private HotTopicFragment hotTopicFragment;
+    private MessageFragment messageFragment;
+    private HomeLiveFragment homeLiveFragment;
     private MineFragment mineFragment;
     private FragmentManager fragmentManager;
     private int index = -1;
-    private TextView tvHome, tvBean, tvTopic, tvMine, tvAddTopic;
+    private TextView tvHome, tvBean, tvTopic, tvMine;
 
 
     @Override
@@ -37,7 +37,7 @@ public class HomeActivity extends BaseActivity {
         tvBean = (TextView) findViewById(R.id.tvBean);
         tvTopic = (TextView) findViewById(R.id.tvTopic);
         tvMine = (TextView) findViewById(R.id.tvMine);
-        tvAddTopic = (TextView) findViewById(R.id.tvAddTopic);
+//        tvAddTopic = (TextView) findViewById(R.id.tvAddTopic);
 
     }
 
@@ -74,12 +74,12 @@ public class HomeActivity extends BaseActivity {
                 setTabSelection(3);
             }
         });
-        tvAddTopic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launcher(HomeActivity.this, HomeAddTopicActivity.class);
-            }
-        });
+//        tvAddTopic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                launcher(HomeActivity.this, HomeAddTopicActivity.class);
+//            }
+//        });
 
     }
 
@@ -110,21 +110,21 @@ public class HomeActivity extends BaseActivity {
                 break;
 
             case 1:
-                if (halfBeanFragment == null) {
-                    halfBeanFragment = new HalfBeanFragment();
-                    transaction.add(R.id.id_content, halfBeanFragment);
+                if (messageFragment == null) {
+                    messageFragment = new MessageFragment();
+                    transaction.add(R.id.id_content, messageFragment);
                 } else {
-                    transaction.show(halfBeanFragment);
+                    transaction.show(messageFragment);
                 }
                 break;
 
 
             case 2:
-                if (hotTopicFragment == null) {
-                    hotTopicFragment = new HotTopicFragment();
-                    transaction.add(R.id.id_content, hotTopicFragment);
+                if (homeLiveFragment == null) {
+                    homeLiveFragment = new HomeLiveFragment();
+                    transaction.add(R.id.id_content, homeLiveFragment);
                 } else {
-                    transaction.show(hotTopicFragment);
+                    transaction.show(homeLiveFragment);
                 }
 
                 break;
@@ -152,11 +152,11 @@ public class HomeActivity extends BaseActivity {
         if (homeFragment != null) {
             transaction.hide(homeFragment);
         }
-        if (halfBeanFragment != null) {
-            transaction.hide(halfBeanFragment);
+        if (messageFragment != null) {
+            transaction.hide(messageFragment);
         }
-        if (hotTopicFragment != null) {
-            transaction.hide(hotTopicFragment);
+        if (homeLiveFragment != null) {
+            transaction.hide(homeLiveFragment);
         }
         if (mineFragment != null)
             transaction.hide(mineFragment);
