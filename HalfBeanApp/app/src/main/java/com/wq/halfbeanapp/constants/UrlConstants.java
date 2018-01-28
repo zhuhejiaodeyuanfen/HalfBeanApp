@@ -69,4 +69,9 @@ public class UrlConstants {
      */
     public static final String USER_ADD_COMMENT = baseIp + "/wq/comment/addComment";
 
+    /**
+     * 获取用户消息列表
+     */
+    public static final String GET_MSG_LIST = baseIp + "/wq/msg/getMsgList";
+
 }

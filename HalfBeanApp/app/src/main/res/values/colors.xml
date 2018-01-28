@@ -9,5 +9,5 @@
     <color name="transparent">#00000000</color> <!-- 半透明 -->
     <color name="baseThemeColor">#3F51B5</color>
 
-    <color name="dividerColor">#F3F3F3</color>
+    <color name="dividerColor">#F4F4F4</color>
 </resources>

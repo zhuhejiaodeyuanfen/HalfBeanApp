@@ -9,13 +9,15 @@
 
     <include layout="@layout/widget_title_bar_layout" />
 
+
     <RelativeLayout
 
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <com.wq.halfbeanapp.widget.SwipeRefreshView
+        <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -117,7 +119,7 @@
                 </LinearLayout>
 
             </android.support.v4.widget.NestedScrollView>
-        </com.wq.halfbeanapp.widget.SwipeRefreshView>
+        </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 
         <TextView
             android:id="@+id/btnSelectPage"
@@ -128,30 +130,52 @@
 
             android:layout_marginRight="10dp"
             android:background="@drawable/bad_tag_button"
-            android:textSize="10sp"
-            android:paddingLeft="7dp"
-            android:paddingTop="10dp"
             android:paddingBottom="10dp"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:paddingTop="10dp"
             android:text="/"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="10sp" />
     </RelativeLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/dividerColor"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/etContent"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:maxLines="3"
 
-        <Button
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/white_chat_corner_button"
+            android:gravity="center_vertical"
+            android:singleLine="false"
+
+            android:paddingBottom="5dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
             android:id="@+id/btnSend"
+            android:layout_gravity="center_vertical"
+            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="发送" />
+            android:text="发送"
+            android:gravity="center_vertical"
+            android:textColor="@color/baseThemeColor" />
     </LinearLayout>
 </LinearLayout>
