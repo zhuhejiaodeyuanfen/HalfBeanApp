@@ -3,7 +3,6 @@ package com.wq.halfbeanapp.util.network;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -199,16 +198,26 @@ public class HttpUtil {
             protected Response<String> parseNetworkResponse(
                     NetworkResponse response) {
 
-                try {//jsonObject要和前面的类型一致,此处都是String
-                    String jsonObject = new String(new String(response.data, "UTF-8"));
-                    AppLogUtil.i("发生了错误1");
-                    return Response.success(jsonObject, HttpHeaderParser.parseCacheHeaders(response));
+//                try {//jsonObject要和前面的类型一致,此处都是String
+//                    String jsonObject = new String(new String(response.data, "UTF-8"));
+//                    AppLogUtil.i("发生了错误1");
+//                    return Response.success(jsonObject, HttpHeaderParser.parseCacheHeaders(response));
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                    AppLogUtil.i("发生了错误2"+e.getMessage());
+//                    return Response.error(new ParseError(e));
+//                }
+                String str = null;
+                try {
+                    str = new String(response.data,"utf-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
-                    AppLogUtil.i("发生了错误2"+e.getMessage());
-                    return Response.error(new ParseError(e));
                 }
+                return Response.success(str, HttpHeaderParser.parseCacheHeaders(response));
+
             }
+
+
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
