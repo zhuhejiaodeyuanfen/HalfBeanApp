@@ -8,7 +8,7 @@ package com.wq.halfbeanapp.constants;
  */
 public class UrlConstants {
 
-        public static final String baseIp = "http://192.168.10.65:8080";
+    public static final String baseIp = "http://192.168.10.65:8080";
 //    public static final String baseIp = "http://192.168.1.9:8080";
 
     /**
@@ -73,5 +73,10 @@ public class UrlConstants {
      * 获取用户消息列表
      */
     public static final String GET_MSG_LIST = baseIp + "/wq/msg/getMsgList";
+
+    /**
+     * 根据id查找指定的消息列表
+     */
+    public static final String GET_MSG_FROM_LIST = baseIp + "/wq/msg/msgFrom/getMsgList";
 
 }

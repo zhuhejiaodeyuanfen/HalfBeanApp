@@ -1,5 +1,6 @@
 package com.wq.halfbeanapp.view.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -70,7 +71,10 @@ public class MessageFragment extends BaseFragment {
         msgListAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                getBaseActivity().launcher(mContext, ChatMsgActivity.class);
+                UserMessageList item = msgListAdapter.getItem(position);
+                Bundle args = new Bundle();
+                args.putInt("id", item.getMsgListId());
+                getBaseActivity().launcher(mContext, ChatMsgActivity.class, args);
 
             }
         });
