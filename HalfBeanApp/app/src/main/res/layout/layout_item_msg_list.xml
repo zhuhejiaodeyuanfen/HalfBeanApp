@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
+        android:id="@+id/baseItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -19,8 +18,8 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_below="@id/tvTitle"
-            android:src="@mipmap/ic_launcher"
             android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_launcher"
             app:border_color="@color/white"
             app:border_width="0dp" />
 
@@ -42,9 +41,9 @@
 
                 <TextView
                     android:id="@+id/tvWriter"
-                    android:text="苏苏晓墨"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="苏苏晓墨"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -60,12 +59,12 @@
 
             <TextView
                 android:id="@+id/tvContent"
-                android:text="1122222"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/ivIcon"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:text="1122222" />
 
         </LinearLayout>
 

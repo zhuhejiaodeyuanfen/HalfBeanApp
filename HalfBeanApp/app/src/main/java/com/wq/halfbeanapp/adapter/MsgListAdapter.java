@@ -32,19 +32,19 @@ public class MsgListAdapter extends BaseRecyclerViewAdapter<UserMessageList> {
 
     @Override
     protected void bindData(BaseViewHolder holder, int position) {
+        holder.getView(R.id.baseItem, true);
         UserMessageList item = getItem(position);
         TextView tvWriter = (TextView) holder.getView(R.id.tvWriter, false);
         tvWriter.setText(item.getMsgUserName());
-        ImageView ivIcon= (ImageView) holder.getView(R.id.ivIcon,false);
-        GlideImageLoader.display(context,ivIcon,item.getMsgUserIcon());
+        ImageView ivIcon = (ImageView) holder.getView(R.id.ivIcon, false);
+        GlideImageLoader.display(context, ivIcon, item.getMsgUserIcon());
 
 
     }
 
 
-
     @Override
     public int getLayoutId() {
-        return R.layout.layout_item_comment_list;
+        return R.layout.layout_item_msg_list;
     }
 }

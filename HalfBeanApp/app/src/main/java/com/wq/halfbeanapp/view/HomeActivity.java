@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.view.fragment.MessageFragment;
-import com.wq.halfbeanapp.view.fragment.HomeFragment;
+import com.wq.halfbeanapp.view.home.HomeFragment;
 import com.wq.halfbeanapp.view.fragment.HomeLiveFragment;
 import com.wq.halfbeanapp.view.fragment.MineFragment;
 

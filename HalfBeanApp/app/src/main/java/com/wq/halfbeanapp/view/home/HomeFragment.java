@@ -1,4 +1,4 @@
-package com.wq.halfbeanapp.view.fragment;
+package com.wq.halfbeanapp.view.home;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
+import com.wq.halfbeanapp.view.fragment.BaseFragment;
+import com.wq.halfbeanapp.view.fragment.HomeLiveFragment;
+import com.wq.halfbeanapp.view.fragment.HomeTopicFragment;
 
 /**
  * Created by vivianWQ on 2017/12/7

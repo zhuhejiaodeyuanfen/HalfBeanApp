@@ -31,4 +31,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.lcodecorex:tkrefreshlayout:1.0.7'
     compile 'com.rabtman.wsmanager:wsmanager:1.0.2'
+    compile 'com.mcxiaoke.volley:library:1.0.+'
 }

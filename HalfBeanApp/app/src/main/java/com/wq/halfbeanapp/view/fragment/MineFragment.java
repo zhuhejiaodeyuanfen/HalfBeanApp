@@ -11,16 +11,17 @@ import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.bean.UserBean;
 import com.wq.halfbeanapp.constants.PermissionConstants;
 import com.wq.halfbeanapp.constants.UrlConstants;
-import com.wq.halfbeanapp.net.response.DataResponseCallback;
-import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
 import com.wq.halfbeanapp.util.AppIntentUtil;
 import com.wq.halfbeanapp.util.AppLogUtil;
+import com.wq.halfbeanapp.util.network.HttpCallBack;
+import com.wq.halfbeanapp.util.network.HttpUtil;
 import com.wq.halfbeanapp.util.sdk.glide.GlideImageLoader;
 import com.wq.halfbeanapp.util.system.AppPermissionUtil1;
 import com.wq.halfbeanapp.util.user.UserInfoUtil;
 import com.wq.halfbeanapp.widget.dialog.AppShareDialog;
 
 import java.io.File;
+import java.util.HashMap;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -131,27 +132,43 @@ public class MineFragment extends BaseFragment {
                     cropFile.getAbsolutePath();
 
 
+//                    RoNetWorkUtil
+//                            .getInstance()
+//                            .get(UrlConstants.UPDATE_USER_ICON)
+//                            .conParams("userIcon="+cropFile.getAbsolutePath())
+//                            .execute1(new DataResponseCallback<UserBean>() {
+//                                @Override
+//                                public void onResponseSuccess(UserBean response) {
+//                                    if(response!=null)
+//                                    {
+//                                        GlideImageLoader.display(mContext,ivUser,response.getUserIcon());
+//                                        UserInfoUtil.saveUserInfo(mContext,response);
+//                                    }
+//
+//                                }
+//
+//                                @Override
+//                                public void onResponseFail(String errorString) {
+//
+//                                }
+//                            });
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("userIcon", cropFile.getAbsolutePath());
+                    HttpUtil.getInstance().request(UrlConstants.UPDATE_USER_ICON, hashMap, new HttpCallBack<UserBean>() {
+                        @Override
+                        public void onSuccess(UserBean data) {
+                            if (data != null) {
+                                GlideImageLoader.display(mContext, ivUser, data.getUserIcon());
+                                UserInfoUtil.saveUserInfo(mContext, data);
+                            }
 
-                    RoNetWorkUtil
-                            .getInstance()
-                            .get(UrlConstants.UPDATE_USER_ICON)
-                            .conParams("userIcon="+cropFile.getAbsolutePath())
-                            .execute1(new DataResponseCallback<UserBean>() {
-                                @Override
-                                public void onResponseSuccess(UserBean response) {
-                                    if(response!=null)
-                                    {
-                                        GlideImageLoader.display(mContext,ivUser,response.getUserIcon());
-                                        UserInfoUtil.saveUserInfo(mContext,response);
-                                    }
+                        }
 
-                                }
+                        @Override
+                        public void onFail(String msg) {
 
-                                @Override
-                                public void onResponseFail(String errorString) {
-
-                                }
-                            });
+                        }
+                    });
 
 
                     break;

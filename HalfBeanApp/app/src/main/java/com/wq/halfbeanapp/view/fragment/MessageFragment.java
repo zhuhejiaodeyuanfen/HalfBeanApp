@@ -4,9 +4,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.adapter.MsgListAdapter;
+import com.wq.halfbeanapp.adapter.MyItemClickListener;
 import com.wq.halfbeanapp.bean.MsgModel;
 import com.wq.halfbeanapp.bean.SocketModel;
 import com.wq.halfbeanapp.bean.UserMessageList;
@@ -15,6 +17,10 @@ import com.wq.halfbeanapp.net.response.DataListResponseCallback;
 import com.wq.halfbeanapp.net.response.JsonTools;
 import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
 import com.wq.halfbeanapp.util.user.UserInfoUtil;
+import com.wq.halfbeanapp.view.AboutMyActivity;
+import com.wq.halfbeanapp.view.ChatMsgActivity;
+import com.wq.halfbeanapp.view.CommentMyActivity;
+import com.wq.halfbeanapp.view.PraiseMyActivity;
 import com.wq.halfbeanapp.view.presenter.ChatSocketPresenter;
 
 import java.sql.Timestamp;
@@ -31,6 +37,7 @@ public class MessageFragment extends BaseFragment {
     private Button btnSend;
     private MsgListAdapter msgListAdapter;
     private RecyclerView rvMessage;
+    private TextView tvAboutMe, tvComment, tvPraise;
 
     @Override
     public void initEventData() {
@@ -52,11 +59,42 @@ public class MessageFragment extends BaseFragment {
     public void initView() {
         btnSend = (Button) mContentView.findViewById(R.id.btnSend);
         rvMessage = (RecyclerView) mContentView.findViewById(R.id.rvMessage);
+        tvAboutMe = (TextView) mContentView.findViewById(R.id.tvAboutMe);
+        tvComment = (TextView) mContentView.findViewById(R.id.tvComment);
+        tvPraise = (TextView) mContentView.findViewById(R.id.tvPraise);
 
     }
 
     @Override
     public void bindEvent() {
+        msgListAdapter.setOnItemClickListener(new MyItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                getBaseActivity().launcher(mContext, ChatMsgActivity.class);
+
+            }
+        });
+        tvAboutMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBaseActivity().launcher(mContext, AboutMyActivity.class);
+            }
+        });
+
+        tvComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getBaseActivity().launcher(mContext, CommentMyActivity.class);
+            }
+        });
+
+        tvPraise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBaseActivity().launcher(mContext, PraiseMyActivity.class);
+            }
+        });
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

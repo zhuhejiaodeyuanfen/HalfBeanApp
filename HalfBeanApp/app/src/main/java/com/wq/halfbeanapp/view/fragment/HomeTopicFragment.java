@@ -13,6 +13,7 @@ import com.wq.halfbeanapp.bean.HomeBoardDetailModel;
 import com.wq.halfbeanapp.constants.UrlConstants;
 import com.wq.halfbeanapp.net.response.DataListResponseCallback;
 import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
+import com.wq.halfbeanapp.util.network.VolleyUtil;
 import com.wq.halfbeanapp.view.HomeAddTopicActivity;
 import com.wq.halfbeanapp.view.HomeDetailActivity;
 
@@ -96,6 +97,8 @@ public class HomeTopicFragment extends BaseFragment {
 
                     }
                 });
+
+
 
     }
 

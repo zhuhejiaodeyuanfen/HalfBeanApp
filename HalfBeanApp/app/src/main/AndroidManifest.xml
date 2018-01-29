@@ -9,26 +9,34 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.LoginActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.HomeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.topic.TopicCardActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.topic.AddTopicActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.HomeDetailActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.StartPagerActivity"
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.topic.TopicCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.topic.AddTopicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.HomeDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".view.StartPagerActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,12 +44,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.RegisterActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.HomeAddTopicActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.PhotoSelectActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.HomeAddTopicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.PhotoSelectActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -53,8 +64,13 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".view.topic.BeanAddTopicActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".view.topic.BeanAddTopicActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.ChatMsgActivity" />
+        <activity android:name=".view.AboutMyActivity" />
+        <activity android:name=".view.CommentMyActivity" />
+        <activity android:name=".view.PraiseMyActivity"></activity>
     </application>
 
 </manifest>
