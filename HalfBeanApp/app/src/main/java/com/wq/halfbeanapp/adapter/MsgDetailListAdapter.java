@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.bean.MsgDetailModel;
+import com.wq.halfbeanapp.util.AppDateUtil;
 import com.wq.halfbeanapp.util.sdk.glide.GlideImageLoader;
 
 import java.util.ArrayList;
@@ -75,12 +76,12 @@ public class MsgDetailListAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_mine_msg, parent, false);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_other_msg, parent, false);
             return new MsgDetailListAdapter.MyTextMsg(view);
 
         } else {
             // first item
-            View view = LayoutInflater.from(mContext).inflate(R.layout.layout_item_edit_text, parent, false);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_mine_msg, parent, false);
             return new MsgDetailListAdapter.OtherTextMsg(view);
         }
     }
@@ -94,10 +95,15 @@ public class MsgDetailListAdapter extends RecyclerView.Adapter<RecyclerView.View
             final MsgDetailListAdapter.MyTextMsg myTextMsg = (MsgDetailListAdapter.MyTextMsg) viewHolder;
             GlideImageLoader.display(mContext, myTextMsg.ivIcon, info.getMsgFromIcon());
             myTextMsg.tvContent.setText(info.getMsgContent());
+            myTextMsg.tvTime.setVisibility(View.VISIBLE);
+            myTextMsg.tvTime.setText(AppDateUtil.getCurrentDate(info.getMsgTime()+""));
         } else if (viewHolder instanceof MsgDetailListAdapter.OtherTextMsg) {
             final MsgDetailListAdapter.OtherTextMsg myTextMsg = (MsgDetailListAdapter.OtherTextMsg) viewHolder;
             GlideImageLoader.display(mContext, myTextMsg.ivIcon, info.getMsgFromIcon());
             myTextMsg.tvContent.setText(info.getMsgContent());
+            myTextMsg.tvTime.setVisibility(View.VISIBLE);
+
+            myTextMsg.tvTime.setText( AppDateUtil.getCurrentDate(info.getMsgTime()+""));
         }
     }
 

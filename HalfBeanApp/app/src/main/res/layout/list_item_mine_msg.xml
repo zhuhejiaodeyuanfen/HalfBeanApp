@@ -45,19 +45,22 @@
 
             android:visibility="gone" />
 
+
         <TextView
             android:id="@+id/tvContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
+            android:text="dfsfsfsf"
+            android:gravity="center"
             android:layout_marginLeft="10dp"
-            android:autoLink="web"
-            android:paddingBottom="11dp"
-            android:paddingLeft="18dp"
-            android:paddingRight="18dp"
-            android:paddingTop="11dp"
-            android:textColor="#645C58"
-            android:textSize="14sp" />
+            android:layout_marginRight="5dp"
+            android:background="@drawable/ease_chatto_bg_focused"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:textColor="#353535"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

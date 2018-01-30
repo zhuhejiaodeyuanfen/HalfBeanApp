@@ -33,17 +33,16 @@
 
     <TextView
         android:id="@+id/tvContent"
+        android:background="@drawable/ease_chatto_bg_focused"
+        android:text="dfsdfsfsdfsdfsdf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_alignTop="@id/ivIcon"
         android:layout_below="@id/tvTime"
         android:layout_marginRight="65dp"
         android:layout_toRightOf="@+id/ivIcon"
         android:autoLink="web"
-        android:paddingBottom="11dp"
-        android:paddingLeft="18dp"
-        android:paddingRight="18dp"
-        android:paddingTop="11dp"
         android:textColor="#645C58"
         android:textSize="14sp" />
 
