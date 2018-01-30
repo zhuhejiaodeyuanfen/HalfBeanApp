@@ -22,7 +22,7 @@ import com.wq.halfbeanapp.view.AboutMyActivity;
 import com.wq.halfbeanapp.view.ChatMsgActivity;
 import com.wq.halfbeanapp.view.CommentMyActivity;
 import com.wq.halfbeanapp.view.PraiseMyActivity;
-import com.wq.halfbeanapp.view.presenter.ChatSocketPresenter;
+import com.wq.halfbeanapp.presenter.ChatSocketPresenter;
 
 import java.sql.Timestamp;
 import java.util.List;

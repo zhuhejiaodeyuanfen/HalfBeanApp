@@ -12,7 +12,7 @@ import com.wq.halfbeanapp.adapter.HotTopicLiveAdapter;
 import com.wq.halfbeanapp.adapter.MyItemClickListener;
 import com.wq.halfbeanapp.bean.LiveBoardModel;
 import com.wq.halfbeanapp.view.iview.IHotTopicFragment;
-import com.wq.halfbeanapp.view.presenter.HotTopicPresenter;
+import com.wq.halfbeanapp.presenter.HotTopicPresenter;
 import com.wq.halfbeanapp.view.topic.BeanAddTopicActivity;
 import com.wq.halfbeanapp.view.topic.TopicCardActivity;
 import com.wq.halfbeanapp.widget.SwipeRefreshView;

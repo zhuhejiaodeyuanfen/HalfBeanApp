@@ -3,15 +3,15 @@ package com.wq.halfbeanapp.view;
 import android.os.Bundle;
 
 import com.wq.halfbeanapp.R;
-import com.wq.halfbeanapp.bean.MsgModel;
-import com.wq.halfbeanapp.constants.UrlConstants;
-import com.wq.halfbeanapp.util.network.HttpListCallBack;
-import com.wq.halfbeanapp.util.network.HttpUtil;
+import com.wq.halfbeanapp.bean.MsgDetailModel;
+import com.wq.halfbeanapp.presenter.MessagePresenter;
+import com.wq.halfbeanapp.util.AppLogUtil;
+import com.wq.halfbeanapp.view.iview.IMsgView;
 
-import java.util.HashMap;
 import java.util.List;
 
-public class ChatMsgActivity extends BaseActivity {
+public class ChatMsgActivity extends BaseActivity implements IMsgView {
+    private MessagePresenter<ChatMsgActivity> messagePresenter;
     private int id;
 
     @Override
@@ -27,6 +27,7 @@ public class ChatMsgActivity extends BaseActivity {
 
     @Override
     public void initEventData() {
+        messagePresenter = new MessagePresenter<>(this, this);
         id = getIntent().getIntExtra("id", 0);
 
 
@@ -39,22 +40,14 @@ public class ChatMsgActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("msgCountId", id + "");
-        hashMap.put("page", 0 + "");
-        HttpUtil.getInstance().requestList(UrlConstants.GET_MSG_FROM_LIST, hashMap, new HttpListCallBack<MsgModel>() {
-            @Override
-            public void onSuccess(List<MsgModel> data) {
+        messagePresenter.getUserMsgList(id, 0);
 
 
-            }
+    }
 
-            @Override
-            public void onFail(String msg) {
-
-            }
-        });
+    @Override
+    public void getMsgList(List<MsgDetailModel> msgModels) {
+        AppLogUtil.i("收到数据");
 
     }
 }

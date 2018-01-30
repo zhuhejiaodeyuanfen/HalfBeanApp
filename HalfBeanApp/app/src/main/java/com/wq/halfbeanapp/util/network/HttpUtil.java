@@ -209,14 +209,13 @@ public class HttpUtil {
 //                }
                 String str = null;
                 try {
-                    str = new String(response.data,"utf-8");
+                    str = new String(response.data, "utf-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
                 return Response.success(str, HttpHeaderParser.parseCacheHeaders(response));
 
             }
-
 
 
             @Override
@@ -238,6 +237,9 @@ public class HttpUtil {
                     UserBean userInfo = UserInfoUtil.getUserInfo(MyApplication.getInstance());
                     headers.put("uid", userInfo.getUserId() + "");
                 }
+//                headers.put("Charset", "utf-8");
+//                headers.put("Content-Type", "application/x-javascript");
+//                headers.put("Accept-Encoding", "gzip,deflate");
 
                 return headers;
             }

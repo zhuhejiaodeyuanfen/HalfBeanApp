@@ -1,4 +1,4 @@
-package com.wq.halfbeanapp.view.presenter;
+package com.wq.halfbeanapp.presenter;
 
 import android.content.Context;
 
