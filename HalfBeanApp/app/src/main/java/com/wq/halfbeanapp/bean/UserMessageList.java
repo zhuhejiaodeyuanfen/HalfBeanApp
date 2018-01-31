@@ -1,10 +1,21 @@
 package com.wq.halfbeanapp.bean;
 
-public class UserMessageList {
+import java.io.Serializable;
+
+public class UserMessageList implements Serializable {
     private int msgListId;
     private String msgUserName;
     private String msgUserIcon;
     private int msgCount;
+    private int msgUserId;
+
+    public int getMsgUserId() {
+        return msgUserId;
+    }
+
+    public void setMsgUserId(int msgUserId) {
+        this.msgUserId = msgUserId;
+    }
 
     public int getMsgCount() {
         return msgCount;

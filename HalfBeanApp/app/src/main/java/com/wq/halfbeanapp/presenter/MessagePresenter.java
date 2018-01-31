@@ -2,8 +2,11 @@ package com.wq.halfbeanapp.presenter;
 
 import android.content.Context;
 
+import com.wq.halfbeanapp.bean.SocketModel;
+import com.wq.halfbeanapp.constants.SocketParams;
 import com.wq.halfbeanapp.model.MsgModel;
 import com.wq.halfbeanapp.util.retrofit.RxSubscribe;
+import com.wq.halfbeanapp.view.fragment.MessageFragment;
 import com.wq.halfbeanapp.view.iview.IActivity;
 import com.wq.halfbeanapp.view.iview.IMsgView;
 
@@ -40,6 +43,20 @@ public class MessagePresenter<T extends IActivity> {
 
             }
         });
+
+    }
+
+    /**
+     * 用户发送消息
+     *
+     * @param msgDetailModel
+     */
+    public boolean sendMsg(com.wq.halfbeanapp.bean.MsgModel msgDetailModel) {
+        SocketModel socketModel = new SocketModel();
+        socketModel.setSocketType(SocketParams.SEND_MESSAGE);
+        socketModel.setData(msgDetailModel);
+        boolean result = MessageFragment.chatSocketPresenter.sendMsg(socketModel);
+        return result;
 
     }
 }

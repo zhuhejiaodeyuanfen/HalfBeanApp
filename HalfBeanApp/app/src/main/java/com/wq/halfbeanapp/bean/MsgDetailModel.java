@@ -10,6 +10,24 @@ public class MsgDetailModel {
     private Timestamp msgTime;
     private String msgFromName;
     private Timestamp sysTime;
+    private String showTime="noData";
+    private int msgUserId;
+
+    public int getMsgUserId() {
+        return msgUserId;
+    }
+
+    public void setMsgUserId(int msgUserId) {
+        this.msgUserId = msgUserId;
+    }
+
+    public String getShowTime() {
+        return showTime;
+    }
+
+    public void setShowTime(String showTime) {
+        this.showTime = showTime;
+    }
 
     public String getMsgFromName() {
         return msgFromName;

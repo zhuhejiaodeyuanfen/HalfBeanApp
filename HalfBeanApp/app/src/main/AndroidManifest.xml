@@ -67,10 +67,18 @@
         <activity
             android:name=".view.topic.BeanAddTopicActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.ChatMsgActivity" />
-        <activity android:name=".view.AboutMyActivity" />
-        <activity android:name=".view.CommentMyActivity" />
-        <activity android:name=".view.PraiseMyActivity"></activity>
+        <activity
+            android:name=".view.ChatMsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AboutMyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.CommentMyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.PraiseMyActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -11,9 +11,13 @@ import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.bean.MsgDetailModel;
+import com.wq.halfbeanapp.bean.UserBean;
 import com.wq.halfbeanapp.util.AppDateUtil;
+import com.wq.halfbeanapp.util.AppLogUtil;
 import com.wq.halfbeanapp.util.sdk.glide.GlideImageLoader;
+import com.wq.halfbeanapp.util.user.UserInfoUtil;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +45,12 @@ public class MsgDetailListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private int unLockCount;
     private int mUnLockCountPos;
     private int mLockCountPos;
+    private Timestamp compareTime;
+    public static final int MY_TEXT_MSG = 0;
+    public static final int OTHER_TEXT_MSG = 1;
+    public static final int MY_IMAGE_MSG = 3;
+    public static final int OTHER_IMAGE_MSG = 4;
+    private UserBean userBean;
 
 
     public int getUnLockCountPos() {
@@ -57,11 +67,46 @@ public class MsgDetailListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public MsgDetailListAdapter(@NonNull Context context) {
         this.mContext = context;
+        userBean = UserInfoUtil.getUserInfo(context);
     }
 
-    public void addData(List<MsgDetailModel> typeBeans) {
-        dataList.addAll(typeBeans);
-        notifyDataSetChanged();
+    /**
+     * 将聊天消息的时间戳格式化==并进行储存
+     *
+     * @param chatMessageBean
+     */
+    public void handleTime(MsgDetailModel chatMessageBean) {
+        if (compareTime == null) {
+            compareTime = chatMessageBean.getMsgTime();
+            chatMessageBean.setShowTime(AppDateUtil.getTime(chatMessageBean.getMsgTime().getTime()));
+        }
+        if (compareTime != null) {
+            if (AppDateUtil.timeCompare5Minute(chatMessageBean.getMsgTime().getTime(), compareTime.getTime()) == false) {
+                //超过五分钟,需要显示
+
+                AppLogUtil.i("超过五分钟");
+                chatMessageBean.setShowTime(AppDateUtil.getTime(chatMessageBean.getMsgTime().getTime()));
+                compareTime = chatMessageBean.getMsgTime();
+            } else {
+                AppLogUtil.i("没到五分钟呢");
+            }
+        }
+    }
+
+    public void addData(List<MsgDetailModel> typeBeans, boolean isRefresh) {
+        if (typeBeans != null && typeBeans.size() > 0) {
+            if (isRefresh) {
+                dataList.clear();
+
+            }
+
+            for (int i = 0; i < typeBeans.size(); i++) {
+                handleTime(typeBeans.get(i));
+
+            }
+            dataList.addAll(typeBeans);
+            notifyDataSetChanged();
+        }
     }
 
     public void addData(MsgDetailModel typeBean) {
@@ -75,7 +120,7 @@ public class MsgDetailListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == 0) {
+        if (viewType == OTHER_TEXT_MSG) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_other_msg, parent, false);
             return new MsgDetailListAdapter.MyTextMsg(view);
 
@@ -95,15 +140,23 @@ public class MsgDetailListAdapter extends RecyclerView.Adapter<RecyclerView.View
             final MsgDetailListAdapter.MyTextMsg myTextMsg = (MsgDetailListAdapter.MyTextMsg) viewHolder;
             GlideImageLoader.display(mContext, myTextMsg.ivIcon, info.getMsgFromIcon());
             myTextMsg.tvContent.setText(info.getMsgContent());
-            myTextMsg.tvTime.setVisibility(View.VISIBLE);
-            myTextMsg.tvTime.setText(AppDateUtil.getCurrentDate(info.getMsgTime()+""));
+            if (!info.getShowTime().equals("noData")) {
+                myTextMsg.tvTime.setVisibility(View.VISIBLE);
+                myTextMsg.tvTime.setText(info.getShowTime());
+            } else {
+                myTextMsg.tvTime.setVisibility(View.GONE);
+            }
         } else if (viewHolder instanceof MsgDetailListAdapter.OtherTextMsg) {
             final MsgDetailListAdapter.OtherTextMsg myTextMsg = (MsgDetailListAdapter.OtherTextMsg) viewHolder;
             GlideImageLoader.display(mContext, myTextMsg.ivIcon, info.getMsgFromIcon());
             myTextMsg.tvContent.setText(info.getMsgContent());
-            myTextMsg.tvTime.setVisibility(View.VISIBLE);
+            if (!info.getShowTime().equals("noData")) {
+                myTextMsg.tvTime.setVisibility(View.VISIBLE);
 
-            myTextMsg.tvTime.setText( AppDateUtil.getCurrentDate(info.getMsgTime()+""));
+                myTextMsg.tvTime.setText(info.getShowTime());
+            } else {
+                myTextMsg.tvTime.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -143,8 +196,14 @@ public class MsgDetailListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-        if (dataList.get(position).getMsgType() == 1) {
-            return 0;
+        //0 代表文字
+        if (dataList.get(position).getMsgType() == 0) {
+            if (dataList.get(position).getMsgUserId() == userBean.getUserId()) {
+                return MY_TEXT_MSG;
+            } else {
+                //不相等
+                return OTHER_TEXT_MSG;
+            }
         } else {
             return 1;
         }

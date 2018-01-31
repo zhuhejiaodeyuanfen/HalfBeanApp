@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
     android:id="@+id/viewContent"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
@@ -13,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:textColor="@color/light_gray_6"
         android:textSize="10sp"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <com.wq.halfbeanapp.widget.imageview.CircleImageView
         android:id="@+id/ivIcon"
@@ -22,8 +24,9 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/tvTime"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="12dp"
+
         android:src="@mipmap/ic_launcher"
         app:border_color="@color/transparent"
         app:border_width="0dp" />
@@ -31,9 +34,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tb_my_user_icon"
-        android:layout_below="@id/user_chat_time"
-        android:layout_marginLeft="63dp"
+        android:layout_alignTop="@id/ivIcon"
+        android:layout_below="@id/tvTime"
+        android:layout_marginLeft="50dp"
         android:layout_toLeftOf="@+id/ivIcon"
         android:orientation="horizontal">
 
@@ -42,7 +45,6 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
-
             android:visibility="gone" />
 
 
@@ -51,15 +53,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="center_horizontal"
-            android:text="dfsfsfsf"
-            android:gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/ease_chatto_bg_focused"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:textColor="#353535"
+            android:padding="12dp"
+            android:text="尝试发送一条消息20180920"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
     </LinearLayout>

@@ -4,27 +4,20 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.adapter.MsgListAdapter;
 import com.wq.halfbeanapp.adapter.MyItemClickListener;
-import com.wq.halfbeanapp.bean.MsgModel;
-import com.wq.halfbeanapp.bean.SocketModel;
 import com.wq.halfbeanapp.bean.UserMessageList;
-import com.wq.halfbeanapp.constants.UrlConstants;
-import com.wq.halfbeanapp.net.response.DataListResponseCallback;
-import com.wq.halfbeanapp.net.response.JsonTools;
-import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
-import com.wq.halfbeanapp.util.user.UserInfoUtil;
+import com.wq.halfbeanapp.presenter.ChatSocketPresenter;
+import com.wq.halfbeanapp.presenter.MsgFragmentPresenter;
 import com.wq.halfbeanapp.view.AboutMyActivity;
 import com.wq.halfbeanapp.view.ChatMsgActivity;
 import com.wq.halfbeanapp.view.CommentMyActivity;
 import com.wq.halfbeanapp.view.PraiseMyActivity;
-import com.wq.halfbeanapp.presenter.ChatSocketPresenter;
+import com.wq.halfbeanapp.view.iview.IMsgFragmentView;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -33,15 +26,16 @@ import java.util.List;
  * desc:
  * Version: 1.0
  */
-public class MessageFragment extends BaseFragment {
-    private ChatSocketPresenter chatSocketPresenter;
-    private Button btnSend;
+public class MessageFragment extends BaseFragment implements IMsgFragmentView {
+    public static ChatSocketPresenter chatSocketPresenter;
     private MsgListAdapter msgListAdapter;
     private RecyclerView rvMessage;
     private TextView tvAboutMe, tvComment, tvPraise;
+    private MsgFragmentPresenter msgFragmentPresenter;
 
     @Override
     public void initEventData() {
+        msgFragmentPresenter=new MsgFragmentPresenter(getContext(),MessageFragment.this);
         chatSocketPresenter = new ChatSocketPresenter(mContext);
         chatSocketPresenter.connectService();
         msgListAdapter = new MsgListAdapter(mContext);
@@ -58,7 +52,6 @@ public class MessageFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        btnSend = (Button) mContentView.findViewById(R.id.btnSend);
         rvMessage = (RecyclerView) mContentView.findViewById(R.id.rvMessage);
         tvAboutMe = (TextView) mContentView.findViewById(R.id.tvAboutMe);
         tvComment = (TextView) mContentView.findViewById(R.id.tvComment);
@@ -73,7 +66,7 @@ public class MessageFragment extends BaseFragment {
             public void onItemClick(View view, int position) {
                 UserMessageList item = msgListAdapter.getItem(position);
                 Bundle args = new Bundle();
-                args.putInt("id", item.getMsgListId());
+                args.putSerializable("data", item);
                 getBaseActivity().launcher(mContext, ChatMsgActivity.class, args);
 
             }
@@ -99,44 +92,39 @@ public class MessageFragment extends BaseFragment {
                 getBaseActivity().launcher(mContext, PraiseMyActivity.class);
             }
         });
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MsgModel msgModel = new MsgModel();
-                msgModel.setMsgContent("尝试发送一条消息2018900");
-                msgModel.setMsgFromId(UserInfoUtil.getUserInfo(mContext).getUserId());
-                msgModel.setMsgTime(new Timestamp(System.currentTimeMillis()));
-                msgModel.setMsgToId(2);
-                msgModel.setMsgType(1);//文字消息
-                SocketModel socketModel = new SocketModel();
-                socketModel.setData(msgModel);
-                socketModel.setSocketType("send_message");
-                chatSocketPresenter.startConnect(JsonTools.getJsonString(socketModel));
-            }
-        });
+
 
     }
 
     @Override
     public void loadData() {
+        msgFragmentPresenter.getListUser(2);
 
-        RoNetWorkUtil
-                .getInstance()
-                .get(UrlConstants.GET_MSG_LIST)
-                .params("")
-                .execute(new DataListResponseCallback<UserMessageList>() {
-                    @Override
-                    public void onResponseSuccess(List<UserMessageList> response) {
-                        if (response != null && response.size() > 0)
-                            msgListAdapter.addData(response);
+//        RoNetWorkUtil
+//                .getInstance()
+//                .get(UrlConstants.GET_MSG_LIST)
+//                .params("")
+//                .execute(new DataListResponseCallback<UserMessageList>() {
+//                    @Override
+//                    public void onResponseSuccess(List<UserMessageList> response) {
+//                        if (response != null && response.size() > 0)
+//                            msgListAdapter.addData(response);
+//
+//                    }
+//
+//                    @Override
+//                    public void onResponseFail(String errorString) {
+//
+//                    }
+//                });
 
-                    }
+    }
 
-                    @Override
-                    public void onResponseFail(String errorString) {
-
-                    }
-                });
-
+    @Override
+    public void showUserMsgList(List<UserMessageList> userMessageLists) {
+        if(userMessageLists!=null&&userMessageLists.size()>0)
+        {
+            msgListAdapter.addData(userMessageLists);
+        }
     }
 }

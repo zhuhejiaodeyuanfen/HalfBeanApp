@@ -10,12 +10,13 @@ import android.widget.Toast;
 
 import com.wq.halfbeanapp.view.BaseActivity;
 import com.wq.halfbeanapp.view.iview.IDialogTwoView;
+import com.wq.halfbeanapp.view.iview.IFragment;
 
 
 /**
  * 所有的fragment都必须
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements IFragment {
 
     public BaseActivity mContext;
     public View mContentView = null;
@@ -39,8 +40,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
-
-
     public abstract void initEventData();
 
     /**
@@ -58,6 +57,25 @@ public abstract class BaseFragment extends Fragment {
 
     public BaseActivity getBaseActivity() {
         return (BaseActivity) this.getActivity();
+    }
+
+
+    public void showToast(int strId) {
+        getBaseActivity().showToast(strId);
+    }
+
+
+    public void showToast(String message) {
+        getBaseActivity().showToast(message);
+    }
+
+
+    public void showProgressDialog(int msg) {
+        getBaseActivity().showProgressDialog(msg);
+    }
+
+    public void cancelProgressDialog() {
+        getBaseActivity().cancelProgressDialog();
     }
 
     /**

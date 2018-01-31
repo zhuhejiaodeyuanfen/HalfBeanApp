@@ -6,6 +6,7 @@ import com.rabtman.wsmanager.WsManager;
 import com.rabtman.wsmanager.listener.WsStatusListener;
 import com.wq.halfbeanapp.bean.SocketModel;
 import com.wq.halfbeanapp.bean.UserSocketBean;
+import com.wq.halfbeanapp.constants.SocketParams;
 import com.wq.halfbeanapp.net.response.JsonTools;
 import com.wq.halfbeanapp.util.AppLogUtil;
 import com.wq.halfbeanapp.util.user.UserInfoUtil;
@@ -53,13 +54,10 @@ public class ChatSocketPresenter {
                 .retryOnConnectionFailure(true)
                 .build();
         wsManager = new WsManager.Builder(context)
-
-                .wsUrl("ws://192.168.1.9:8080/wq/echo")
-
+                .wsUrl("ws://192.168.10.154:8080/wq/echo")
                 .needReconnect(false)
                 .client(okHttpClient)
                 .build();
-
         wsManager.startConnect();
         AppLogUtil.i("尝试重新连接");
         wsManager.setWsStatusListener(new WsStatusListener() {
@@ -77,13 +75,12 @@ public class ChatSocketPresenter {
                 if (text.equals("ServerConnect")) {
                     AppLogUtil.i("接收到消息" + text);
 
-                    AppLogUtil.i("尝试发送消息");
                     UserSocketBean userSocketBean = new UserSocketBean();
                     userSocketBean.setUserId(UserInfoUtil.getUserInfo(context).getUserId());
                     SocketModel socketModel = new SocketModel();
-                    socketModel.setSocketType("server_connect");
+                    socketModel.setSocketType(SocketParams.SERVER_CONNECT);
                     socketModel.setData(userSocketBean);
-                    startConnect(JsonTools.getJsonString(socketModel));
+                    sendMsg(socketModel);
                 }
 
             }
@@ -124,14 +121,11 @@ public class ChatSocketPresenter {
         });
     }
 
-    public String startConnect(String uuid) {
+    public boolean sendMsg(SocketModel socketModel) {
         //开启连接的消息
-        AppLogUtil.i("开启连接了");
-
-
-        boolean b = wsManager.sendMessage(uuid);
-        AppLogUtil.i("是否发送成功" + b);
-        return clientId;
+        boolean result = wsManager.sendMessage(JsonTools.getJsonString(socketModel));
+        AppLogUtil.i("是否发送成功" + result);
+        return result;
     }
 
     public void sendHeartBeat() {

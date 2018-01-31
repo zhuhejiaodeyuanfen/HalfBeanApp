@@ -9,6 +9,7 @@ import com.wq.halfbeanapp.constants.UrlConstants;
 import com.wq.halfbeanapp.net.response.DataResponseCallback;
 import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
 import com.wq.halfbeanapp.util.file.AppConfigFileImpl;
+import com.wq.halfbeanapp.util.retrofit.NetHttpApi;
 import com.wq.halfbeanapp.util.user.UserInfoUtil;
 
 import java.util.concurrent.TimeUnit;
@@ -52,6 +53,7 @@ public class StartPagerActivity extends BaseActivity {
                         .execute1(new DataResponseCallback<UserBean>() {
                             @Override
                             public void onResponseSuccess(UserBean response) {
+                                NetHttpApi.getInstance().initHeader();
                                 UserInfoUtil.saveUserInfo(StartPagerActivity.this, response);
                                 launcher(StartPagerActivity.this, HomeActivity.class);
 

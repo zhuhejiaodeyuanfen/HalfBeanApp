@@ -269,10 +269,8 @@ public class AppDateUtil {
      * @param systemTime
      * @return
      */
-    public static boolean timeCompare5Minute(String serverTime, String systemTime) {
-        long systemTimeLong = Long.parseLong(systemTime);//系统时间
-        long serverTimeLong = Long.parseLong(serverTime);//服务器时间
-        return serverTimeLong - 5 * 60 < systemTimeLong;
+    public static boolean timeCompare5Minute(long serverTime, long systemTime) {
+        return serverTime - 5 * 60 < systemTime;
     }
 
     public static boolean timeCompare20Minute(String serverTime, String systemTime) {
@@ -419,24 +417,24 @@ public class AppDateUtil {
         }
     }
 
-    public static String getTime(String time, String before) {
+    public static String getTime(long time) {
 
-        if (isToday(new Date(Long.parseLong(time) * 1000))) {
+        if (isToday(new Date(time))) {
             //T日的所有时间显示【xx：xx】
-            return getStringByFormat(Long.parseLong(time), dateFormatHM);
+            return getStringByFormat(time, dateFormatHM);
         } else {
             //不是T日
-            switch (differentDays(new Date(Long.parseLong(time) * 1000), new Date())) {
+            switch (differentDays(new Date(time), new Date())) {
                 case 1:
-                    return "昨天" + getStringByFormat(Long.parseLong(time), dateFormatHM);
+                    return "昨天" + getStringByFormat(time, dateFormatHM);
                 case 2:
                 case 3:
                 case 4:
                 case 5:
                 case 6:
-                    return getWeekOfDateChat(Long.parseLong(time) * 1000) + getStringByFormat(Long.parseLong(time), dateFormatHM);
+                    return getWeekOfDateChat(time) + getStringByFormat(time, dateFormatHM);
                 default:
-                    return getStringByFormat(Long.parseLong(time), chatDateFormatYMDHMS);
+                    return getStringByFormat(time, chatDateFormatYMDHMS);
 
             }
 
