@@ -20,9 +20,12 @@
 
             <TextView
                 android:id="@+id/tvAboutMe"
+                android:drawableLeft="@mipmap/ic_at_me"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:gravity="center_vertical"
+                android:drawablePadding="10dp"
+                android:textColor="@color/black"
                 android:paddingLeft="10dp"
                 android:text="提到我的" />
 
@@ -32,11 +35,14 @@
                 android:background="#eeeeee" />
 
             <TextView
+                android:drawableLeft="@mipmap/ic_comment"
                 android:id="@+id/tvComment"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:drawablePadding="10dp"
                 android:text="评论" />
 
             <View
@@ -45,9 +51,12 @@
                 android:background="#eeeeee" />
 
             <TextView
+                android:drawableLeft="@mipmap/ic_praise"
                 android:id="@+id/tvPraise"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:drawablePadding="10dp"
+                android:textColor="@color/black"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:text="赞" />
