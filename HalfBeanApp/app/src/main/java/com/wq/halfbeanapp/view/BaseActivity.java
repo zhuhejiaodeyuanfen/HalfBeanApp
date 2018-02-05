@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.wq.halfbeanapp.R;
+import com.wq.halfbeanapp.statusbar.StatusBarFontHelper;
 import com.wq.halfbeanapp.view.iview.IActivity;
 import com.wq.halfbeanapp.view.iview.IDialogTwoView;
 import com.wq.halfbeanapp.widget.dialog.ToastDialog;
@@ -43,7 +44,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     @Override
     public void setContentView(int layoutResID) {
         View view = LayoutInflater.from(this).inflate(layoutResID, null);
+
         setContentView(view);
+        StatusBarFontHelper.setStatusBarMode(this,true);
+
     }
 
     protected View mContentView;
