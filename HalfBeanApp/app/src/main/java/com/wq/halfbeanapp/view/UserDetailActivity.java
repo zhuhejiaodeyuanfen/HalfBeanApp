@@ -25,7 +25,7 @@ public class UserDetailActivity extends BaseActivity implements IUserView {
     @Override
     public void initEventData() {
         userPresenter = new UserPresenter(UserDetailActivity.this, this);
-        uid = getIntent().getIntExtra("uid", 0);
+        uid = getIntent().getIntExtra("userId", 0);
 
     }
 

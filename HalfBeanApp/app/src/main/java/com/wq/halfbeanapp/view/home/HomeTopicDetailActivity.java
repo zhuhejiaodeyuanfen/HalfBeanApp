@@ -164,6 +164,7 @@ public class HomeTopicDetailActivity extends BaseActivity implements IHomeTopicV
         btnSelectPage.setText(currPage + "/" + totalPage);
     }
 
+    private  int userId;
     @Override
     public void bindEvent() {
 //        swipeRefresh.setOnTouchListener(new View.OnTouchListener() {
@@ -178,7 +179,8 @@ public class HomeTopicDetailActivity extends BaseActivity implements IHomeTopicV
             @Override
             public void onItemClick(View view, int position) {
                 Bundle args = new Bundle();
-                args.putInt("uid", commentListAdapter.getItem(position).getUserId());
+              userId  = commentListAdapter.getItem(position).getUserId();
+                args.putInt("userId",userId );
                 launcher(HomeTopicDetailActivity.this, UserDetailActivity.class, args);
             }
         });
