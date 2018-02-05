@@ -13,6 +13,15 @@ public class CommentBean {
     private String userComment;
     private String userIcon;
     private String userName;
+    private int userId;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public Timestamp getSysCurrentTime() {
         return sysCurrentTime;

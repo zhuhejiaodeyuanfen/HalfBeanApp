@@ -1,6 +1,7 @@
 package com.wq.halfbeanapp.view.home;
 
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.lcodecore.tkrefreshlayout.footer.LoadingView;
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.adapter.CommentListAdapter;
 import com.wq.halfbeanapp.adapter.HomeDetailAdapter;
+import com.wq.halfbeanapp.adapter.MyItemClickListener;
 import com.wq.halfbeanapp.bean.CommentBean;
 import com.wq.halfbeanapp.bean.CommentModelOri;
 import com.wq.halfbeanapp.bean.HomeBoardDetailModel;
@@ -30,6 +32,7 @@ import com.wq.halfbeanapp.util.sdk.glide.GlideImageLoader;
 import com.wq.halfbeanapp.util.system.SoftKeyBoardListener;
 import com.wq.halfbeanapp.util.user.UserInfoUtil;
 import com.wq.halfbeanapp.view.BaseActivity;
+import com.wq.halfbeanapp.view.UserDetailActivity;
 import com.wq.halfbeanapp.view.iview.IHomeTopicView;
 import com.wq.halfbeanapp.widget.dialog.CommentDialog;
 import com.wq.halfbeanapp.widget.dialog.PageSelectDialog;
@@ -58,9 +61,13 @@ public class HomeTopicDetailActivity extends BaseActivity implements IHomeTopicV
     private CommentBean commentBean;
     private TextView btnSelectPage;
     private PageSelectDialog pageSelectDialog;
+    private NestedScrollView scrollView;
     private TwinklingRefreshLayout swipeRefresh;
     private CommentDialog commentDialog;
+    private TextView tvResponse;
     private HomeTopicPresenter homeTopicPresenter;
+    private int totalPage;
+    private int currPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +90,8 @@ public class HomeTopicDetailActivity extends BaseActivity implements IHomeTopicV
         ivIcon = (ImageView) findViewById(R.id.ivIcon);
         swipeRefresh = (TwinklingRefreshLayout) findViewById(R.id.swipeRefresh);
         swipeRefresh.setAutoLoadMore(true);
-
+        scrollView = (NestedScrollView) findViewById(R.id.scrollView);
+        tvResponse = (TextView) findViewById(R.id.tvResponse);
         swipeRefresh.setEnableOverScroll(false);
         swipeRefresh.setEnableRefresh(false);
         LoadingView loadingView = new LoadingView(this);
@@ -94,7 +102,7 @@ public class HomeTopicDetailActivity extends BaseActivity implements IHomeTopicV
 
     @Override
     public void initEventData() {
-        homeTopicPresenter=new HomeTopicPresenter(HomeTopicDetailActivity.this,this);
+        homeTopicPresenter = new HomeTopicPresenter(HomeTopicDetailActivity.this, this);
         commentModelOri = new CommentModelOri();
         homeBoardDetailModel = (HomeBoardDetailModel) getIntent().getSerializableExtra("item");
         if (homeBoardDetailModel != null) {
@@ -128,7 +136,9 @@ public class HomeTopicDetailActivity extends BaseActivity implements IHomeTopicV
                 page = page + 1;
 
             }
-            btnSelectPage.setText("1/" + page);
+            currPage = 1;
+            totalPage = page;
+            showPage();
         } else {
             btnSelectPage.setVisibility(View.GONE);
         }
@@ -145,9 +155,13 @@ public class HomeTopicDetailActivity extends BaseActivity implements IHomeTopicV
             }
         });
 
-        commentDialog=new CommentDialog
+        commentDialog = new CommentDialog
                 .Builder(HomeTopicDetailActivity.this)
                 .create();
+    }
+
+    public void showPage() {
+        btnSelectPage.setText(currPage + "/" + totalPage);
     }
 
     @Override
@@ -160,6 +174,14 @@ public class HomeTopicDetailActivity extends BaseActivity implements IHomeTopicV
 //                return false;
 //            }
 //        });
+        commentListAdapter.setOnItemClickListener(new MyItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Bundle args = new Bundle();
+                args.putInt("uid", commentListAdapter.getItem(position).getUserId());
+                launcher(HomeTopicDetailActivity.this, UserDetailActivity.class, args);
+            }
+        });
         swipeRefresh.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
@@ -264,22 +286,33 @@ public class HomeTopicDetailActivity extends BaseActivity implements IHomeTopicV
 
     }
 
-    private int currPage = 1;
 
     public void getPageData(int page) {
         currPage = page;
-        homeTopicPresenter.getPostCommentList(homeBoardDetailModel.getHomePostId(),page);
-
-
-
+        homeTopicPresenter.getPostCommentList(homeBoardDetailModel.getHomePostId(), page);
     }
 
     @Override
     public void getTopicCommentList(List<CommentBean> response) {
         swipeRefresh.finishLoadmore();
-
         if (response != null && response.size() > 0) {
             commentListAdapter.setDatas(response);
+            if (pageSelectDialog != null)
+                pageSelectDialog.dismiss();
+            if (currPage > 1) {
+                //
+                rvComment.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+//                        rvComment.scrollToPosition(0);
+                        scrollView.scrollTo(0, tvResponse.getTop() - 20);
+                        if (btnSelectPage.getVisibility() == View.VISIBLE) {
+                            showPage();
+                        }
+
+                    }
+                }, 250);
+            }
         }
 
     }

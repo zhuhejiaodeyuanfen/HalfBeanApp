@@ -31,7 +31,7 @@ public class HomeTopicPresenter<T extends IActivity> {
     }
 
     public void getPostCommentList(int postId, int page) {
-        homeTopicModel.getCommentList(postId, page, new RxSubscribe<List<CommentBean>>(mContext, true) {
+        homeTopicModel.getCommentList(postId, page, new RxSubscribe<List<CommentBean>>(mContext, false) {
             @Override
             protected void _onNext(List<CommentBean> commentBeans) {
                 mView.getTopicCommentList(commentBeans);

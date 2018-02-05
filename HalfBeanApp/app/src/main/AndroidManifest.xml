@@ -79,7 +79,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.PraiseMyActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.UserDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -36,7 +36,7 @@ public class CommentListAdapter extends BaseRecyclerViewAdapter<CommentBean> {
         CommentBean item = getItem(position);
         TextView tvWriter = (TextView) holder.getView(R.id.tvWriter, false);
         tvWriter.setText(item.getUserName());
-        ImageView ivIcon = (ImageView) holder.getView(R.id.ivIcon, false);
+        ImageView ivIcon = (ImageView) holder.getView(R.id.ivIcon, true);
         GlideImageLoader.display(context, ivIcon, item.getUserIcon());
         TextView tvContent = (TextView) holder.getView(R.id.tvContent, false);
         tvContent.setText(item.getUserComment());
