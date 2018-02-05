@@ -15,6 +15,7 @@
 
         <com.wq.halfbeanapp.widget.imageview.CircleImageView
             android:layout_width="70dp"
+            android:id="@+id/ivUser"
             android:layout_centerInParent="true"
             app:border_width="0dp"
             app:border_color="@color/transparent"
