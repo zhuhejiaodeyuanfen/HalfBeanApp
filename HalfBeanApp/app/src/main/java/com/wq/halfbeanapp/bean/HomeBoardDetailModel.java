@@ -18,7 +18,15 @@ public class HomeBoardDetailModel implements Serializable {
     private int postBadCount;//帖子的坏评数
     private int postCommentCount;//帖子的评论数
     private int rePostCount;//帖子的转发数
+    private Timestamp postUpdateTime;//更新时间
 
+    public Timestamp getPostUpdateTime() {
+        return postUpdateTime;
+    }
+
+    public void setPostUpdateTime(Timestamp postUpdateTime) {
+        this.postUpdateTime = postUpdateTime;
+    }
 
 
     public String getPostAdminIcon() {

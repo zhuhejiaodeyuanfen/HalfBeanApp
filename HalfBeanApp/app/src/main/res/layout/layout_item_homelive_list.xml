@@ -2,7 +2,10 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/baseItem"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -12,15 +15,18 @@
         android:orientation="horizontal">
 
         <TextView
+            android:drawableTop="@mipmap/ic_contact"
             android:id="@+id/tvCount"
-            android:padding="5dp"
-            android:layout_width="wrap_content"
+            android:text="11"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:drawablePadding="3dp"
+            android:gravity="center"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="3dp" />
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -29,22 +35,47 @@
             android:orientation="vertical">
 
             <TextView
+                android:text="我是测试标题"
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            <com.wq.halfbeanapp.widget.imageview.CircleImageView
+                android:layout_below="@id/tvTitle"
+                android:id="@+id/ivIcon"
+                android:layout_width="20dp"
+                app:border_color="@color/transparent"
+                app:border_width="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/ic_launcher"
+                />
+
             <TextView
+                android:text="dfsfsfs"
+                android:layout_toRightOf="@id/ivIcon"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/tvWriter"
+                android:layout_below="@id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvUpdateTime"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="dfsfs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
 
 
     </LinearLayout>
 
     <View
-        android:background="#000"
+        android:background="@color/dividerColor"
         android:layout_width="match_parent"
         android:layout_height="1px"/>
 

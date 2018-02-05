@@ -13,9 +13,8 @@ import com.wq.halfbeanapp.bean.HomeBoardDetailModel;
 import com.wq.halfbeanapp.constants.UrlConstants;
 import com.wq.halfbeanapp.net.response.DataListResponseCallback;
 import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
-import com.wq.halfbeanapp.util.network.VolleyUtil;
 import com.wq.halfbeanapp.view.HomeAddTopicActivity;
-import com.wq.halfbeanapp.view.HomeDetailActivity;
+import com.wq.halfbeanapp.view.home.HomeTopicDetailActivity;
 
 import java.util.List;
 
@@ -63,7 +62,7 @@ public class HomeTopicFragment extends BaseFragment {
                 HomeBoardDetailModel item = homeLiveAdapter.getItem(position);
                 Bundle args = new Bundle();
                 args.putSerializable("item", item);
-                getBaseActivity().launcher(mContext, HomeDetailActivity.class, args);
+                getBaseActivity().launcher(mContext, HomeTopicDetailActivity.class, args);
             }
         });
 

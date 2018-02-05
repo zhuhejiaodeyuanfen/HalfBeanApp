@@ -1,4 +1,4 @@
-package com.wq.halfbeanapp.view;
+package com.wq.halfbeanapp.view.home;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,15 +20,17 @@ import com.wq.halfbeanapp.bean.CommentModelOri;
 import com.wq.halfbeanapp.bean.HomeBoardDetailModel;
 import com.wq.halfbeanapp.bean.TypeBean;
 import com.wq.halfbeanapp.constants.UrlConstants;
-import com.wq.halfbeanapp.net.response.DataListResponseCallback;
 import com.wq.halfbeanapp.net.response.DataResponseCallback;
 import com.wq.halfbeanapp.net.response.JsonTools;
 import com.wq.halfbeanapp.net.response.ResponseBean;
 import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
+import com.wq.halfbeanapp.presenter.HomeTopicPresenter;
 import com.wq.halfbeanapp.util.AppDateUtil;
 import com.wq.halfbeanapp.util.sdk.glide.GlideImageLoader;
 import com.wq.halfbeanapp.util.system.SoftKeyBoardListener;
 import com.wq.halfbeanapp.util.user.UserInfoUtil;
+import com.wq.halfbeanapp.view.BaseActivity;
+import com.wq.halfbeanapp.view.iview.IHomeTopicView;
 import com.wq.halfbeanapp.widget.dialog.CommentDialog;
 import com.wq.halfbeanapp.widget.dialog.PageSelectDialog;
 
@@ -40,7 +42,7 @@ import java.util.List;
  * <20不需要展示
  */
 
-public class HomeDetailActivity extends BaseActivity {
+public class HomeTopicDetailActivity extends BaseActivity implements IHomeTopicView {
 
     private TextView tvContent, tvSubTitle, tvWriter, tvTimeDate;
     private RecyclerView rvComment;
@@ -58,6 +60,7 @@ public class HomeDetailActivity extends BaseActivity {
     private PageSelectDialog pageSelectDialog;
     private TwinklingRefreshLayout swipeRefresh;
     private CommentDialog commentDialog;
+    private HomeTopicPresenter homeTopicPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,22 +94,23 @@ public class HomeDetailActivity extends BaseActivity {
 
     @Override
     public void initEventData() {
+        homeTopicPresenter=new HomeTopicPresenter(HomeTopicDetailActivity.this,this);
         commentModelOri = new CommentModelOri();
         homeBoardDetailModel = (HomeBoardDetailModel) getIntent().getSerializableExtra("item");
         if (homeBoardDetailModel != null) {
-            GlideImageLoader.display(HomeDetailActivity.this, ivIcon, homeBoardDetailModel.getPostAdminIcon());
+            GlideImageLoader.display(HomeTopicDetailActivity.this, ivIcon, homeBoardDetailModel.getPostAdminIcon());
             tvTimeDate.setText(AppDateUtil.getCompareShowString(homeBoardDetailModel.getSysCurrentTime().getTime(), homeBoardDetailModel.getPostCreateTime().getTime()));
         }
-        commentListAdapter = new CommentListAdapter(HomeDetailActivity.this);
-        homeDetailAdapter = new HomeDetailAdapter(HomeDetailActivity.this);
-        rvContent.setLayoutManager(new LinearLayoutManager(HomeDetailActivity.this, LinearLayoutManager.VERTICAL, false) {
+        commentListAdapter = new CommentListAdapter(HomeTopicDetailActivity.this);
+        homeDetailAdapter = new HomeDetailAdapter(HomeTopicDetailActivity.this);
+        rvContent.setLayoutManager(new LinearLayoutManager(HomeTopicDetailActivity.this, LinearLayoutManager.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
         });
         rvContent.setAdapter(homeDetailAdapter);
-        rvComment.setLayoutManager(new LinearLayoutManager(HomeDetailActivity.this, LinearLayoutManager.VERTICAL, false) {
+        rvComment.setLayoutManager(new LinearLayoutManager(HomeTopicDetailActivity.this, LinearLayoutManager.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -130,7 +134,7 @@ public class HomeDetailActivity extends BaseActivity {
         }
 
         pageSelectDialog = new PageSelectDialog
-                .Builder(HomeDetailActivity.this)
+                .Builder(HomeTopicDetailActivity.this)
                 .initCommentCount(homeBoardDetailModel.getPostCommentCount())
                 .create();
         pageSelectDialog.setiDialog(new PageSelectDialog.IDialog() {
@@ -142,7 +146,7 @@ public class HomeDetailActivity extends BaseActivity {
         });
 
         commentDialog=new CommentDialog
-                .Builder(HomeDetailActivity.this)
+                .Builder(HomeTopicDetailActivity.this)
                 .create();
     }
 
@@ -152,7 +156,7 @@ public class HomeDetailActivity extends BaseActivity {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
 //
-//                AppUtil.hideInputMethod(HomeDetailActivity.this,etContent);
+//                AppUtil.hideInputMethod(HomeTopicDetailActivity.this,etContent);
 //                return false;
 //            }
 //        });
@@ -177,15 +181,15 @@ public class HomeDetailActivity extends BaseActivity {
             }
         });
 
-        SoftKeyBoardListener.setListener(HomeDetailActivity.this, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+        SoftKeyBoardListener.setListener(HomeTopicDetailActivity.this, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
             @Override
             public void keyBoardShow(int height) {
-                Toast.makeText(HomeDetailActivity.this, "键盘显示 高度" + height, Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeTopicDetailActivity.this, "键盘显示 高度" + height, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void keyBoardHide(int height) {
-                Toast.makeText(HomeDetailActivity.this, "键盘隐藏 高度" + height, Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeTopicDetailActivity.this, "键盘隐藏 高度" + height, Toast.LENGTH_SHORT).show();
 //                etContent.setText(commentDialog.getText());
 //                etContent.setSelection(commentDialog.getSelection());
 //                etContent.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
@@ -204,7 +208,7 @@ public class HomeDetailActivity extends BaseActivity {
 
                 commentModelOri.setCommentContent(etContent.getText().toString());
                 commentModelOri.setCommentPostId(homeBoardDetailModel.getHomePostId());
-                commentModelOri.setCommentUserId(UserInfoUtil.getUserInfo(HomeDetailActivity.this).getUserId());
+                commentModelOri.setCommentUserId(UserInfoUtil.getUserInfo(HomeTopicDetailActivity.this).getUserId());
                 commentModelOri.setCommentTime(new Timestamp(System.currentTimeMillis()));
                 RoNetWorkUtil
                         .getInstance()
@@ -217,9 +221,10 @@ public class HomeDetailActivity extends BaseActivity {
                                 commentBean = new CommentBean();
                                 commentBean.setUserComment(etContent.getText().toString());
                                 etContent.setText("");
-                                commentBean.setUserIcon(UserInfoUtil.getUserInfo(HomeDetailActivity.this).getUserIcon());
-                                commentBean.setUserName(UserInfoUtil.getUserInfo(HomeDetailActivity.this).getUserName());
+                                commentBean.setUserIcon(UserInfoUtil.getUserInfo(HomeTopicDetailActivity.this).getUserIcon());
+                                commentBean.setUserName(UserInfoUtil.getUserInfo(HomeTopicDetailActivity.this).getUserName());
                                 commentBean.setCommentTime(commentModelOri.getCommentTime());
+                                commentBean.setSysCurrentTime(commentModelOri.getCommentTime());
                                 commentListAdapter.addData(commentBean);
 
                             }
@@ -263,27 +268,19 @@ public class HomeDetailActivity extends BaseActivity {
 
     public void getPageData(int page) {
         currPage = page;
+        homeTopicPresenter.getPostCommentList(homeBoardDetailModel.getHomePostId(),page);
 
 
-        RoNetWorkUtil
-                .getInstance()
-                .get(UrlConstants.GET_COMMENT_LIST)
-                .conParams("postId=" + homeBoardDetailModel.getHomePostId() + "&&page=" + page)
-                .execute1(new DataListResponseCallback<CommentBean>() {
-                    @Override
-                    public void onResponseSuccess(List<CommentBean> response) {
-                        swipeRefresh.finishLoadmore();
 
-                        if (response != null && response.size() > 0) {
-                            commentListAdapter.setDatas(response);
-                        }
+    }
 
-                    }
+    @Override
+    public void getTopicCommentList(List<CommentBean> response) {
+        swipeRefresh.finishLoadmore();
 
-                    @Override
-                    public void onResponseFail(String errorString) {
+        if (response != null && response.size() > 0) {
+            commentListAdapter.setDatas(response);
+        }
 
-                    }
-                });
     }
 }

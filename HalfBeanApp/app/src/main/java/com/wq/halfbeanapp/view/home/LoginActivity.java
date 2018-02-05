@@ -1,4 +1,4 @@
-package com.wq.halfbeanapp.view;
+package com.wq.halfbeanapp.view.home;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +14,9 @@ import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
 import com.wq.halfbeanapp.util.AppStrUtil;
 import com.wq.halfbeanapp.util.file.AppConfigFileImpl;
 import com.wq.halfbeanapp.util.user.UserInfoUtil;
+import com.wq.halfbeanapp.view.BaseActivity;
+import com.wq.halfbeanapp.view.HomeActivity;
+import com.wq.halfbeanapp.view.RegisterActivity;
 
 public class LoginActivity extends BaseActivity {
     private EditText etUser, etPassWord;

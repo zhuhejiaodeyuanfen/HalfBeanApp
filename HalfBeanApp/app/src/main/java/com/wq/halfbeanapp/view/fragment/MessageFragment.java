@@ -32,10 +32,11 @@ public class MessageFragment extends BaseFragment implements IMsgFragmentView {
     private RecyclerView rvMessage;
     private TextView tvAboutMe, tvComment, tvPraise;
     private MsgFragmentPresenter msgFragmentPresenter;
+    private int page = 1;
 
     @Override
     public void initEventData() {
-        msgFragmentPresenter=new MsgFragmentPresenter(getContext(),MessageFragment.this);
+        msgFragmentPresenter = new MsgFragmentPresenter(getContext(), MessageFragment.this);
         chatSocketPresenter = new ChatSocketPresenter(mContext);
         chatSocketPresenter.connectService();
         msgListAdapter = new MsgListAdapter(mContext);
@@ -56,6 +57,7 @@ public class MessageFragment extends BaseFragment implements IMsgFragmentView {
         tvAboutMe = (TextView) mContentView.findViewById(R.id.tvAboutMe);
         tvComment = (TextView) mContentView.findViewById(R.id.tvComment);
         tvPraise = (TextView) mContentView.findViewById(R.id.tvPraise);
+        initTitle("消息");
 
     }
 
@@ -98,7 +100,7 @@ public class MessageFragment extends BaseFragment implements IMsgFragmentView {
 
     @Override
     public void loadData() {
-        msgFragmentPresenter.getListUser(2);
+        msgFragmentPresenter.getListUser(page);
 
 //        RoNetWorkUtil
 //                .getInstance()
@@ -122,8 +124,8 @@ public class MessageFragment extends BaseFragment implements IMsgFragmentView {
 
     @Override
     public void showUserMsgList(List<UserMessageList> userMessageLists) {
-        if(userMessageLists!=null&&userMessageLists.size()>0)
-        {
+        if (userMessageLists != null && userMessageLists.size() > 0) {
+            page++;
             msgListAdapter.addData(userMessageLists);
         }
     }

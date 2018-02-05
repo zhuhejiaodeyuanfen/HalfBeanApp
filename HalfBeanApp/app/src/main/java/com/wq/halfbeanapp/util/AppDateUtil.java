@@ -148,6 +148,82 @@ public class AppDateUtil {
     }
 
 
+    public static String getHomeBoard(long sysTime, long addTime) {
+        long compareDate = sysTime - addTime;//精确到毫秒级
+        if (compareDate > 7 * 24 * 60 * 60 * 1000) {
+            //超过7天,判断是否是当年
+
+            Calendar cSystem = Calendar.getInstance();
+            cSystem.setTime(new Date(sysTime));
+            int sysYear = cSystem.get(Calendar.YEAR);
+
+            Calendar cPost = Calendar.getInstance();
+            cPost.setTime(new Date(addTime));
+            int postYear = cPost.get(Calendar.YEAR);
+
+            if (sysYear > postYear) {
+                //不是当前年份
+                return (AppDateUtil.getStringByFormat(addTime, AppDateUtil.dateFormatYMD));
+            } else {
+                //当前年份
+
+                return (AppDateUtil.getStringByFormat(addTime, AppDateUtil.dateFormatMD1));
+            }
+        } else {
+            //7天内
+            if (compareDate > 1 * 24 * 60 * 60 * 1000) {
+                //大于1天--7天
+
+                Calendar cSystem = Calendar.getInstance();
+                cSystem.setTime(new Date(sysTime));
+                int sysDay = cSystem.get(Calendar.DAY_OF_MONTH);
+
+                Calendar cPost = Calendar.getInstance();
+                cPost.setTime(new Date(addTime));
+                int postDay = cPost.get(Calendar.DAY_OF_MONTH);
+
+                int i = sysDay - postDay;
+                return i + "天前";
+            } else {
+                //小于1天
+                if (compareDate > 1 * 60 * 60 * 1000) {
+                    //大于1小时--小于1天
+                    Calendar cSystem = Calendar.getInstance();
+                    cSystem.setTime(new Date(sysTime));
+                    int sysHour = cSystem.get(Calendar.HOUR_OF_DAY);
+
+                    Calendar cPost = Calendar.getInstance();
+                    cPost.setTime(new Date(addTime));
+                    int postHour = cPost.get(Calendar.HOUR_OF_DAY);
+
+                    int i = sysHour - postHour;
+                    return i + "小时前";
+                } else {
+                    if (compareDate > 1 * 60 * 1000) {
+                        //1分钟---1小时
+
+                        Calendar cSystem = Calendar.getInstance();
+                        cSystem.setTime(new Date(compareDate));
+                        int sysMinute = cSystem.get(Calendar.MINUTE);
+
+                        return sysMinute + "分钟前";
+                    } else {
+                        //1秒---60秒
+                        if (compareDate > 1 * 1000) {
+                            Calendar cSystem = Calendar.getInstance();
+                            cSystem.setTime(new Date(compareDate));
+                            int sysSecond = cSystem.get(Calendar.SECOND);
+                            return sysSecond + "秒前";
+                        } else {
+                            return "刚刚";
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     public static String getWeekOfDate(long time) {
 
         try {

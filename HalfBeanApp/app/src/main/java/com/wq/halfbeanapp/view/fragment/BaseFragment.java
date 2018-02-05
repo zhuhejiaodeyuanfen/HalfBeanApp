@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.view.BaseActivity;
 import com.wq.halfbeanapp.view.iview.IDialogTwoView;
 import com.wq.halfbeanapp.view.iview.IFragment;
+import com.wq.halfbeanapp.widget.titlebar.TitleBar;
 
 
 /**
@@ -37,6 +39,12 @@ public abstract class BaseFragment extends Fragment implements IFragment {
         super.onCreate(savedInstanceState);
         mContext = getBaseActivity();
 //        EventBus.getDefault().register(this);
+    }
+
+    public TitleBar initTitle(String title) {
+        TitleBar uiTitleBar = (TitleBar)mContentView.findViewById(R.id.titleBarView);
+        uiTitleBar.setTitleText(title);
+        return uiTitleBar;
     }
 
 

@@ -11,6 +11,7 @@ import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
 import com.wq.halfbeanapp.util.file.AppConfigFileImpl;
 import com.wq.halfbeanapp.util.retrofit.NetHttpApi;
 import com.wq.halfbeanapp.util.user.UserInfoUtil;
+import com.wq.halfbeanapp.view.home.LoginActivity;
 
 import java.util.concurrent.TimeUnit;
 

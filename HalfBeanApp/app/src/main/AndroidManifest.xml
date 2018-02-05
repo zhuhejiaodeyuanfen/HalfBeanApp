@@ -20,7 +20,7 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.LoginActivity"
+            android:name=".view.home.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.HomeActivity"
@@ -32,7 +32,7 @@
             android:name=".view.topic.AddTopicActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.HomeDetailActivity"
+            android:name=".view.home.HomeTopicDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
@@ -69,7 +69,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ChatMsgActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.AboutMyActivity"
             android:screenOrientation="portrait" />

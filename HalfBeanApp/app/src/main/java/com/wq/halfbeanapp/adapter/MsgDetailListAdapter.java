@@ -122,14 +122,16 @@ public class MsgDetailListAdapter extends RecyclerView.Adapter<RecyclerView.View
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == OTHER_TEXT_MSG) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_other_msg, parent, false);
-            return new MsgDetailListAdapter.MyTextMsg(view);
+            return new MsgDetailListAdapter.OtherTextMsg(view);
 
         } else {
             // first item
             View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_mine_msg, parent, false);
-            return new MsgDetailListAdapter.OtherTextMsg(view);
+            return new MsgDetailListAdapter.MyTextMsg(view);
         }
     }
+
+
 
 
     @Override
@@ -138,7 +140,7 @@ public class MsgDetailListAdapter extends RecyclerView.Adapter<RecyclerView.View
         final MsgDetailModel info = dataList.get(adapterPosition);
         if (viewHolder instanceof MsgDetailListAdapter.MyTextMsg) {
             final MsgDetailListAdapter.MyTextMsg myTextMsg = (MsgDetailListAdapter.MyTextMsg) viewHolder;
-            GlideImageLoader.display(mContext, myTextMsg.ivIcon, info.getMsgFromIcon());
+            GlideImageLoader.display(mContext, myTextMsg.ivIcon, UserInfoUtil.getUserInfo(mContext).getUserIcon());
             myTextMsg.tvContent.setText(info.getMsgContent());
             if (!info.getShowTime().equals("noData")) {
                 myTextMsg.tvTime.setVisibility(View.VISIBLE);
