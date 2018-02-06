@@ -1,6 +1,7 @@
 package com.wq.halfbeanapp.model;
 
 import com.wq.halfbeanapp.bean.CommentBean;
+import com.wq.halfbeanapp.bean.LivePhotoDetailModel;
 import com.wq.halfbeanapp.service.HomeTopicService;
 import com.wq.halfbeanapp.util.retrofit.NetHttpApi;
 import com.wq.halfbeanapp.util.retrofit.RxHelper;
@@ -25,6 +26,7 @@ public class HomeTopicModel {
 
     /**
      * 获取特定帖子的评论列表
+     *
      * @param postId
      * @param page
      * @param subscribe
@@ -32,6 +34,18 @@ public class HomeTopicModel {
     public void getCommentList(int postId, int page, RxSubscribe<List<CommentBean>> subscribe) {
         homeTopicService.getCommentList(postId, page)
                 .compose(RxHelper.<List<com.wq.halfbeanapp.bean.CommentBean>>handleResult())
+                .subscribe(subscribe);
+    }
+
+    /**
+     * 用户参与一场live
+     *
+     * @param livePhotoDetailModel
+     * @param subscribe
+     */
+    public void userInALive(LivePhotoDetailModel livePhotoDetailModel, RxSubscribe<String> subscribe) {
+        homeTopicService.userAddLive(livePhotoDetailModel)
+                .compose(RxHelper.<String>handleResult())
                 .subscribe(subscribe);
     }
 

@@ -27,6 +27,7 @@ public class HomeTopicFragModel {
     public void getHomeTopicList(int page, RxSubscribe<List<HomeBoardDetailModel>> subscribe) {
         homeTopicService.getHomeTopicList(page) .compose(RxHelper.<List<HomeBoardDetailModel>>handleResult())
                 .subscribe(subscribe);
-
     }
+
+
 }

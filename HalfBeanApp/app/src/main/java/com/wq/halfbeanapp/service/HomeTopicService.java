@@ -2,11 +2,13 @@ package com.wq.halfbeanapp.service;
 
 import com.wq.halfbeanapp.bean.CommentBean;
 import com.wq.halfbeanapp.bean.HomeBoardDetailModel;
+import com.wq.halfbeanapp.bean.LivePhotoDetailModel;
 import com.wq.halfbeanapp.bean.UserMessageList;
 import com.wq.halfbeanapp.util.retrofit.BaseResponse;
 
 import java.util.List;
 
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -54,5 +56,13 @@ public interface HomeTopicService {
     @POST("/wq/home/getHomeLive")
     Observable<BaseResponse<List<HomeBoardDetailModel>>> getHomeTopicList(@Query("page") int page);
 
+
+    /**
+     * 用户发表参与一条最新的live
+     * @param livePhotoDetailModel
+     * @return
+     */
+    @POST("/wq/live/addLivePost")
+    Observable<BaseResponse<String>> userAddLive(@Body LivePhotoDetailModel livePhotoDetailModel);
 
 }

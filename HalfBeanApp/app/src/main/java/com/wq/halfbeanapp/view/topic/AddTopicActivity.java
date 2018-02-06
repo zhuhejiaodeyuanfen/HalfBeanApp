@@ -9,22 +9,21 @@ import android.widget.EditText;
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.bean.LiveBoardModel;
 import com.wq.halfbeanapp.bean.LivePhotoDetailModel;
-import com.wq.halfbeanapp.constants.UrlConstants;
-import com.wq.halfbeanapp.net.response.DataResponseCallback;
-import com.wq.halfbeanapp.net.response.ResponseBean;
-import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
+import com.wq.halfbeanapp.presenter.UserInLivePresenter;
 import com.wq.halfbeanapp.util.user.UserInfoUtil;
 import com.wq.halfbeanapp.view.BaseActivity;
+import com.wq.halfbeanapp.view.iview.IAddTopicView;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class AddTopicActivity extends BaseActivity {
+public class AddTopicActivity extends BaseActivity implements IAddTopicView {
 
     private Button btnCommit, btnChange;
     private EditText etTopic;
+    private UserInLivePresenter userInLivePresenter;
 
     private List<String> colorList = new ArrayList<>();
     private LiveBoardModel liveBoardModel;
@@ -48,6 +47,7 @@ public class AddTopicActivity extends BaseActivity {
     @Override
     public void initEventData() {
         liveBoardModel = (LiveBoardModel) getIntent().getSerializableExtra("data");
+        userInLivePresenter=new UserInLivePresenter(this,this);
         colorList.add("#c63c26");
         colorList.add("#f3715c");
         colorList.add("#cd9a5b");
@@ -84,27 +84,28 @@ public class AddTopicActivity extends BaseActivity {
                 livePhotoDetailModel.setPostContent(etTopic.getText().toString());
                 livePhotoDetailModel.setPostParentId(liveBoardModel.getLiveBoardModelId() + "");
                 livePhotoDetailModel.setPostSonId("1");
-                RoNetWorkUtil
-                        .getInstance()
-                        .get(UrlConstants.USER_ADD_LIVE)
-                        .params(livePhotoDetailModel)
-                        .execute(new DataResponseCallback<ResponseBean>() {
-                            @Override
-                            public void onResponseSuccess(ResponseBean response) {
-
-                                showToast("发表成功");
-
-
-                            }
-
-                            @Override
-                            public void onResponseFail(String errorString) {
-
-                                cancelProgressDialog();
-                                showToast(errorString);
-
-                            }
-                        });
+                userInLivePresenter.userInLive(livePhotoDetailModel);
+//                RoNetWorkUtil
+//                        .getInstance()
+//                        .get(UrlConstants.USER_ADD_LIVE)
+//                        .params(livePhotoDetailModel)
+//                        .execute(new DataResponseCallback<ResponseBean>() {
+//                            @Override
+//                            public void onResponseSuccess(ResponseBean response) {
+//
+//
+//
+//
+//                            }
+//
+//                            @Override
+//                            public void onResponseFail(String errorString) {
+//
+//                                cancelProgressDialog();
+//                                showToast(errorString);
+//
+//                            }
+//                        });
             }
         });
 
@@ -112,6 +113,12 @@ public class AddTopicActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+
+    }
+
+    @Override
+    public void commitResult(String result) {
+        showToast("发表成功");
 
     }
 }
