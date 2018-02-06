@@ -57,7 +57,7 @@ public class MessageFragment extends BaseFragment implements IMsgFragmentView {
         tvAboutMe = (TextView) mContentView.findViewById(R.id.tvAboutMe);
         tvComment = (TextView) mContentView.findViewById(R.id.tvComment);
         tvPraise = (TextView) mContentView.findViewById(R.id.tvPraise);
-        initTitle("消息");
+        initTitleNoLeft("消息");
 
     }
 

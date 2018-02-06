@@ -37,7 +37,7 @@ public class MsgListAdapter extends BaseRecyclerViewAdapter<UserMessageList> {
         TextView tvWriter = (TextView) holder.getView(R.id.tvWriter, false);
         tvWriter.setText(item.getMsgUserName());
         ImageView ivIcon = (ImageView) holder.getView(R.id.ivIcon, false);
-        GlideImageLoader.display(context, ivIcon, item.getMsgUserIcon());
+        GlideImageLoader.display(context, ivIcon, item.getMsgUserIcon(),R.mipmap.ic_icon);
 
 
     }

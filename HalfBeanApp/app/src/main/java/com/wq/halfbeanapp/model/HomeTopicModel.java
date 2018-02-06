@@ -47,6 +47,8 @@ public class HomeTopicModel {
         homeTopicService.userAddLive(livePhotoDetailModel)
                 .compose(RxHelper.<String>handleResult())
                 .subscribe(subscribe);
+
+
     }
 
 

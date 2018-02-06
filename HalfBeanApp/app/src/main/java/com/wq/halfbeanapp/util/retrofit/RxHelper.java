@@ -1,5 +1,7 @@
 package com.wq.halfbeanapp.util.retrofit;
 
+import com.wq.halfbeanapp.net.response.JsonTools;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -42,6 +44,25 @@ public class RxHelper {
     }
 
 
+    public static Observable.Transformer<String, BaseResponse1> handleResultResponse() {
+        return new Observable.Transformer<String, BaseResponse1>() {
+            @Override
+            public Observable<BaseResponse1> call(Observable<String> tObservable) {
+                return tObservable.flatMap(new Func1<String, Observable<BaseResponse1>>() {
+                    @Override
+                    public Observable<BaseResponse1> call(String result) {
+
+                        return createData(result);
+
+                    }
+                })
+                        .subscribeOn(Schedulers.io())
+                        .unsubscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+            }
+        };
+
+    }
 
     /**
      * 将数据存入subscriber
@@ -56,6 +77,21 @@ public class RxHelper {
             public void call(Subscriber<? super T> subscriber) {
                 try {
                     subscriber.onNext(data);
+                    subscriber.onCompleted();
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+            }
+        });
+
+    }
+
+    private static Observable<BaseResponse1> createData(final String data) {
+        return Observable.create(new Observable.OnSubscribe<BaseResponse1>() {
+            @Override
+            public void call(Subscriber<? super BaseResponse1> subscriber) {
+                try {
+                    subscriber.onNext(JsonTools.getBean(data, BaseResponse1.class));
                     subscriber.onCompleted();
                 } catch (Exception e) {
                     subscriber.onError(e);

@@ -47,6 +47,12 @@ public abstract class BaseFragment extends Fragment implements IFragment {
         return uiTitleBar;
     }
 
+    public TitleBar initTitleNoLeft(String title) {
+        TitleBar uiTitleBar = (TitleBar)mContentView.findViewById(R.id.titleBarView);
+        uiTitleBar.setTitleText(title);
+        uiTitleBar.hidenLeftButton();
+        return uiTitleBar;
+    }
 
     public abstract void initEventData();
 

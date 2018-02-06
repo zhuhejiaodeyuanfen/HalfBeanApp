@@ -47,8 +47,8 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#eeeeee" />
+                android:layout_height="1dp"
+                android:background="@color/dividerColor" />
 
             <TextView
                 android:drawableLeft="@mipmap/ic_praise"
@@ -63,8 +63,8 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#eeeeee" />
+                android:layout_height="1dp"
+                android:background="@color/dividerColor" />
 
 
             <android.support.v7.widget.RecyclerView

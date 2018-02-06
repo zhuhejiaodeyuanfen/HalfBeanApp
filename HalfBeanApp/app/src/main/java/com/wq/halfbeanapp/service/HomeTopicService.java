@@ -58,7 +58,7 @@ public interface HomeTopicService {
 
 
     /**
-     * 用户发表参与一条最新的live
+     *
      * @param livePhotoDetailModel
      * @return
      */

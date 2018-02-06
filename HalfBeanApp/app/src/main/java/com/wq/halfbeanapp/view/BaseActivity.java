@@ -44,9 +44,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     @Override
     public void setContentView(int layoutResID) {
         View view = LayoutInflater.from(this).inflate(layoutResID, null);
-
-        setContentView(view);
         StatusBarFontHelper.setStatusBarMode(this,true);
+        setContentView(view);
+
 
     }
 
