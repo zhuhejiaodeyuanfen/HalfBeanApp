@@ -90,11 +90,14 @@ public class DynamicListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        if (viewType == 0) {
+        if (viewType == 0) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_user_broad, parent, false);
             return new DynamicListAdapter.OtherTextMsg(view);
 
-//        }
+        }else{
+            View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_user_topic_repost, parent, false);
+            return new DynamicListAdapter.OtherTextMsg(view);
+        }
     }
 
 
@@ -134,8 +137,9 @@ public class DynamicListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (dataList.get(position).getType() == 0) {
 
             return 0;
+        }else {
+            return 1;
         }
-        return 0;
     }
 
     public void updateData(@NonNull List<DynamicListBean> update) {

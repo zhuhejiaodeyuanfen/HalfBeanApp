@@ -25,8 +25,12 @@ public class DynamicFragment extends BaseFragment {
     public void initEventData() {
         dynamicListAdapter = new DynamicListAdapter(mContext);
         dynamicListBeans = new ArrayList<>();
-        for (int i = 0; i < 10; i++)
-            dynamicListBeans.add(new DynamicListBean());
+        for (int i = 0; i < 10; i++) {
+            DynamicListBean dynamicListBean = new DynamicListBean();
+            if(i%2==0)
+                dynamicListBean.setType(1);
+            dynamicListBeans.add(dynamicListBean);
+        }
         dynamicListAdapter.addData(dynamicListBeans,true);
         rvDynamic.setAdapter(dynamicListAdapter);
 
