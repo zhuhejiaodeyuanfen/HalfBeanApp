@@ -6,13 +6,22 @@
     android:orientation="vertical">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:background="@color/dividerColor"
-        android:gravity="center"
 
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivSet"
+            android:layout_width="wrap_content"
+
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@mipmap/ic_set" />
 
         <com.wq.halfbeanapp.widget.imageview.CircleImageView
             android:id="@+id/ivUser"
@@ -21,22 +30,25 @@
             android:layout_centerInParent="true" />
 
         <TextView
+            android:layout_below="@id/ivUser"
             android:id="@+id/tvName"
+            android:layout_centerHorizontal="true"
+            android:text="dfdf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
 
-    </LinearLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
 
         <LinearLayout
-            android:paddingRight="20dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -44,19 +56,26 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvWatchUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="关注" />
 
             <TextView
+                android:id="@+id/tvWatchDown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="78" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:paddingLeft="20dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -64,13 +83,20 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvUnWatchUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="被关注" />
 
             <TextView
+                android:id="@+id/tvUnWatchDown"
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="78" />
 
         </LinearLayout>

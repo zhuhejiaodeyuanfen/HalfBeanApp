@@ -80,7 +80,10 @@
         <activity
             android:name=".view.PraiseMyActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.UserDetailActivity"></activity>
+        <activity android:name=".view.UserDetailActivity" />
+        <activity android:name=".view.user.UserWatchActivity" />
+        <activity android:name=".view.user.UserUnWatchActivity" />
+        <activity android:name=".view.user.UserSetActivity"></activity>
     </application>
 
 </manifest>

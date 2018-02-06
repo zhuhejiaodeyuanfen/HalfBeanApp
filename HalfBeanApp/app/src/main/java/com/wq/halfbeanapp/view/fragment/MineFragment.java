@@ -18,6 +18,9 @@ import com.wq.halfbeanapp.util.network.HttpUtil;
 import com.wq.halfbeanapp.util.sdk.glide.GlideImageLoader;
 import com.wq.halfbeanapp.util.system.AppPermissionUtil1;
 import com.wq.halfbeanapp.util.user.UserInfoUtil;
+import com.wq.halfbeanapp.view.user.UserSetActivity;
+import com.wq.halfbeanapp.view.user.UserUnWatchActivity;
+import com.wq.halfbeanapp.view.user.UserWatchActivity;
 import com.wq.halfbeanapp.widget.dialog.AppShareDialog;
 
 import java.io.File;
@@ -36,6 +39,8 @@ public class MineFragment extends BaseFragment {
     private TextView tvName;
     private AppShareDialog appShareDialog;
     private AppPermissionUtil1 appPermissionUtil1;
+    private View tvWatchUp, tvWatchDown, tvUnWatchUp, tvUnWatchDown;
+    private View ivSet;
 
     @Override
     public void initEventData() {
@@ -77,8 +82,11 @@ public class MineFragment extends BaseFragment {
     public void initView() {
         ivUser = (ImageView) mContentView.findViewById(R.id.ivUser);
         tvName = (TextView) mContentView.findViewById(R.id.tvName);
-
-
+        tvWatchUp = mContentView.findViewById(R.id.tvWatchUp);
+        tvWatchDown = mContentView.findViewById(R.id.tvWatchDown);
+        tvUnWatchDown = mContentView.findViewById(R.id.tvUnWatchDown);
+        tvUnWatchUp = mContentView.findViewById(R.id.tvUnWatchUp);
+        ivSet=mContentView.findViewById(R.id.ivSet);
     }
 
     @Override
@@ -89,6 +97,43 @@ public class MineFragment extends BaseFragment {
                 //点击更换头像
                 appShareDialog.show();
 
+            }
+        });
+        ivSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBaseActivity().launcher(mContext, UserSetActivity.class);
+
+            }
+        });
+        //用户关注列表
+        tvWatchDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBaseActivity().launcher(mContext, UserWatchActivity.class);
+
+            }
+        });
+        tvWatchUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getBaseActivity().launcher(mContext, UserWatchActivity.class);
+
+            }
+        });
+
+        tvUnWatchUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBaseActivity().launcher(mContext, UserUnWatchActivity.class);
+            }
+        });
+
+        tvUnWatchDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBaseActivity().launcher(mContext, UserUnWatchActivity.class);
             }
         });
 
