@@ -12,7 +12,7 @@ import com.wq.halfbeanapp.adapter.HotTopicLiveAdapter;
 import com.wq.halfbeanapp.adapter.MyItemClickListener;
 import com.wq.halfbeanapp.bean.LiveBoardModel;
 import com.wq.halfbeanapp.view.iview.IHotTopicFragment;
-import com.wq.halfbeanapp.presenter.HotTopicPresenter;
+import com.wq.halfbeanapp.presenter.HotLivePresenter;
 import com.wq.halfbeanapp.view.topic.BeanAddTopicActivity;
 import com.wq.halfbeanapp.view.topic.TopicCardActivity;
 import com.wq.halfbeanapp.widget.SwipeRefreshView;
@@ -30,7 +30,7 @@ public class HomeLiveFragment extends BaseFragment implements IHotTopicFragment 
     private HotTopicLiveAdapter hotTopicLiveAdapter;
     private TextView tvAddLive;
     private SwipeRefreshView refreshView;
-    private HotTopicPresenter hotTopicPresenter;
+    private HotLivePresenter hotLivePresenter;
 
 
     @Override
@@ -79,7 +79,7 @@ public class HomeLiveFragment extends BaseFragment implements IHotTopicFragment 
             @Override
             public void onRefresh() {
 
-                hotTopicPresenter.getLivePage(true);
+                hotLivePresenter.getLivePage(true);
 
             }
         });
@@ -90,8 +90,8 @@ public class HomeLiveFragment extends BaseFragment implements IHotTopicFragment 
     public void loadData() {
 
 
-        hotTopicPresenter = new HotTopicPresenter(this);
-        hotTopicPresenter.getLivePage(true);
+        hotLivePresenter = new HotLivePresenter(this);
+        hotLivePresenter.getLivePage(true);
 
 
     }

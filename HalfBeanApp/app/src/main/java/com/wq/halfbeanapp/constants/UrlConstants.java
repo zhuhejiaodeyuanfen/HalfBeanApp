@@ -8,8 +8,8 @@ package com.wq.halfbeanapp.constants;
  */
 public class UrlConstants {
 
-//    public static final String baseIp = "http://192.168.10.154:8080";
-    public static final String baseIp = "http://192.168.1.8:8080";
+    public static final String baseIp = "http://192.168.10.154:8080";
+//    public static final String baseIp = "http://192.168.1.8:8080";
 
     /**
      * 获取所有动态列表

@@ -14,12 +14,12 @@ import java.util.List;
  * desc:
  * Version: 1.0
  */
-public class HotTopicPresenter {
+public class HotLivePresenter {
 
 
     private IHotTopicFragment iHotTopicFragment;
 
-    public HotTopicPresenter(IHotTopicFragment iHotTopicFragment) {
+    public HotLivePresenter(IHotTopicFragment iHotTopicFragment) {
         this.iHotTopicFragment = iHotTopicFragment;
     }
 

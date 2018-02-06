@@ -1,11 +1,15 @@
 package com.wq.halfbeanapp.adapter;
 
 import android.content.Context;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.bean.HomeBoardDetailModel;
 import com.wq.halfbeanapp.util.AppDateUtil;
+import com.wq.halfbeanapp.util.sdk.glide.GlideImageLoader;
+
+import java.text.DecimalFormat;
 
 /**
  * Created by vivianWQ on 2018/1/19
@@ -22,8 +26,11 @@ import com.wq.halfbeanapp.util.AppDateUtil;
  * 首页 话题 adapter
  */
 public class HomeLiveAdapter extends BaseRecyclerViewAdapter<HomeBoardDetailModel> {
+    private Context context;
+
     public HomeLiveAdapter(Context context) {
         super(context);
+        this.context = context;
     }
 
     @Override
@@ -33,11 +40,21 @@ public class HomeLiveAdapter extends BaseRecyclerViewAdapter<HomeBoardDetailMode
         tvTitle.setText(item.getPostTitle());
         TextView tvWriter = (TextView) holder.getView(R.id.tvWriter, false);
         tvWriter.setText(item.getPostAdmin());
+
         TextView tvCount = (TextView) holder.getView(R.id.tvCount, false);
-        tvCount.setText(item.getPostCommentCount() + "");
+        if (item.getPostCommentCount() < 999)
+            tvCount.setText(item.getPostCommentCount() + "");
+        else {
+            float num = (float) item.getPostCommentCount() / 1000;
+            DecimalFormat df = new DecimalFormat("0.0");//格式化小数
+            String s = df.format(num);//返回的是String类型
+            tvCount.setText(s + "k");
+        }
         holder.getView(R.id.baseItem, true);
         TextView tvUpdateTime = (TextView) holder.getView(R.id.tvUpdateTime, false);
         tvUpdateTime.setText(AppDateUtil.getHomeBoard(item.getSysCurrentTime().getTime(), item.getPostUpdateTime().getTime()) + "更新");
+        ImageView ivIcon = (ImageView) holder.getView(R.id.ivIcon, false);
+        GlideImageLoader.display(context, ivIcon, item.getPostAdminIcon(), R.mipmap.ic_launcher);
 
 
     }

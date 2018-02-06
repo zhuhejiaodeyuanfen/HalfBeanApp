@@ -1,6 +1,7 @@
 package com.wq.halfbeanapp.service;
 
 import com.wq.halfbeanapp.bean.CommentBean;
+import com.wq.halfbeanapp.bean.HomeBoardDetailModel;
 import com.wq.halfbeanapp.bean.UserMessageList;
 import com.wq.halfbeanapp.util.retrofit.BaseResponse;
 
@@ -42,6 +43,16 @@ public interface HomeTopicService {
      */
     @POST("/wq/msg/getMsgList")
     Observable<BaseResponse<List<UserMessageList>>> getListUserMsg(@Query("page") int page);
+
+
+    /**
+     * 获取首页所有帖子列表
+     *
+     * @param page
+     * @return
+     */
+    @POST("/wq/home/getHomeLive")
+    Observable<BaseResponse<List<HomeBoardDetailModel>>> getHomeTopicList(@Query("page") int page);
 
 
 }

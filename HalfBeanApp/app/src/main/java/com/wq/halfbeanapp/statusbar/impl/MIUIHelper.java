@@ -1,6 +1,8 @@
 package com.wq.halfbeanapp.statusbar.impl;
 
 import android.app.Activity;
+import android.os.Build;
+import android.view.View;
 import android.view.Window;
 
 import com.wq.halfbeanapp.statusbar.IStatusBarFontHelper;
@@ -21,8 +23,8 @@ public class MIUIHelper implements IStatusBarFontHelper {
      */
     @Override
     public boolean setStatusBarLightMode(Activity activity, boolean isFontColorDark) {
-        Window window = activity.getWindow();
         boolean result = false;
+        Window window = activity.getWindow();
         if (window != null) {
             Class clazz = window.getClass();
             try {
@@ -37,10 +39,21 @@ public class MIUIHelper implements IStatusBarFontHelper {
                     extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
                 }
                 result = true;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    //开发版 7.7.13 及以后版本采用了系统API，旧方法无效但不会报错，所以两个方式都要加上
+                    if (isFontColorDark) {
+                        activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                    } else {
+                        activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                    }
+                }
             } catch (Exception e) {
-                e.printStackTrace();
+
             }
         }
         return result;
+
+
     }
 }

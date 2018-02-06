@@ -1,14 +1,19 @@
 package com.wq.halfbeanapp.view.home;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
 import com.wq.halfbeanapp.view.fragment.BaseFragment;
 import com.wq.halfbeanapp.view.fragment.HomeLiveFragment;
 import com.wq.halfbeanapp.view.fragment.HomeTopicFragment;
+import com.wq.halfbeanapp.widget.titlebar.CaterpillarIndicator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vivianWQ on 2017/12/7
@@ -17,12 +22,12 @@ import com.wq.halfbeanapp.view.fragment.HomeTopicFragment;
  * Version: 1.0
  */
 public class HomeFragment extends BaseFragment {
-    private TextView tvRight, tvLeft;
-    private int index=-1;
     private HomeTopicFragment homeTopicFragment;
     private HomeLiveFragment halfBeanFragment;
 
-    private FragmentManager fragmentManager;
+    private CaterpillarIndicator upBar;
+    private ViewPager viewPager;
+    private List<Fragment> fragmentList;
 
     @Override
     public int onSetLayoutId() {
@@ -32,32 +37,37 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void initView() {
 
-        tvRight = (TextView) mContentView.findViewById(R.id.tvRight);
-        tvLeft = (TextView) mContentView.findViewById(R.id.tvLeft);
+        upBar = (CaterpillarIndicator) mContentView.findViewById(R.id.upBar);
+
+
+        viewPager = (ViewPager) mContentView.findViewById(R.id.viewPager);
+
+        fragmentList = new ArrayList<>();
+        fragmentList.add(new HomeTopicFragment());
+        fragmentList.add(new HomeLiveFragment());
+        BaseFragmentAdapter adapter = new BaseFragmentAdapter(getChildFragmentManager());
+        viewPager.setAdapter(adapter);
+        viewPager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                titleBar.setTextColorSelected(getResources().getColor(R.color.colorPrimary));
+            }
+        });
+        List<CaterpillarIndicator.TitleInfo> titles = new ArrayList<>();
+        titles.add(new CaterpillarIndicator.TitleInfo("话题"));
+        titles.add(new CaterpillarIndicator.TitleInfo("Live"));
+        upBar.init(1, titles, viewPager);
 
     }
 
     @Override
     public void initEventData() {
 
-        fragmentManager = getChildFragmentManager();
-        setTabSelection(0);
+
     }
 
     @Override
     public void bindEvent() {
-        tvLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setTabSelection(0);
-            }
-        });
-        tvRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setTabSelection(1);
-            }
-        });
 
 
     }
@@ -68,51 +78,22 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    /**
-     * 将所有Fragment都置为隐藏状态
-     *
-     * @param transaction 用于对Fragment执行操作的事务
-     */
-    private void hideFragments(FragmentTransaction transaction) {
-        if (homeTopicFragment != null) {
-            transaction.hide(homeTopicFragment);
-        }
-        if (halfBeanFragment != null) {
-            transaction.hide(halfBeanFragment);
+    private class BaseFragmentAdapter extends FragmentStatePagerAdapter {
+
+        public BaseFragmentAdapter(FragmentManager fm) {
+            super(fm);
         }
 
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList != null ? fragmentList.size() : 0;
+        }
     }
 
-    public void setTabSelection(int index) {
-        if (this.index == index) {
-            return;
-        }
-        this.index = index;
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        hideFragments(transaction);
-        switch (index) {
-            case 0:
-                //需要实时刷新
-                if (homeTopicFragment == null) {
-                    homeTopicFragment = new HomeTopicFragment();
-                    transaction.add(R.id.viewHome, homeTopicFragment);
-                } else {
-                    transaction.show(homeTopicFragment);
-                }
-                break;
 
-            case 1:
-                if (halfBeanFragment == null) {
-                    halfBeanFragment = new HomeLiveFragment();
-                    transaction.add(R.id.viewHome, halfBeanFragment);
-                } else {
-                    transaction.show(halfBeanFragment);
-                }
-                break;
-
-
-        }
-        transaction.commitAllowingStateLoss();
-
-    }
 }
