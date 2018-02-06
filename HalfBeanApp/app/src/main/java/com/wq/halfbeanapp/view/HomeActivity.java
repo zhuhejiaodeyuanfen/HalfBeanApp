@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
+import com.wq.halfbeanapp.view.fragment.DynamicFragment;
 import com.wq.halfbeanapp.view.fragment.MessageFragment;
-import com.wq.halfbeanapp.view.home.HomeFragment;
-import com.wq.halfbeanapp.view.fragment.HomeLiveFragment;
 import com.wq.halfbeanapp.view.fragment.MineFragment;
+import com.wq.halfbeanapp.view.home.HomeFragment;
 
 public class HomeActivity extends BaseActivity {
 
@@ -18,7 +18,7 @@ public class HomeActivity extends BaseActivity {
     private FragmentTransaction transaction;
     private HomeFragment homeFragment;
     private MessageFragment messageFragment;
-    private HomeLiveFragment homeLiveFragment;
+    private DynamicFragment dynamicFragment;
     private MineFragment mineFragment;
     private FragmentManager fragmentManager;
     private int index = -1;
@@ -120,11 +120,11 @@ public class HomeActivity extends BaseActivity {
 
 
             case 2:
-                if (homeLiveFragment == null) {
-                    homeLiveFragment = new HomeLiveFragment();
-                    transaction.add(R.id.id_content, homeLiveFragment);
+                if (dynamicFragment == null) {
+                    dynamicFragment = new DynamicFragment();
+                    transaction.add(R.id.id_content, dynamicFragment);
                 } else {
-                    transaction.show(homeLiveFragment);
+                    transaction.show(dynamicFragment);
                 }
 
                 break;
@@ -155,8 +155,8 @@ public class HomeActivity extends BaseActivity {
         if (messageFragment != null) {
             transaction.hide(messageFragment);
         }
-        if (homeLiveFragment != null) {
-            transaction.hide(homeLiveFragment);
+        if (dynamicFragment != null) {
+            transaction.hide(dynamicFragment);
         }
         if (mineFragment != null)
             transaction.hide(mineFragment);

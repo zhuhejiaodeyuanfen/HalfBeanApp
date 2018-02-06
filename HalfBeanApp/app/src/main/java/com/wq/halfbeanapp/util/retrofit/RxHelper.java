@@ -44,7 +44,7 @@ public class RxHelper {
     }
 
 
-    public static Observable.Transformer<String, BaseResponse1> handleResultResponse() {
+    public static  Observable.Transformer<String, BaseResponse1> handleResultResponse() {
         return new Observable.Transformer<String, BaseResponse1>() {
             @Override
             public Observable<BaseResponse1> call(Observable<String> tObservable) {
@@ -91,7 +91,7 @@ public class RxHelper {
             @Override
             public void call(Subscriber<? super BaseResponse1> subscriber) {
                 try {
-                    subscriber.onNext(JsonTools.getBean(data, BaseResponse1.class));
+                    subscriber.onNext(JsonTools.getBean(data, com.wq.halfbeanapp.util.retrofit.BaseResponse1.class));
                     subscriber.onCompleted();
                 } catch (Exception e) {
                     subscriber.onError(e);
