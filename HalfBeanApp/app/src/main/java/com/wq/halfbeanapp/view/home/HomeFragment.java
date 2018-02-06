@@ -56,7 +56,7 @@ public class HomeFragment extends BaseFragment {
         List<CaterpillarIndicator.TitleInfo> titles = new ArrayList<>();
         titles.add(new CaterpillarIndicator.TitleInfo("话题"));
         titles.add(new CaterpillarIndicator.TitleInfo("Live"));
-        upBar.init(1, titles, viewPager);
+        upBar.init(0, titles, viewPager);
 
     }
 

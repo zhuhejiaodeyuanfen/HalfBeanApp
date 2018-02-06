@@ -14,6 +14,15 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="30人参与"
+            android:layout_marginBottom="20dp"
+            android:drawableTop="@mipmap/ic_hot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
 
         <com.wq.halfbeanapp.widget.imageview.CircleImageView
             android:id="@+id/ivIcon"
@@ -21,6 +30,8 @@
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:src="@mipmap/ic_launcher" />
+
+
 
 
         <LinearLayout
@@ -42,6 +53,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/tvSubTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,25 +71,35 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
 
     <com.wq.halfbeanapp.widget.recyclerviewpagerlib.RecyclerViewPager
         android:id="@+id/rvPager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
+        android:paddingBottom="30dp"
         app:rvp_singlePageFling="true"
         app:rvp_triggerOffset="0.1" />
 
     <RelativeLayout
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingBottom="10dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
 
-        <Button
+        <TextView
+            android:layout_alignBottom="@+id/btnCommit"
             android:id="@+id/btnQuickView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,8 +107,9 @@
             android:layout_gravity="center_horizontal"
             android:text="快速浏览" />
 
-        <Button
+        <TextView
             android:id="@+id/btnCommit"
+            android:drawableTop="@mipmap/ic_write"
 
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
@@ -94,5 +117,6 @@
             android:layout_gravity="center_horizontal"
             android:text="立即参与" />
 
+    </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

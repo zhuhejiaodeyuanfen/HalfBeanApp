@@ -9,18 +9,59 @@
     <TextView
         android:id="@+id/tvContent"
         android:layout_width="wrap_content"
+        android:layout_marginTop="150dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="50dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:text="这个年怕是过不好了...." />
 
+    <com.wq.halfbeanapp.widget.imageview.CircleImageView
+        android:layout_toLeftOf="@+id/tvWriter"
+        android:layout_below="@id/tvContent"
+        android:visibility="gone"
+        android:id="@+id/ivIcon"
+        android:layout_width="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="30dp"
+       />
+
     <TextView
+        android:id="@+id/tvPraiseCount"
+        android:drawableLeft="@mipmap/ic_add_praise"
+        android:layout_width="wrap_content"
+        android:layout_toLeftOf="@+id/tvCommentCount"
+        android:layout_alignParentBottom="true"
+
+        android:text="0"
+        android:layout_marginBottom="50dp"
+
+        android:layout_height="wrap_content"
+        />
+
+
+    <TextView
+        android:id="@+id/tvCommentCount"
+        android:layout_alignParentRight="true"
+        android:drawableLeft="@mipmap/ic_add_comment"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="0"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:layout_below="@id/tvContent"
         android:id="@+id/tvWriter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="center_vertical"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="20dp"
         android:text="78人" />
 
 </RelativeLayout>

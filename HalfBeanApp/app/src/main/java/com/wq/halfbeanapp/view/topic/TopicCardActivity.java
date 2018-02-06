@@ -4,19 +4,21 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wq.halfbeanapp.R;
+import com.wq.halfbeanapp.adapter.MyItemClickListener;
 import com.wq.halfbeanapp.adapter.PhotoVpAdapter;
 import com.wq.halfbeanapp.bean.LiveBoardModel;
 import com.wq.halfbeanapp.bean.LivePhotoDetailModel;
 import com.wq.halfbeanapp.constants.UrlConstants;
 import com.wq.halfbeanapp.net.response.DataListResponseCallback;
 import com.wq.halfbeanapp.net.response.RoNetWorkUtil;
+import com.wq.halfbeanapp.util.AppDateUtil;
 import com.wq.halfbeanapp.util.sdk.glide.GlideImageLoader;
 import com.wq.halfbeanapp.view.BaseActivity;
+import com.wq.halfbeanapp.view.UserDetailActivity;
 import com.wq.halfbeanapp.widget.recyclerviewpagerlib.RecyclerViewPager;
 
 import java.util.HashMap;
@@ -25,7 +27,7 @@ import java.util.List;
 public class TopicCardActivity extends BaseActivity {
     private RecyclerViewPager rvPager;
     private PhotoVpAdapter photoVpAdapter;
-    private Button btnCommit;
+    private TextView btnCommit;
     private TextView tvMainTitle, tvSubTitle, tvTime;
     private LiveBoardModel liveBoardModel;
     private ImageView ivIcon;
@@ -41,7 +43,7 @@ public class TopicCardActivity extends BaseActivity {
     @Override
     public void initView() {
         initTitle("A Live");
-        btnCommit = (Button) findViewById(R.id.btnCommit);
+        btnCommit = (TextView) findViewById(R.id.btnCommit);
         ivIcon = (ImageView) findViewById(R.id.ivIcon);
         tvMainTitle = (TextView) findViewById(R.id.tvMainTitle);
         tvSubTitle = (TextView) findViewById(R.id.tvSubTitle);
@@ -49,7 +51,7 @@ public class TopicCardActivity extends BaseActivity {
         photoVpAdapter = new PhotoVpAdapter(TopicCardActivity.this);
         rvPager = (RecyclerViewPager) findViewById(R.id.rvPager);
         rvPager.setAdapter(photoVpAdapter);
-        LinearLayoutManager layout = new LinearLayoutManager(TopicCardActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        final LinearLayoutManager layout = new LinearLayoutManager(TopicCardActivity.this, LinearLayoutManager.HORIZONTAL, false);
         rvPager.setLayoutManager(layout);
         rvPager.setHasFixedSize(true);
         rvPager.setLongClickable(true);
@@ -89,6 +91,25 @@ public class TopicCardActivity extends BaseActivity {
                         v.setScaleY(0.9f + rate * 0.1f);
                         v.setScaleX(0.9f + rate * 0.1f);
                     }
+                }
+            }
+        });
+        photoVpAdapter.setOnItemClickListener(new MyItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                LivePhotoDetailModel item = photoVpAdapter.getItem(position);
+                switch (view.getId()) {
+                    case R.id.ivIcon:
+                        //点击头像
+                        Bundle args = new Bundle();
+                        args.putInt("uid", item.getPostAdminId());
+                        launcher(TopicCardActivity.this, UserDetailActivity.class, args);
+                        break;
+                    case R.id.tvPraiseCount:
+                        showToast("用户点击了赞");
+                        break;
+                    case R.id.tvCommentCount:
+                        break;
                 }
             }
         });
@@ -132,7 +153,7 @@ public class TopicCardActivity extends BaseActivity {
         if (liveBoardModel != null) {
             tvMainTitle.setText(liveBoardModel.getLiveBoardTitle());
             tvSubTitle.setText(liveBoardModel.getLiveBoardContent());
-            tvTime.setText(liveBoardModel.getCreateTime() + "");
+            tvTime.setText(AppDateUtil.getStringByFormat(liveBoardModel.getCreateTime().getTime(), AppDateUtil.dateFormatYMD));
             GlideImageLoader.display(TopicCardActivity.this, ivIcon, liveBoardModel.getLiveIcon());
         }
 
@@ -156,7 +177,7 @@ public class TopicCardActivity extends BaseActivity {
     public void loadData() {
 
         HashMap<String, String> map = new HashMap<>();
-        map.put("id", liveBoardModel.getLiveBoardModelId()+"");
+        map.put("id", liveBoardModel.getLiveBoardModelId() + "");
         RoNetWorkUtil
                 .getInstance()
                 .get(UrlConstants.QUERY_HOT_List)

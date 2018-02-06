@@ -19,6 +19,24 @@ public class LivePhotoDetailModel {
     private int postBadCount;//帖子的坏评数
     private int postCommentCount;//帖子的评论数
     private int rePostCount;//帖子的转发数
+     public String getPostAdminIcon() {
+        return postAdminIcon;
+}
+    private int postAdminId;
+
+    public int getPostAdminId() {
+        return postAdminId;
+    }
+
+    public void setPostAdminId(int postAdminId) {
+        this.postAdminId = postAdminId;
+    }
+
+    public void setPostAdminIcon(String postAdminIcon) {
+        this.postAdminIcon = postAdminIcon;
+    }
+
+    private String postAdminIcon;//发帖者icon地址
 
     public int getLivePostId() {
         return livePostId;
